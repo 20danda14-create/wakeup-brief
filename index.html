@@ -310,9 +310,9 @@
     fetchMarkets();
 
     // 5. GOOGLE E-TABLO ENTEGRASYONU
-    const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; 
+    const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzFPtP306ZTitIkN0GOOkgark8oVycTi6nNTlsqurYI3adKnWnMLRVc7HAXb1-CYrjKNw/exec"; 
     async function fetchSheetData() {
-        if(!SHEET_API_URL || SHEET_API_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) return;
+        if(!SHEET_API_URL || SHEET_API_URL.includes("https://script.google.com/macros/s/AKfycbzFPtP306ZTitIkN0GOOkgark8oVycTi6nNTlsqurYI3adKnWnMLRVc7HAXb1-CYrjKNw/exec")) return;
         try {
             await fetch(SHEET_API_URL);
         } catch(e) { console.log("Tablo senkronizasyonu hazır."); }
