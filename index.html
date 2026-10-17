@@ -20,7 +20,7 @@
         .header { background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(124,92,252,0.1)); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; display: flex; justify-content: space-between; align-items: center; }
         .header-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
         .header-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
-        .live-clock { font-family: 'DM Mono', monospace; font-size: 25px; font-weight: 500; color: var(--accent); background: rgba(255,107,53,0.1); padding: 6px 12px; border-radius: 10px; border: 1px solid rgba(255,107,53,0.2); }
+        .live-clock { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: var(--accent); background: rgba(255,107,53,0.1); padding: 6px 12px; border-radius: 10px; border: 1px solid rgba(255,107,53,0.2); }
 
         /* CARD SECTIONS */
         .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
@@ -39,8 +39,8 @@
         .brief-item:last-child { border-bottom: none; }
         .bullet { color: var(--accent); font-weight: bold; flex-shrink: 0; }
 
-        /* MATCH ALERT BOX */
-        .match-alert-card { background: rgba(255, 77, 109, 0.12); border: 1px solid rgba(255, 77, 109, 0.3); border-radius: 12px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; margin-top: 6px; }
+        /* MATCH ALERT CARD */
+        .match-alert-card { background: rgba(255, 77, 109, 0.12); border: 1px solid rgba(255, 77, 109, 0.3); border-radius: 12px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; margin-top: 4px; }
         .match-alert-title { font-size: 13px; font-weight: 700; color: var(--danger); margin-bottom: 2px; }
         .match-alert-desc { font-size: 12px; color: var(--text); line-height: 1.3; }
 
@@ -64,12 +64,14 @@
         <div id="liveClock" class="live-clock">00:00</div>
     </div>
 
-    <!-- 01 · GÜNÜN ÖZETİ -->
+    <!-- 01 · GÜNÜN ÖZETİ (MAÇ & TRAFİK UYARISI) -->
     <div class="card">
         <div class="card-title"><span>01</span> Günün Özeti & Acil Uyarısı</div>
-        <div id="summaryContent" style="display: flex; flex-direction: column; gap: 6px;">
-            <div class="brief-item">
-                <span class="bullet">▪</span> Günlük akış stabil. Kritik altyapı kesintisi bulunmuyor.
+        <div class="match-alert-card">
+            <span style="font-size:18px;">⚠️</span>
+            <div>
+                <div class="match-alert-title">STADYUM & TRAFİK UYARISI</div>
+                <div class="match-alert-desc">Bugün saat <strong>16:00</strong>'da Eryaman Stadyumu'nda <strong>Gençlerbirliği - Galatasaray</strong> maçı bulunmaktadır. Stadyum çevresinde ve Eryaman içi ana arterlerde ciddi trafik yoğunluğu beklenmektedir.</div>
             </div>
         </div>
     </div>
@@ -103,8 +105,17 @@
     <div class="card" id="localStatusCard">
         <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman)</div>
         <div class="brief-item"><span class="bullet">▪</span> EGO Metro ve Otobüs seferleri normal seyrediyor.</div>
-        <div id="matchArea"></div>
-        <div class="link-row">
+        
+        <!-- Eryaman Stadyumu Maç Detayı -->
+        <div class="match-alert-card">
+            <span style="font-size:18px;">⚽</span>
+            <div>
+                <div class="match-alert-title">Bugün Eryaman'da Maç Var!</div>
+                <div class="match-alert-desc">Gençlerbirliği vs Galatasaray (16:00) — Stadyum çevresinde ulaşım tedbiri alınız.</div>
+            </div>
+        </div>
+
+        <div class="link-row" style="margin-top: 8px;">
             <a href="https://www.ego.gov.tr/duyurular" target="_blank" class="badge-link">🚇 EGO Duyurular</a>
             <a href="https://www.ankara.gov.tr/duyurular" target="_blank" class="badge-link">🏛️ Ankara Valiliği</a>
             <a href="https://x.com/AnkaraValiligi" target="_blank" class="badge-link">𝕏 @AnkaraValiligi</a>
@@ -172,46 +183,13 @@
                 document.getElementById('weatherSub').innerText = precip > 0 ? "Su geçirmez kıyafet giyin" : "Normal giyim önerilir";
             }
         } catch (e) {
-            console.log("Hava durumu canlı bağlantısı fallback modunda çalıştı.");
+            console.log("Hava durumu bağlantısı yedek modda çalıştı.");
         }
     }
     fetchWeather();
 
-    // 3. ERYAMAN STADYUMU MAÇ UYARISI (TAM OTOMATİK DÜZELTİLMİŞ)
-    function checkMatchStatus() {
-        const today = new Date();
-        const isMatchDay = true; // Eryaman Stadyumu Maç Günü Tespit Edildi (Gençlerbirliği - Galatasaray)
-        
-        if (isMatchDay) {
-            // Özet Bölümüne Ekle
-            const summaryBox = document.getElementById('summaryContent');
-            summaryBox.innerHTML = `
-                <div class="match-alert-card">
-                    <span style="font-size:18px;">⚠️</span>
-                    <div>
-                        <div class="match-alert-title">STADYUM & TRAFİK UYARISI</div>
-                        <div class="match-alert-desc">Bugün saat <strong>16:00</strong>'da Eryaman Stadyumu'nda <strong>Gençlerbirliği - Galatasaray</strong> maçı vardır. Stadyum çevresinde ve Eryaman içi ana arterlerde ciddi trafik yoğunluğu beklenmektedir.</div>
-                    </div>
-                </div>
-            `;
-
-            // Yerel Durum Kartına Ekle
-            const matchArea = document.getElementById('matchArea');
-            matchArea.innerHTML = `
-                <div class="match-alert-card">
-                    <span style="font-size:18px;">⚽</span>
-                    <div>
-                        <div class="match-alert-title">Bugün Eryaman'da Maç Var!</div>
-                        <div class="match-alert-desc">Gençlerbirliği vs Galatasaray (16:00) — Stadyum çevresinde ulaşım tedbiri alınız.</div>
-                    </div>
-                </div>
-            `;
-        }
-    }
-    checkMatchStatus();
-
-    // 4. GOOGLE E-TABLOLAR VERİ SÜZME VE YÜKLEME
-    const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; // 1. Adımdaki Apps Script URL'si
+    // 3. GOOGLE E-TABLOLAR VERİ SÜZME VE YÜKLEME
+    const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; 
     async function fetchSheetData() {
         if(!SHEET_API_URL || SHEET_API_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) return;
         try {
