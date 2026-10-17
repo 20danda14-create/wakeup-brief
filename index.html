@@ -1,182 +1,317 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WAKE UP BRIEF · Ankara / Eryaman</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0d0d12; --surface: #14141c; --card: #1b1b26; --border: #2a2a3d;
-            --accent: #ff6b35; --purple: #7c5cfc; --text: #f0f0f8; --muted: #78789e;
-            --success: #2dd4a0; --warning: #ffb703; --danger: #ff4d6d;
-            --r: 16px;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px 16px 40px; -webkit-font-smoothing: antialiased; }
-        .container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
-        
-        /* HEADER */
-        .header { background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(124,92,252,0.1)); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .header-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-        .header-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
-        .live-clock { font-family: 'DM Mono', monospace; font-size: 35px; font-weight: 500; color: var(--accent); background: rgba(255,107,53,0.1); padding: 6px 12px; border-radius: 10px; border: 1px solid rgba(255,107,53,0.2); }
-
-        /* CARD SECTIONS */
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
-        .card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
-        .card-title span { color: var(--accent); }
-
-        /* GRID & METRICS */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .metric-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
-        .metric-label { font-size: 11px; color: var(--muted); font-weight: 600; }
-        .metric-val { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; }
-        .metric-sub { font-size: 10px; color: var(--muted); }
-
-        /* LIST & ITEMS */
-        .brief-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.4; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .brief-item:last-child { border-bottom: none; }
-        .bullet { color: var(--accent); font-weight: bold; flex-shrink: 0; }
-
-        /* MATCH ALERT CARD */
-        .match-alert-card { background: rgba(255, 77, 109, 0.12); border: 1px solid rgba(255, 77, 109, 0.3); border-radius: 12px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; margin-top: 4px; }
-        .match-alert-title { font-size: 13px; font-weight: 700; color: var(--danger); margin-bottom: 2px; }
-        .match-alert-desc { font-size: 12px; color: var(--text); line-height: 1.3; }
-
-        /* LINKS & BADGES */
-        .link-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-        .badge-link { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 8px; font-size: 12px; text-decoration: none; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-        .badge-link:hover { border-color: var(--accent); color: var(--accent); }
-
-        .footer-note { text-align: center; font-size: 11px; color: var(--muted); margin-top: 10px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WAKE UP BRIEF · Ankara / Eryaman</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0d12;--surface:#14141c;--card:#1b1b26;--border:#2a2a3d;--accent:#ff6b35;--purple:#7c5cfc;--text:#f0f0f8;--muted:#78789e;--success:#2dd4a0;--warning:#ffb703;--danger:#ff4d6d;--r:16px}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px 16px 40px;-webkit-font-smoothing:antialiased}
+.container{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.header{background:linear-gradient(135deg,rgba(255,107,53,.1),rgba(124,92,252,.1));border:1px solid var(--border);border-radius:var(--r);padding:20px;display:flex;justify-content:space-between;align-items:center}
+.header-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px}
+.header-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.live-clock{font-family:'DM Mono',monospace;font-size:35px;font-weight:500;color:var(--accent);background:rgba(255,107,53,.1);padding:6px 12px;border-radius:10px;border:1px solid rgba(255,107,53,.2)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.card-title span{color:var(--accent)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.metric-box.wide{grid-column:1/-1}
+.metric-label{font-size:11px;color:var(--muted);font-weight:600}
+.metric-val{font-family:'DM Mono',monospace;font-size:15px;font-weight:500}
+.metric-sub{font-size:10px;color:var(--muted);line-height:1.35}
+.up{color:var(--success)}.down{color:var(--danger)}.flat{color:var(--muted)}
+.brief-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.4;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.brief-item:last-child{border-bottom:none}
+.bullet{color:var(--accent);font-weight:bold;flex-shrink:0}
+.src{font-size:10px;color:var(--muted);display:block;margin-top:2px}
+.unverified{color:var(--warning)}
+.match-alert-card{background:rgba(255,77,109,.12);border:1px solid rgba(255,77,109,.3);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:flex-start}
+.match-alert-title{font-size:13px;font-weight:700;color:var(--danger);margin-bottom:2px}
+.match-alert-desc{font-size:12px;line-height:1.3}
+.empty{font-size:13px;color:var(--muted)}
+.link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.badge-link{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:8px;font-size:12px;text-decoration:none;font-weight:500;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.badge-link:hover{border-color:var(--accent);color:var(--accent)}
+.footer-note{text-align:center;font-size:11px;color:var(--muted);margin-top:10px}
+</style>
 </head>
 <body>
-
 <div class="container">
-    <!-- HEADER -->
-    <div class="header">
-        <div>
-            <div class="header-title">WAKE UP BRIEF</div>
-            <div class="header-sub">Ankara · Eryaman · Günlük Operasyonel Bülten</div>
-        </div>
-        <div id="liveClock" class="live-clock">00:00</div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="header-title">WAKE UP BRIEF</div>
+      <div class="header-sub" id="dateLine">Ankara · Eryaman · Günlük Operasyonel Bülten</div>
     </div>
+    <div id="liveClock" class="live-clock">00:00</div>
+  </div>
 
-    <!-- 01 · GÜNÜN ÖZETİ (MAÇ & TRAFİK UYARISI) -->
-    <div class="card">
-        <div class="card-title"><span>01</span> Günün Özeti & Acil Uyarısı</div>
-        <div class="match-alert-card">
-            <span style="font-size:18px;">⚠️</span>
-            <div>
-                <div class="match-alert-title">STADYUM & TRAFİK UYARISI</div>
-                <div class="match-alert-desc">Bugün saat <strong>16:00</strong>'da Eryaman Stadyumu'nda <strong>Gençlerbirliği - Galatasaray</strong> maçı bulunmaktadır. Stadyum çevresinde ve Eryaman içi ana arterlerde ciddi trafik yoğunluğu beklenmektedir.</div>
-            </div>
-        </div>
+  <!-- 01 · ACİL UYARILAR -->
+  <div class="card">
+    <div class="card-title"><span>01</span> Günün Özeti & Acil Uyarılar</div>
+    <div id="alertList"><div class="empty">Tabloda aktif acil uyarı yok.</div></div>
+  </div>
+
+  <!-- 02 · HAVA -->
+  <div class="card">
+    <div class="card-title"><span>02</span> Güne Hazırlık & Hava Durumu (Eryaman)</div>
+    <div class="grid-2">
+      <div class="metric-box">
+        <span class="metric-label">SICAKLIK & DURUM</span>
+        <span id="weatherTemp" class="metric-val">—</span>
+        <span id="weatherDesc" class="metric-sub unverified">Güncel durum doğrulanamadı</span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label">GİYİM ÖNERİSİ</span>
+        <span id="weatherCloth" class="metric-val">—</span>
+        <span id="weatherSub" class="metric-sub"></span>
+      </div>
     </div>
+  </div>
 
-    <!-- 02 · GÜNE HAZIRLIK -->
-    <div class="card">
-        <div class="card-title"><span>02</span> Güne Hazırlık & Hava Durumu (Eryaman)</div>
-        <div class="grid-2">
-            <div class="metric-box">
-                <span class="metric-label">SICAKLIK & DURUM</span>
-                <span id="weatherTemp" class="metric-val">17°C · 🌧️</span>
-                <span id="weatherDesc" class="metric-sub">Çok Bulutlu / Yağışlı (2.4 mm)</span>
-            </div>
-            <div class="metric-box">
-                <span class="metric-label">GİYİM ÖNERİSİ</span>
-                <span id="weatherCloth" class="metric-val">Şemsiye & Mont</span>
-                <span id="weatherSub" class="metric-sub">Su geçirmez kıyafet giyin</span>
-            </div>
-        </div>
+  <!-- 03 · PLAN -->
+  <div class="card">
+    <div class="card-title"><span>03</span> Bugünün Planı</div>
+    <div id="agendaList"><div class="empty">Tabloda aktif plan maddesi yok.</div></div>
+  </div>
+
+  <!-- 04 · YEREL DURUM -->
+  <div class="card">
+    <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman)</div>
+    <div id="localList">
+      <div class="brief-item"><span class="bullet">▪</span><span><strong>EGO Metro / Otobüs:</strong> <span class="unverified">Güncel durum doğrulanamadı</span> — resmî duyuruları kontrol edin.</span></div>
     </div>
-
-    <!-- 04 · YEREL DURUM -->
-    <div class="card" id="localStatusCard">
-        <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman)</div>
-        <div class="brief-item"><span class="bullet">▪</span> EGO Metro ve Otobüs seferleri normal seyrediyor.</div>
-        
-        <div class="match-alert-card">
-            <span style="font-size:18px;">⚽</span>
-            <div>
-                <div class="match-alert-title">Bugün Eryaman'da Maç Var!</div>
-                <div class="match-alert-desc">Gençlerbirliği vs Galatasaray (16:00) — Stadyum çevresinde ulaşım tedbiri alınız.</div>
-            </div>
-        </div>
-
-        <div class="link-row" style="margin-top: 8px;">
-            <a href="https://www.ego.gov.tr/duyurular" target="_blank" class="badge-link">🚇 EGO Duyurular</a>
-            <a href="https://www.ankara.gov.tr/duyurular" target="_blank" class="badge-link">🏛️ Ankara Valiliği</a>
-            <a href="https://x.com/AnkaraValiligi" target="_blank" class="badge-link">𝕏 @AnkaraValiligi</a>
-        </div>
+    <div class="link-row">
+      <a href="https://www.ego.gov.tr/duyurular" target="_blank" rel="noopener" class="badge-link">🚇 EGO Duyurular</a>
+      <a href="https://www.ankara.gov.tr/duyurular" target="_blank" rel="noopener" class="badge-link">🏛️ Ankara Valiliği</a>
+      <a href="https://x.com/AnkaraValiligi" target="_blank" rel="noopener" class="badge-link">𝕏 @AnkaraValiligi</a>
     </div>
+  </div>
 
-    
+  <!-- 05 · GÜNDEM -->
+  <div class="card">
+    <div class="card-title"><span>05</span> Türkiye & Dünya Gündemi</div>
+    <div id="newsList"><div class="empty">Öne çıkan önemli gelişme yok / veri doğrulanamadı.</div></div>
+  </div>
 
-   
+  <!-- 06 · PİYASALAR -->
+  <div class="card">
+    <div class="card-title"><span>06</span> Piyasalar</div>
+    <div id="marketStatus" class="metric-sub"></div>
+    <div class="grid-2">
+      <div class="metric-box">
+        <span class="metric-label">EURO / TL</span>
+        <span id="eurVal" class="metric-val">…</span>
+        <span id="eurChg" class="metric-sub"></span>
+        <span id="eurMeta" class="metric-sub"></span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label">GRAM ALTIN (TL)</span>
+        <span id="goldVal" class="metric-val">…</span>
+        <span id="goldChg" class="metric-sub"></span>
+        <span id="goldMeta" class="metric-sub"></span>
+      </div>
+      <div class="metric-box wide">
+        <span class="metric-label">BIST 100</span>
+        <span id="bistVal" class="metric-val">…</span>
+        <span id="bistChg" class="metric-sub"></span>
+        <span id="bistMeta" class="metric-sub"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 · SON KONTROL -->
+  <div class="card">
+    <div class="card-title"><span>07</span> Çıkmadan Önce Son Kontrol</div>
+    <div id="checklistList"><div class="empty">Kontrol maddesi yok.</div></div>
+  </div>
+
+  <div class="footer-note" id="footerNote">Veriler otomatik çekilir; doğrulanamayan bilgi uydurulmaz.</div>
+</div>
 
 <script>
-    // 1. CANLI SAAT
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('liveClock').innerText = now.toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+// ---------- Yardımcılar ----------
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = id => document.getElementById(id);
+const TZ = 'Europe/Istanbul';
+const fmtNum = (n, d=2) => Number(n).toLocaleString('tr-TR', {minimumFractionDigits:d, maximumFractionDigits:d});
+const fmtDate = d => new Date(d).toLocaleDateString('tr-TR', {day:'2-digit', month:'long', year:'numeric', timeZone:TZ});
+const fmtDateTime = d => new Date(d).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit', timeZone:TZ});
+const norm = s => String(s||'').toLocaleLowerCase('tr-TR').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 
-    // 2. ERYAMAN HAVA DURUMU (CANLI ENTEGRASYON)
-    async function fetchWeather() {
-        try {
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,precipitation,weather_code');
-            if (res.ok) {
-                const data = await res.json();
-                const temp = data.current.temperature_2m;
-                const precip = data.current.precipitation;
-                document.getElementById('weatherTemp').innerText = `${temp}°C · ${precip > 0 ? '🌧️' : '⛅'}`;
-                document.getElementById('weatherDesc').innerText = precip > 0 ? `Yağmurlu (${precip} mm)` : 'Parçalı Bulutlu';
-                document.getElementById('weatherCloth').innerText = precip > 0 ? "Şemsiye & Mont" : "Ceket / Mont";
-                document.getElementById('weatherSub').innerText = precip > 0 ? "Su geçirmez kıyafet giyin" : "Normal giyim önerilir";
-            }
-        } catch (e) {
-            console.log("Hava durumu bağlantısı yedek modda çalıştı.");
-        }
-    }
-    fetchWeather();
+function istParts() {
+  const p = new Intl.DateTimeFormat('en-US', {timeZone:TZ, weekday:'short', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(new Date());
+  const g = t => p.find(x => x.type === t).value;
+  return {wd: g('weekday'), h: +g('hour') % 24, m: +g('minute')};
+}
+function bistOpenNow() {
+  const {wd,h,m} = istParts();
+  if (wd === 'Sat' || wd === 'Sun') return false;
+  const mins = h*60+m;
+  return mins >= 10*60 && mins < 18*60; // sürekli işlem ~10:00–18:00
+}
+function chgHTML(cur, prev) {
+  if (prev == null || !isFinite(prev) || prev === 0) return '<span class="flat">Değişim: veri yok</span>';
+  const pct = (cur-prev)/prev*100;
+  const cls = pct > 0.005 ? 'up' : pct < -0.005 ? 'down' : 'flat';
+  const arrow = pct > 0.005 ? '▲' : pct < -0.005 ? '▼' : '■';
+  return `<span class="${cls}">${arrow} %${fmtNum(Math.abs(pct))}</span>`;
+}
+function unverified(prefix) {
+  $(prefix+'Val').innerHTML = '<span class="unverified">Doğrulanamadı</span>';
+  $(prefix+'Chg').innerHTML = '';
+  $(prefix+'Meta').textContent = 'Güncel veri alınamadı';
+}
+async function getJSON(url, ms=8000) {
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), ms);
+  try {
+    const r = await fetch(url, {signal: ctl.signal});
+    if (!r.ok) throw new Error(r.status);
+    return await r.json();
+  } finally { clearTimeout(t); }
+}
 
-    // 3. GOOGLE E-TABLOLAR VERİ SÜZME VE YÜKLEME
-    const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; 
-    async function fetchSheetData() {
-        if(!SHEET_API_URL || SHEET_API_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) return;
-        try {
-            const res = await fetch(SHEET_API_URL);
-            const data = await res.json();
-            
-            let agendaHTML = "";
-            let newsHTML = "";
-            let checkHTML = "";
+// ---------- 1. Saat & tarih ----------
+function updateClock() {
+  const now = new Date();
+  $('liveClock').innerText = now.toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit', timeZone:TZ});
+  $('dateLine').innerText = 'Ankara · Eryaman · ' + now.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long', timeZone:TZ});
+}
+setInterval(updateClock, 1000); updateClock();
 
-            data.forEach(item => {
-                if(item.durum && item.durum.toString().toLowerCase() === "aktif") {
-                    if(item.kategori === "03_PLAN") {
-                        agendaHTML += `<div class="brief-item"><span class="bullet">▪</span> <strong>${item.baslik}:</strong> ${item.detay}</div>`;
-                    } else if(item.kategori === "05_GÜNDEM") {
-                        newsHTML += `<div class="brief-item"><span class="bullet">▪</span> <strong>${item.baslik}:</strong> ${item.detay}</div>`;
-                    } else if(item.kategori === "07_SON_KONTROL") {
-                        checkHTML += `<div class="brief-item"><span class="bullet">✓</span> ${item.baslik}</div>`;
-                    }
-                }
-            });
+// ---------- 2. Hava durumu ----------
+async function fetchWeather() {
+  try {
+    const d = await getJSON('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,precipitation,weather_code&timezone=Europe%2FIstanbul');
+    const temp = d.current.temperature_2m, pr = d.current.precipitation;
+    $('weatherTemp').innerText = `${temp}°C · ${pr > 0 ? '🌧️' : '⛅'}`;
+    $('weatherDesc').className = 'metric-sub';
+    $('weatherDesc').innerText = (pr > 0 ? `Yağışlı (${pr} mm)` : 'Yağış yok') + ' · ' + fmtDateTime(d.current.time);
+    $('weatherCloth').innerText = pr > 0 ? 'Şemsiye & Mont' : (temp < 12 ? 'Mont' : 'Ceket');
+    $('weatherSub').innerText = pr > 0 ? 'Su geçirmez kıyafet giyin' : 'Normal giyim önerilir';
+  } catch (e) { console.log('Hava durumu alınamadı'); }
+}
+fetchWeather();
 
-            if(agendaHTML) document.getElementById('agendaList').innerHTML = agendaHTML;
-            if(newsHTML) document.getElementById('newsList').innerHTML = newsHTML;
-            if(checkHTML) document.getElementById('checklistList').innerHTML = checkHTML;
+// ---------- 3. Piyasalar ----------
+const OUNCE_G = 31.1034768;
 
-        } catch(e) { console.log("Tablo verileri okunurken varsayılan içerik korundu."); }
-    }
-    fetchSheetData();
+async function fxSeries(base) {
+  const start = new Date(Date.now() - 12*864e5).toISOString().slice(0,10);
+  const d = await getJSON(`https://api.frankfurter.app/${start}..?from=${base}&to=TRY`);
+  const days = Object.keys(d.rates).sort();
+  return days.map(k => ({date:k, v:d.rates[k].TRY}));
+}
+
+async function loadFX() {
+  let eur = null, usd = null;
+  try { eur = await fxSeries('EUR'); } catch(e) {}
+  try { usd = await fxSeries('USD'); } catch(e) {}
+
+  if (eur && eur.length) {
+    const l = eur[eur.length-1], p = eur[eur.length-2];
+    $('eurVal').innerText = fmtNum(l.v, 4) + ' ₺';
+    $('eurChg').innerHTML = chgHTML(l.v, p && p.v);
+    $('eurMeta').textContent = `AB Merkez Bankası (ECB) referans kuru · ${fmtDate(l.date)} (günlük)`;
+  } else unverified('eur');
+
+  try {
+    const g = await getJSON('https://api.gold-api.com/price/XAU');
+    if (!usd || !usd.length || !g.price) throw new Error('eksik');
+    const usdTry = usd[usd.length-1].v;
+    const gram = g.price * usdTry / OUNCE_G;
+    $('goldVal').innerText = fmtNum(gram, 2) + ' ₺';
+    $('goldChg').innerHTML = '<span class="flat">Değişim: veri yok</span>';
+    $('goldMeta').textContent = `Ons altın (${fmtNum(g.price)} $) × USD/TRY (ECB ${fmtDate(usd[usd.length-1].date)}) ÷ 31,1035 hesaplanmış değerdir; kuyumcu/Kapalıçarşı fiyatı değildir. Ons verisi: ${g.updatedAt ? fmtDateTime(g.updatedAt) : 'zaman yok'}`;
+  } catch(e) { unverified('gold'); }
+}
+
+async function loadBIST(sheetRows) {
+  const open = bistOpenNow();
+  $('marketStatus').innerHTML = open
+    ? '🟢 BIST şu an açık (10:00–18:00). Veriler gecikmeli olabilir.'
+    : '🔴 BIST kapalı — son işlem gününün kapanışı gösteriliyor.';
+  try {
+    const d = await getJSON('https://query1.finance.yahoo.com/v8/finance/chart/XU100.IS?interval=1d&range=10d');
+    const r = d.chart.result[0];
+    const ts = r.timestamp, cl = r.indicators.quote[0].close;
+    const pts = ts.map((t,i) => ({t:t*1000, c:cl[i]})).filter(x => x.c != null);
+    if (pts.length < 1) throw new Error('boş');
+    const l = pts[pts.length-1], p = pts[pts.length-2];
+    $('bistVal').innerText = fmtNum(l.c, 2);
+    $('bistChg').innerHTML = chgHTML(l.c, p && p.c);
+    $('bistMeta').textContent = (open ? 'Anlık/son fiyat' : 'Kapanış') + ` · ${fmtDate(l.t)} · Kaynak: Yahoo Finance (gecikmeli olabilir)`;
+    return;
+  } catch(e) {}
+  // Yedek: tablodaki 06_PIYASA satırı
+  const row = (sheetRows||[]).find(i => i.kategori === '06_PIYASA' && /bist/i.test(i.baslik||'') && String(i.durum||'').toLowerCase() === 'aktif');
+  if (row) {
+    $('bistVal').innerText = esc(row.detay);
+    $('bistChg').innerHTML = '';
+    $('bistMeta').textContent = 'Tablodan' + (row.zaman ? ' · ' + row.zaman : '') + (row.kaynak ? ' · ' + row.kaynak : '');
+  } else unverified('bist');
+}
+
+// ---------- 4. Tablo verisi (Google Apps Script) ----------
+// Sütunlar: kategori | baslik | detay | durum | zaman | kaynak
+const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+function renderItems(rows, cat, {bullet='▪', limit=99, dedupe=false} = {}) {
+  const seen = new Set(); let html = '', n = 0;
+  rows.filter(i => i.kategori === cat && String(i.durum||'').toLowerCase() === 'aktif').forEach(i => {
+    if (n >= limit) return;
+    if (dedupe) { const k = norm(i.baslik); if (seen.has(k)) return; seen.add(k); }
+    const meta = [i.zaman, i.kaynak].filter(Boolean).map(esc).join(' · ');
+    html += `<div class="brief-item"><span class="bullet">${bullet}</span><span>${i.baslik ? `<strong>${esc(i.baslik)}</strong>` : ''}${i.baslik && i.detay ? ': ' : ''}${esc(i.detay)}${meta ? `<span class="src">${meta}</span>` : ''}</span></div>`;
+    n++;
+  });
+  return html;
+}
+
+async function fetchSheetData() {
+  let rows = [];
+  if (SHEET_API_URL && !SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')) {
+    try { rows = await getJSON(SHEET_API_URL, 10000); if (!Array.isArray(rows)) rows = []; }
+    catch(e) { console.log('Tablo okunamadı'); }
+  }
+
+  const alerts = rows.filter(i => i.kategori === '06_UYARI' && String(i.durum||'').toLowerCase() === 'aktif');
+  if (alerts.length) {
+    $('alertList').innerHTML = alerts.map(a => `
+      <div class="match-alert-card" style="margin-bottom:8px">
+        <span style="font-size:18px">⚠️</span>
+        <div><div class="match-alert-title">${esc(a.baslik)}</div>
+        <div class="match-alert-desc">${esc(a.detay)}${a.zaman ? `<span class="src">${esc(a.zaman)}</span>` : ''}</div></div>
+      </div>`).join('');
+  }
+
+  const plan = renderItems(rows, '03_PLAN');
+  if (plan) $('agendaList').innerHTML = plan;
+
+  const local = renderItems(rows, '04_YEREL');
+  if (local) $('localList').innerHTML = local;
+
+  const news = renderItems(rows, '05_GÜNDEM', {limit:5, dedupe:true});
+  if (news) $('newsList').innerHTML = news;
+
+  const chk = renderItems(rows, '07_SON_KONTROL', {bullet:'✓'});
+  if (chk) $('checklistList').innerHTML = chk;
+
+  return rows;
+}
+
+// ---------- Başlat ----------
+(async () => {
+  const rows = await fetchSheetData();
+  loadFX();
+  loadBIST(rows);
+})();
 </script>
-
 </body>
 </html>
