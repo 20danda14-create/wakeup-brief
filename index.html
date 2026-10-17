@@ -10,7 +10,7 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px 16px 40px;-webkit-font-smoothing:antialiased}
 .container{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
-.header{background:linear-gradient(135deg,rgba(255,107,53,.1),rgba(124,92,252,.1));border:1px solid var(--border);border-radius:var(--r);padding:20px;display:flex;justify-content:space-between;align-items:center}
+.header{background:linear-gradient(135deg,rgba(255,107,53,.1),rgba(124,92,252,.1));border:1px solid var(--border);border-radius:var(--r);padding:20px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .header-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px}
 .header-sub{font-size:12px;color:var(--muted);margin-top:4px}
 .live-clock{font-family:'DM Mono',monospace;font-size:35px;font-weight:500;color:var(--accent);background:rgba(255,107,53,.1);padding:6px 12px;border-radius:10px;border:1px solid rgba(255,107,53,.2)}
@@ -21,11 +21,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .metric-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
 .metric-box.wide{grid-column:1/-1}
 .metric-label{font-size:11px;color:var(--muted);font-weight:600}
-.metric-val{font-family:'DM Mono',monospace;font-size:15px;font-weight:500}
+.metric-val{font-family:'DM Mono',monospace;font-size:16px;font-weight:500}
 .metric-sub{font-size:10px;color:var(--muted);line-height:1.35}
 .up{color:var(--success)}.down{color:var(--danger)}.flat{color:var(--muted)}
 .brief-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.4;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.03)}
 .brief-item:last-child{border-bottom:none}
+.brief-item a{color:var(--text);text-decoration:none}
+.brief-item a:hover{color:var(--accent)}
 .bullet{color:var(--accent);font-weight:bold;flex-shrink:0}
 .src{font-size:10px;color:var(--muted);display:block;margin-top:2px}
 .unverified{color:var(--warning)}
@@ -42,24 +44,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <body>
 <div class="container">
 
-  <!-- HEADER -->
   <div class="header">
     <div>
       <div class="header-title">WAKE UP BRIEF</div>
-      <div class="header-sub" id="dateLine">Ankara · Eryaman · Günlük Operasyonel Bülten</div>
+      <div class="header-sub" id="dateLine">Ankara · Eryaman · Günlük Bülten</div>
     </div>
     <div id="liveClock" class="live-clock">00:00</div>
   </div>
 
-  <!-- 01 · ACİL UYARILAR -->
   <div class="card">
     <div class="card-title"><span>01</span> Günün Özeti & Acil Uyarılar</div>
-    <div id="alertList"><div class="empty">Tabloda aktif acil uyarı yok.</div></div>
+    <div id="alertList"><div class="empty">Aktif acil uyarı yok.</div></div>
   </div>
 
-  <!-- 02 · HAVA -->
   <div class="card">
-    <div class="card-title"><span>02</span> Güne Hazırlık & Hava Durumu (Eryaman)</div>
+    <div class="card-title"><span>02</span> Güne Hazırlık & Hava (Eryaman)</div>
     <div class="grid-2">
       <div class="metric-box">
         <span class="metric-label">SICAKLIK & DURUM</span>
@@ -74,13 +73,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 
-  <!-- 03 · PLAN -->
   <div class="card">
     <div class="card-title"><span>03</span> Bugünün Planı</div>
     <div id="agendaList"><div class="empty">Tabloda aktif plan maddesi yok.</div></div>
   </div>
 
-  <!-- 04 · YEREL DURUM -->
   <div class="card">
     <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman)</div>
     <div id="localList">
@@ -93,13 +90,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 
-  <!-- 05 · GÜNDEM -->
   <div class="card">
     <div class="card-title"><span>05</span> Türkiye & Dünya Gündemi</div>
-    <div id="newsList"><div class="empty">Öne çıkan önemli gelişme yok / veri doğrulanamadı.</div></div>
+    <div id="newsList"><div class="empty">Yükleniyor…</div></div>
   </div>
 
-  <!-- 06 · PİYASALAR -->
   <div class="card">
     <div class="card-title"><span>06</span> Piyasalar</div>
     <div id="marketStatus" class="metric-sub"></div>
@@ -125,192 +120,277 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 
-  <!-- 07 · SON KONTROL -->
   <div class="card">
     <div class="card-title"><span>07</span> Çıkmadan Önce Son Kontrol</div>
     <div id="checklistList"><div class="empty">Kontrol maddesi yok.</div></div>
   </div>
 
-  <div class="footer-note" id="footerNote">Veriler otomatik çekilir; doğrulanamayan bilgi uydurulmaz.</div>
+  <div class="footer-note" id="footerNote">Doğrulanamayan bilgi uydurulmaz.</div>
 </div>
 
 <script>
-// ---------- Yardımcılar ----------
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// ================= YARDIMCILAR =================
 const $ = id => document.getElementById(id);
 const TZ = 'Europe/Istanbul';
-const fmtNum = (n, d=2) => Number(n).toLocaleString('tr-TR', {minimumFractionDigits:d, maximumFractionDigits:d});
-const fmtDate = d => new Date(d).toLocaleDateString('tr-TR', {day:'2-digit', month:'long', year:'numeric', timeZone:TZ});
-const fmtDateTime = d => new Date(d).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit', timeZone:TZ});
-const norm = s => String(s||'').toLocaleLowerCase('tr-TR').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtNum = (n,d=2) => Number(n).toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmtDate = d => new Date(d).toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric',timeZone:TZ});
+const fmtDT = d => new Date(d).toLocaleString('tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ});
+const ymd = d => new Date(d).toISOString().slice(0,10);
+const addDays = (s,n) => ymd(new Date(new Date(s+'T12:00:00Z').getTime()+n*864e5));
 
-function istParts() {
-  const p = new Intl.DateTimeFormat('en-US', {timeZone:TZ, weekday:'short', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(new Date());
-  const g = t => p.find(x => x.type === t).value;
-  return {wd: g('weekday'), h: +g('hour') % 24, m: +g('minute')};
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem('wub_'+k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem('wub_'+k, JSON.stringify(v)); }catch(e){} }
+};
+
+// CORS'a takılırsa sırayla proxy dener
+const PROXIES = [
+  u => u,
+  u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+  u => 'https://corsproxy.io/?' + encodeURIComponent(u),
+  u => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u)
+];
+async function fetchT(url, ms){
+  const c = new AbortController(); const t = setTimeout(()=>c.abort(), ms);
+  try{ const r = await fetch(url,{signal:c.signal}); if(!r.ok) throw new Error(r.status); return await r.text(); }
+  finally{ clearTimeout(t); }
 }
-function bistOpenNow() {
-  const {wd,h,m} = istParts();
-  if (wd === 'Sat' || wd === 'Sun') return false;
-  const mins = h*60+m;
-  return mins >= 10*60 && mins < 18*60; // sürekli işlem ~10:00–18:00
+async function getText(url, {proxy=true, ms=8000, check} = {}){
+  const list = proxy ? PROXIES : [PROXIES[0]];
+  let err;
+  for(const p of list){
+    try{ const t = await fetchT(p(url), ms); if(!check || check(t)) return t; }catch(e){ err = e; }
+  }
+  throw err || new Error('erişilemedi');
 }
-function chgHTML(cur, prev) {
-  if (prev == null || !isFinite(prev) || prev === 0) return '<span class="flat">Değişim: veri yok</span>';
-  const pct = (cur-prev)/prev*100;
-  const cls = pct > 0.005 ? 'up' : pct < -0.005 ? 'down' : 'flat';
-  const arrow = pct > 0.005 ? '▲' : pct < -0.005 ? '▼' : '■';
-  return `<span class="${cls}">${arrow} %${fmtNum(Math.abs(pct))}</span>`;
+async function getJSON(url, opt={}){
+  const t = await getText(url, {...opt, check: x => /^\s*[\[{]/.test(x)});
+  return JSON.parse(t);
 }
-function unverified(prefix) {
-  $(prefix+'Val').innerHTML = '<span class="unverified">Doğrulanamadı</span>';
-  $(prefix+'Chg').innerHTML = '';
-  $(prefix+'Meta').textContent = 'Güncel veri alınamadı';
+function chgHTML(cur, prev){
+  if(prev==null || !isFinite(prev) || prev===0) return '<span class="flat">Değişim: veri yok</span>';
+  const pct=(cur-prev)/prev*100;
+  const cls=pct>0.005?'up':pct<-0.005?'down':'flat';
+  const ar=pct>0.005?'▲':pct<-0.005?'▼':'■';
+  return `<span class="${cls}">${ar} %${fmtNum(Math.abs(pct))}</span>`;
 }
-async function getJSON(url, ms=8000) {
-  const ctl = new AbortController();
-  const t = setTimeout(() => ctl.abort(), ms);
-  try {
-    const r = await fetch(url, {signal: ctl.signal});
-    if (!r.ok) throw new Error(r.status);
-    return await r.json();
-  } finally { clearTimeout(t); }
+// Kart yaz + önbelleğe kaydet
+function showMarket(key, valText, chgHtml, meta){
+  $(key+'Val').innerText = valText; $(key+'Chg').innerHTML = chgHtml; $(key+'Meta').textContent = meta;
+  store.set(key, {valText, chgHtml, meta, saved:new Date().toISOString()});
+}
+// Canlı veri yoksa önbellek, o da yoksa "doğrulanamadı"
+function fallbackMarket(key){
+  const c = store.get(key);
+  if(c){
+    $(key+'Val').innerText = c.valText; $(key+'Chg').innerHTML = c.chgHtml;
+    $(key+'Meta').textContent = c.meta + ' (önbellek · kayıt: ' + fmtDT(c.saved) + ')';
+  } else {
+    $(key+'Val').innerHTML = '<span class="unverified">Doğrulanamadı</span>';
+    $(key+'Chg').innerHTML = ''; $(key+'Meta').textContent = 'Güncel veri alınamadı';
+  }
 }
 
-// ---------- 1. Saat & tarih ----------
-function updateClock() {
-  const now = new Date();
-  $('liveClock').innerText = now.toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit', timeZone:TZ});
-  $('dateLine').innerText = 'Ankara · Eryaman · ' + now.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long', timeZone:TZ});
+// ================= 1. SAAT =================
+function updateClock(){
+  const n=new Date();
+  $('liveClock').innerText = n.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',timeZone:TZ});
+  $('dateLine').innerText = 'Ankara · Eryaman · ' + n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',timeZone:TZ});
 }
-setInterval(updateClock, 1000); updateClock();
+setInterval(updateClock,1000); updateClock();
 
-// ---------- 2. Hava durumu ----------
-async function fetchWeather() {
-  try {
-    const d = await getJSON('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,precipitation,weather_code&timezone=Europe%2FIstanbul');
-    const temp = d.current.temperature_2m, pr = d.current.precipitation;
-    $('weatherTemp').innerText = `${temp}°C · ${pr > 0 ? '🌧️' : '⛅'}`;
-    $('weatherDesc').className = 'metric-sub';
-    $('weatherDesc').innerText = (pr > 0 ? `Yağışlı (${pr} mm)` : 'Yağış yok') + ' · ' + fmtDateTime(d.current.time);
-    $('weatherCloth').innerText = pr > 0 ? 'Şemsiye & Mont' : (temp < 12 ? 'Mont' : 'Ceket');
-    $('weatherSub').innerText = pr > 0 ? 'Su geçirmez kıyafet giyin' : 'Normal giyim önerilir';
-  } catch (e) { console.log('Hava durumu alınamadı'); }
+// ================= 2. HAVA =================
+async function fetchWeather(){
+  try{
+    const d = await getJSON('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,precipitation&timezone=Europe%2FIstanbul',{proxy:false});
+    const t=d.current.temperature_2m, p=d.current.precipitation;
+    $('weatherTemp').innerText = `${t}°C · ${p>0?'🌧️':'⛅'}`;
+    $('weatherDesc').className='metric-sub';
+    $('weatherDesc').innerText = (p>0?`Yağışlı (${p} mm)`:'Yağış yok') + ' · ' + fmtDT(d.current.time);
+    $('weatherCloth').innerText = p>0?'Şemsiye & Mont':(t<12?'Mont':'Ceket');
+    $('weatherSub').innerText = p>0?'Su geçirmez kıyafet giyin':'Normal giyim önerilir';
+  }catch(e){}
 }
-fetchWeather();
 
-// ---------- 3. Piyasalar ----------
+// ================= 3. PİYASALAR =================
 const OUNCE_G = 31.1034768;
-
-async function fxSeries(base) {
-  const start = new Date(Date.now() - 12*864e5).toISOString().slice(0,10);
-  const d = await getJSON(`https://api.frankfurter.app/${start}..?from=${base}&to=TRY`);
-  const days = Object.keys(d.rates).sort();
-  return days.map(k => ({date:k, v:d.rates[k].TRY}));
+const CA = (date, cur) => [
+  `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${date}/v1/currencies/${cur}.json`,
+  `https://${date==='latest'?'latest':date}.currency-api.pages.dev/v1/currencies/${cur}.json`
+];
+async function caGet(date, cur){
+  let err;
+  for(const u of CA(date,cur)){ try{ return await getJSON(u,{proxy:false}); }catch(e){ err=e; } }
+  throw err;
 }
 
-async function loadFX() {
-  let eur = null, usd = null;
-  try { eur = await fxSeries('EUR'); } catch(e) {}
-  try { usd = await fxSeries('USD'); } catch(e) {}
-
-  if (eur && eur.length) {
-    const l = eur[eur.length-1], p = eur[eur.length-2];
-    $('eurVal').innerText = fmtNum(l.v, 4) + ' ₺';
-    $('eurChg').innerHTML = chgHTML(l.v, p && p.v);
-    $('eurMeta').textContent = `AB Merkez Bankası (ECB) referans kuru · ${fmtDate(l.date)} (günlük)`;
-  } else unverified('eur');
-
-  try {
-    const g = await getJSON('https://api.gold-api.com/price/XAU');
-    if (!usd || !usd.length || !g.price) throw new Error('eksik');
-    const usdTry = usd[usd.length-1].v;
-    const gram = g.price * usdTry / OUNCE_G;
-    $('goldVal').innerText = fmtNum(gram, 2) + ' ₺';
-    $('goldChg').innerHTML = '<span class="flat">Değişim: veri yok</span>';
-    $('goldMeta').textContent = `Ons altın (${fmtNum(g.price)} $) × USD/TRY (ECB ${fmtDate(usd[usd.length-1].date)}) ÷ 31,1035 hesaplanmış değerdir; kuyumcu/Kapalıçarşı fiyatı değildir. Ons verisi: ${g.updatedAt ? fmtDateTime(g.updatedAt) : 'zaman yok'}`;
-  } catch(e) { unverified('gold'); }
-}
-
-async function loadBIST(sheetRows) {
-  const open = bistOpenNow();
-  $('marketStatus').innerHTML = open
-    ? '🟢 BIST şu an açık (10:00–18:00). Veriler gecikmeli olabilir.'
-    : '🔴 BIST kapalı — son işlem gününün kapanışı gösteriliyor.';
-  try {
-    const d = await getJSON('https://query1.finance.yahoo.com/v8/finance/chart/XU100.IS?interval=1d&range=10d');
-    const r = d.chart.result[0];
-    const ts = r.timestamp, cl = r.indicators.quote[0].close;
-    const pts = ts.map((t,i) => ({t:t*1000, c:cl[i]})).filter(x => x.c != null);
-    if (pts.length < 1) throw new Error('boş');
-    const l = pts[pts.length-1], p = pts[pts.length-2];
-    $('bistVal').innerText = fmtNum(l.c, 2);
-    $('bistChg').innerHTML = chgHTML(l.c, p && p.c);
-    $('bistMeta').textContent = (open ? 'Anlık/son fiyat' : 'Kapanış') + ` · ${fmtDate(l.t)} · Kaynak: Yahoo Finance (gecikmeli olabilir)`;
+// Euro: önce ECB (Frankfurter), olmazsa currency-api (günlük)
+async function loadEUR(){
+  const start = addDays(ymd(new Date()), -12);
+  const urls = [
+    `https://api.frankfurter.dev/v1/${start}..?base=EUR&symbols=TRY`,
+    `https://api.frankfurter.app/${start}..?from=EUR&to=TRY`
+  ];
+  for(const u of urls){
+    try{
+      const d = await getJSON(u,{proxy:false});
+      const days = Object.keys(d.rates).sort();
+      const l = d.rates[days.at(-1)].TRY, p = days.length>1 ? d.rates[days.at(-2)].TRY : null;
+      showMarket('eur', fmtNum(l,4)+' ₺', chgHTML(l,p), `AB Merkez Bankası (ECB) referans kuru · ${fmtDate(days.at(-1))} (günlük kapanış)`);
+      return;
+    }catch(e){}
+  }
+  try{
+    const a = await caGet('latest','eur'); const d0 = a.date;
+    const l = a.eur.try;
+    let p=null; try{ p = (await caGet(addDays(d0,-1),'eur')).eur.try; }catch(e){}
+    showMarket('eur', fmtNum(l,4)+' ₺', chgHTML(l,p), `Günlük ortalama kur (currency-api) · ${fmtDate(d0)}`);
     return;
-  } catch(e) {}
-  // Yedek: tablodaki 06_PIYASA satırı
-  const row = (sheetRows||[]).find(i => i.kategori === '06_PIYASA' && /bist/i.test(i.baslik||'') && String(i.durum||'').toLowerCase() === 'aktif');
-  if (row) {
-    $('bistVal').innerText = esc(row.detay);
-    $('bistChg').innerHTML = '';
-    $('bistMeta').textContent = 'Tablodan' + (row.zaman ? ' · ' + row.zaman : '') + (row.kaynak ? ' · ' + row.kaynak : '');
-  } else unverified('bist');
+  }catch(e){}
+  fallbackMarket('eur');
 }
 
-// ---------- 4. Tablo verisi (Google Apps Script) ----------
+// Gram altın = ons altın (TRY) / 31,1035
+async function loadGold(){
+  try{
+    const a = await caGet('latest','xau'); const d0 = a.date;
+    const l = a.xau.try / OUNCE_G;
+    let p=null; try{ p = (await caGet(addDays(d0,-1),'xau')).xau.try / OUNCE_G; }catch(e){}
+    showMarket('gold', fmtNum(l,2)+' ₺', chgHTML(l,p),
+      `Hesaplanmış gram değer (ons altın × TRY ÷ 31,1035) · ${fmtDate(d0)} günlük veri · Kuyumcu/Kapalıçarşı fiyatı değildir`);
+    return;
+  }catch(e){}
+  try{
+    const g = await getJSON('https://api.gold-api.com/price/XAU');
+    const fx = await getJSON(`https://api.frankfurter.app/latest?from=USD&to=TRY`);
+    const l = g.price * fx.rates.TRY / OUNCE_G;
+    showMarket('gold', fmtNum(l,2)+' ₺', '<span class="flat">Değişim: veri yok</span>',
+      `Hesaplanmış (ons ${fmtNum(g.price)} $ × USD/TRY ${fmtDate(fx.date)} ÷ 31,1035) · Ons: ${g.updatedAt?fmtDT(g.updatedAt):'zaman yok'} · Kuyumcu fiyatı değildir`);
+    return;
+  }catch(e){}
+  fallbackMarket('gold');
+}
+
+// BIST 100: Yahoo (doğrudan → proxy zinciri), her zaman son işlem günü kapanışı
+async function loadBIST(sheetRows){
+  const {wd,h,m} = (()=>{const p=new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());const g=t=>p.find(x=>x.type===t).value;return{wd:g('weekday'),h:+g('hour')%24,m:+g('minute')};})();
+  const open = !['Sat','Sun'].includes(wd) && (h*60+m)>=600 && (h*60+m)<1080;
+  $('marketStatus').innerHTML = open ? '🟢 BIST açık (10:00–18:00). Veriler gecikmeli olabilir.' : '🔴 BIST kapalı — son işlem gününün kapanışı gösteriliyor.';
+
+  const hosts = ['query1','query2'];
+  for(const hst of hosts){
+    try{
+      const d = await getJSON(`https://${hst}.finance.yahoo.com/v8/finance/chart/XU100.IS?interval=1d&range=1mo`);
+      const r = d.chart.result[0], ts=r.timestamp, cl=r.indicators.quote[0].close;
+      const pts = ts.map((t,i)=>({t:t*1000,c:cl[i]})).filter(x=>x.c!=null);
+      if(!pts.length) throw new Error('boş');
+      const l = pts.at(-1), p = pts.length>1 ? pts.at(-2) : null;
+      const isToday = ymd(new Date(l.t)) === ymd(new Date());
+      const label = (open && isToday) ? 'Anlık/gecikmeli fiyat' : 'Kapanış';
+      showMarket('bist', fmtNum(l.c,2), chgHTML(l.c, p&&p.c), `${label} · ${fmtDate(l.t)} · Kaynak: Yahoo Finance`);
+      return;
+    }catch(e){}
+  }
+  const row = (sheetRows||[]).find(i=>i.kategori==='06_PIYASA' && /bist/i.test(i.baslik||'') && String(i.durum||'').toLowerCase()==='aktif');
+  if(row){
+    $('bistVal').innerText = row.detay; $('bistChg').innerHTML='';
+    $('bistMeta').textContent = 'Tablodan' + (row.zaman?' · '+row.zaman:'') + (row.kaynak?' · '+row.kaynak:'');
+    return;
+  }
+  fallbackMarket('bist');
+}
+
+// ================= 4. HABERLER (RSS) =================
+const FEEDS = [
+  {name:'TRT Haber',  grp:'TR',    url:'https://www.trthaber.com/manset_articles.rss'},
+  {name:'AA',         grp:'TR',    url:'https://www.aa.com.tr/tr/rss/default?cat=guncel'},
+  {name:'BBC Türkçe', grp:'WORLD', url:'https://feeds.bbci.co.uk/turkce/rss.xml'},
+  {name:'DW Türkçe',  grp:'WORLD', url:'https://rss.dw.com/rdf/rss-tur-all'}
+];
+async function readFeed(f){
+  // 1) rss2json  2) ham RSS (doğrudan/proxy)
+  try{
+    const j = await getJSON('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(f.url),{proxy:false});
+    if(j.status==='ok' && j.items?.length)
+      return j.items.map(i=>({title:i.title, link:i.link, date:new Date((i.pubDate||'').replace(' ','T')+'Z'), src:f.name, grp:f.grp}));
+  }catch(e){}
+  const xml = await getText(f.url,{check:t=>/<item[\s>]/.test(t)});
+  const doc = new DOMParser().parseFromString(xml,'text/xml');
+  return [...doc.querySelectorAll('item')].map(it=>{
+    const txt = s => it.querySelector(s)?.textContent?.trim() || '';
+    const ds = txt('pubDate') || it.getElementsByTagName('dc:date')[0]?.textContent || '';
+    return {title:txt('title'), link:txt('link'), date:new Date(ds), src:f.name, grp:f.grp};
+  });
+}
+const toks = s => new Set(String(s).toLocaleLowerCase('tr-TR').replace(/[^\p{L}\p{N}\s]/gu,' ').split(/\s+/).filter(w=>w.length>3));
+function similar(a,b){ const A=toks(a),B=toks(b); if(!A.size||!B.size) return false; let n=0; A.forEach(w=>{if(B.has(w))n++;}); return n/Math.min(A.size,B.size) >= 0.6; }
+const URGENT = /deprem|sel felaketi|patlama|saldırı|yangın|uyarı|olağanüstü|tahliye|şiddetli|fırtına/i;
+
+async function loadNews(sheetRows){
+  const res = await Promise.allSettled(FEEDS.map(readFeed));
+  const okAny = res.some(r=>r.status==='fulfilled' && r.value.length);
+  const all = res.flatMap(r=>r.status==='fulfilled'?r.value:[])
+    .filter(i=>i.title && i.link && /^https?:/.test(i.link) && !isNaN(i.date) && (Date.now()-i.date) < 48*36e5)
+    .sort((a,b)=>b.date-a.date);
+
+  const picked = [];
+  const tryAdd = i => { if(picked.some(p=>similar(p.title,i.title))) return false; picked.push(i); return true; };
+  const take = (grp,n) => { let c=0; for(const i of all){ if(c>=n) break; if(i.grp===grp && tryAdd(i)) c++; } };
+  // acil olanlar önce
+  all.filter(i=>URGENT.test(i.title)).slice(0,2).forEach(tryAdd);
+  take('TR', 3); take('WORLD', 2);
+  const items = picked.sort((a,b)=>b.date-a.date).slice(0,5);
+
+  // Tablodaki elle girilen haberler (varsa) en üste
+  const manual = (sheetRows||[]).filter(i=>i.kategori==='05_GÜNDEM' && String(i.durum||'').toLowerCase()==='aktif')
+    .map(i=>`<div class="brief-item"><span class="bullet">▪</span><span><strong>${esc(i.baslik)}</strong>${i.detay?': '+esc(i.detay):''}<span class="src">${esc([i.zaman,i.kaynak].filter(Boolean).join(' · '))}</span></span></div>`).join('');
+
+  const html = items.map(i=>`<div class="brief-item"><span class="bullet">${URGENT.test(i.title)?'⚠️':'▪'}</span><span><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a><span class="src">${esc(i.src)} · ${fmtDT(i.date)}</span></span></div>`).join('');
+
+  if(manual || html){
+    $('newsList').innerHTML = manual + html;
+    store.set('news', {html: manual+html, saved:new Date().toISOString()});
+  } else if(okAny){
+    $('newsList').innerHTML = '<div class="empty">Son 48 saatte öne çıkan yeni gelişme bulunamadı.</div>';
+  } else {
+    const c = store.get('news');
+    $('newsList').innerHTML = c
+      ? `<div class="src unverified">Haber kaynaklarına ulaşılamadı — son kayıtlı bülten (${fmtDT(c.saved)}):</div>` + c.html
+      : '<div class="empty unverified">Haber kaynaklarına ulaşılamadı — güncel haber doğrulanamadı.</div>';
+  }
+}
+
+// ================= 5. GOOGLE TABLO (opsiyonel) =================
 // Sütunlar: kategori | baslik | detay | durum | zaman | kaynak
 const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
-
-function renderItems(rows, cat, {bullet='▪', limit=99, dedupe=false} = {}) {
-  const seen = new Set(); let html = '', n = 0;
-  rows.filter(i => i.kategori === cat && String(i.durum||'').toLowerCase() === 'aktif').forEach(i => {
-    if (n >= limit) return;
-    if (dedupe) { const k = norm(i.baslik); if (seen.has(k)) return; seen.add(k); }
-    const meta = [i.zaman, i.kaynak].filter(Boolean).map(esc).join(' · ');
-    html += `<div class="brief-item"><span class="bullet">${bullet}</span><span>${i.baslik ? `<strong>${esc(i.baslik)}</strong>` : ''}${i.baslik && i.detay ? ': ' : ''}${esc(i.detay)}${meta ? `<span class="src">${meta}</span>` : ''}</span></div>`;
-    n++;
-  });
-  return html;
+function renderItems(rows, cat, bullet='▪'){
+  return rows.filter(i=>i.kategori===cat && String(i.durum||'').toLowerCase()==='aktif').map(i=>{
+    const meta=[i.zaman,i.kaynak].filter(Boolean).map(esc).join(' · ');
+    return `<div class="brief-item"><span class="bullet">${bullet}</span><span>${i.baslik?`<strong>${esc(i.baslik)}</strong>`:''}${i.baslik&&i.detay?': ':''}${esc(i.detay)}${meta?`<span class="src">${meta}</span>`:''}</span></div>`;
+  }).join('');
 }
-
-async function fetchSheetData() {
-  let rows = [];
-  if (SHEET_API_URL && !SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')) {
-    try { rows = await getJSON(SHEET_API_URL, 10000); if (!Array.isArray(rows)) rows = []; }
-    catch(e) { console.log('Tablo okunamadı'); }
+async function fetchSheetData(){
+  let rows=[];
+  if(SHEET_API_URL && !SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')){
+    try{ rows = await getJSON(SHEET_API_URL,{proxy:false,ms:10000}); if(!Array.isArray(rows)) rows=[]; }catch(e){}
   }
-
-  const alerts = rows.filter(i => i.kategori === '06_UYARI' && String(i.durum||'').toLowerCase() === 'aktif');
-  if (alerts.length) {
-    $('alertList').innerHTML = alerts.map(a => `
-      <div class="match-alert-card" style="margin-bottom:8px">
-        <span style="font-size:18px">⚠️</span>
-        <div><div class="match-alert-title">${esc(a.baslik)}</div>
-        <div class="match-alert-desc">${esc(a.detay)}${a.zaman ? `<span class="src">${esc(a.zaman)}</span>` : ''}</div></div>
-      </div>`).join('');
-  }
-
-  const plan = renderItems(rows, '03_PLAN');
-  if (plan) $('agendaList').innerHTML = plan;
-
-  const local = renderItems(rows, '04_YEREL');
-  if (local) $('localList').innerHTML = local;
-
-  const news = renderItems(rows, '05_GÜNDEM', {limit:5, dedupe:true});
-  if (news) $('newsList').innerHTML = news;
-
-  const chk = renderItems(rows, '07_SON_KONTROL', {bullet:'✓'});
-  if (chk) $('checklistList').innerHTML = chk;
-
+  const alerts = rows.filter(i=>i.kategori==='06_UYARI' && String(i.durum||'').toLowerCase()==='aktif');
+  if(alerts.length) $('alertList').innerHTML = alerts.map(a=>`<div class="match-alert-card" style="margin-bottom:8px"><span style="font-size:18px">⚠️</span><div><div class="match-alert-title">${esc(a.baslik)}</div><div class="match-alert-desc">${esc(a.detay)}${a.zaman?`<span class="src">${esc(a.zaman)}</span>`:''}</div></div></div>`).join('');
+  const plan = renderItems(rows,'03_PLAN');   if(plan) $('agendaList').innerHTML = plan;
+  const loc  = renderItems(rows,'04_YEREL');  if(loc)  $('localList').innerHTML = loc;
+  const chk  = renderItems(rows,'07_SON_KONTROL','✓'); if(chk) $('checklistList').innerHTML = chk;
   return rows;
 }
 
-// ---------- Başlat ----------
-(async () => {
+// ================= BAŞLAT =================
+(async ()=>{
+  fetchWeather();
+  loadEUR(); loadGold();
   const rows = await fetchSheetData();
-  loadFX();
   loadBIST(rows);
+  loadNews(rows);
+  $('footerNote').textContent = 'Son yenileme: ' + fmtDT(new Date()) + ' · Doğrulanamayan bilgi uydurulmaz.';
 })();
 </script>
 </body>
