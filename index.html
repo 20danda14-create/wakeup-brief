@@ -17,6 +17,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
 .card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);display:flex;align-items:center;gap:8px}
 .card-title span{color:var(--accent)}
+.sub-title{font-size:12px;font-weight:600;color:var(--muted);margin-top:6px}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .metric-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
 .metric-box.wide{grid-column:1/-1}
@@ -38,6 +39,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
 .badge-link{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:8px;font-size:12px;text-decoration:none;font-weight:500;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
 .badge-link:hover{border-color:var(--accent);color:var(--accent)}
+.x-box{border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:60px;background:var(--surface);padding:6px}
 .footer-note{text-align:center;font-size:11px;color:var(--muted);margin-top:10px}
 </style>
 </head>
@@ -78,15 +80,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div id="agendaList"><div class="empty">Tabloda aktif plan maddesi yok.</div></div>
   </div>
 
+  <!-- 04 · YEREL DURUM -->
   <div class="card">
     <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman)</div>
+
     <div id="localList">
-      <div class="brief-item"><span class="bullet">▪</span><span><strong>EGO Metro / Otobüs:</strong> <span class="unverified">Güncel durum doğrulanamadı</span> — resmî duyuruları kontrol edin.</span></div>
+      <div class="brief-item"><span class="bullet">▪</span><span><strong>Metro / Ankaray işleyişi:</strong> <span class="unverified">Güncel durum doğrulanamadı</span> — aşağıdaki resmî duyurulara ve EGO'nun X hesabına bakın.</span></div>
     </div>
+
+    <div class="sub-title">🚌 EGO Genel Müdürlüğü · Duyurular</div>
+    <div id="egoList"><div class="empty">Yükleniyor…</div></div>
+
+    <div class="sub-title">🏛️ Ankara Valiliği · Duyurular</div>
+    <div class="empty">Valilik sitesi otomatik erişime izin vermediği için duyurular burada listelenemiyor. Güncel duyurular için bağlantıyı kullanın.</div>
+
+    <div class="sub-title">𝕏 @AnkaraValiligi · Paylaşımlar</div>
+    <div id="xBox" class="x-box"><div class="empty" style="padding:8px">Yükleniyor…</div></div>
+
     <div class="link-row">
       <a href="https://www.ego.gov.tr/duyurular" target="_blank" rel="noopener" class="badge-link">🚇 EGO Duyurular</a>
       <a href="https://www.ankara.gov.tr/duyurular" target="_blank" rel="noopener" class="badge-link">🏛️ Ankara Valiliği</a>
       <a href="https://x.com/AnkaraValiligi" target="_blank" rel="noopener" class="badge-link">𝕏 @AnkaraValiligi</a>
+      <a href="https://x.com/egobilgi" target="_blank" rel="noopener" class="badge-link">𝕏 @egobilgi</a>
     </div>
   </div>
 
@@ -144,7 +159,6 @@ const store = {
   set(k,v){ try{ localStorage.setItem('wub_'+k, JSON.stringify(v)); }catch(e){} }
 };
 
-// CORS'a takılırsa sırayla proxy dener
 const PROXIES = [
   u => u,
   u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
@@ -175,12 +189,10 @@ function chgHTML(cur, prev){
   const ar=pct>0.005?'▲':pct<-0.005?'▼':'■';
   return `<span class="${cls}">${ar} %${fmtNum(Math.abs(pct))}</span>`;
 }
-// Kart yaz + önbelleğe kaydet
 function showMarket(key, valText, chgHtml, meta){
   $(key+'Val').innerText = valText; $(key+'Chg').innerHTML = chgHtml; $(key+'Meta').textContent = meta;
   store.set(key, {valText, chgHtml, meta, saved:new Date().toISOString()});
 }
-// Canlı veri yoksa önbellek, o da yoksa "doğrulanamadı"
 function fallbackMarket(key){
   const c = store.get(key);
   if(c){
@@ -213,7 +225,63 @@ async function fetchWeather(){
   }catch(e){}
 }
 
-// ================= 3. PİYASALAR =================
+// ================= 3. YEREL: EGO DUYURULARI =================
+const todayTR = () => new Date().toLocaleDateString('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:TZ});
+const trDateToObj = s => { const [d,m,y]=s.split('.'); return new Date(`${y}-${m}-${d}T12:00:00`); };
+
+async function loadEGO(){
+  const box = $('egoList');
+  let items = null, fetchedAt = null;
+  try{
+    const html = await getText('https://www.ego.gov.tr/duyurular', {check: t=>/\/duyuru\/\d+/.test(t)});
+    const doc = new DOMParser().parseFromString(html,'text/html');
+    const seen = new Set(); items = [];
+    doc.querySelectorAll('a[href*="/duyuru/"]').forEach(a=>{
+      const raw = (a.textContent||'').replace(/\s+/g,' ').trim();
+      const m = raw.match(/^(.*?)\s*(\d{2}\.\d{2}\.\d{4})$/);
+      if(!m) return;
+      let href = a.getAttribute('href') || '';
+      try{ href = new URL(href, 'https://www.ego.gov.tr/').href; }catch(e){ return; }
+      if(seen.has(href)) return; seen.add(href);
+      items.push({title:m[1].trim(), date:m[2], link:href});
+    });
+    if(!items.length) throw new Error('boş');
+    fetchedAt = new Date().toISOString();
+    store.set('ego', {items, fetchedAt});
+  }catch(e){
+    const c = store.get('ego');
+    if(c){ items = c.items; fetchedAt = c.fetchedAt; box.dataset.cache = '1'; }
+  }
+  if(!items){
+    box.innerHTML = '<div class="empty unverified">EGO duyuruları alınamadı — doğrulanamadı. Bağlantıdan kontrol edin.</div>';
+    return;
+  }
+  const row = i => `<div class="brief-item"><span class="bullet">▪</span><span><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a><span class="src">EGO · ${esc(i.date)}</span></span></div>`;
+  const today = items.filter(i=>i.date===todayTR());
+  const note = box.dataset.cache ? `<div class="src unverified">Canlı veri alınamadı — önbellek (${fmtDT(fetchedAt)})</div>` : '';
+  if(today.length){
+    box.innerHTML = note + today.map(row).join('');
+  } else {
+    const last = items.slice().sort((a,b)=>trDateToObj(b.date)-trDateToObj(a.date)).slice(0,3);
+    box.innerHTML = note + `<div class="empty">Bugün (${todayTR()}) yayımlanmış yeni EGO duyurusu yok. Son duyurular:</div>` + last.map(row).join('');
+  }
+}
+
+// ================= 4. YEREL: @AnkaraValiligi (resmî X gömme) =================
+function loadX(){
+  const box = $('xBox');
+  box.innerHTML = '<a class="twitter-timeline" data-theme="dark" data-height="420" data-chrome="noheader nofooter transparent" data-dnt="true" href="https://twitter.com/AnkaraValiligi">@AnkaraValiligi paylaşımları</a>';
+  const s = document.createElement('script');
+  s.src = 'https://platform.twitter.com/widgets.js'; s.async = true; s.charset = 'utf-8';
+  document.body.appendChild(s);
+  setTimeout(()=>{
+    if(!box.querySelector('iframe')){
+      box.innerHTML = '<div class="empty" style="padding:8px"><span class="unverified">Paylaşımlar yüklenemedi</span> (X, gömülü akışı engellemiş olabilir). Güncel paylaşımlar için yukarıdaki @AnkaraValiligi bağlantısını açın.</div>';
+    }
+  }, 9000);
+}
+
+// ================= 5. PİYASALAR =================
 const OUNCE_G = 31.1034768;
 const CA = (date, cur) => [
   `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${date}/v1/currencies/${cur}.json`,
@@ -224,8 +292,6 @@ async function caGet(date, cur){
   for(const u of CA(date,cur)){ try{ return await getJSON(u,{proxy:false}); }catch(e){ err=e; } }
   throw err;
 }
-
-// Euro: önce ECB (Frankfurter), olmazsa currency-api (günlük)
 async function loadEUR(){
   const start = addDays(ymd(new Date()), -12);
   const urls = [
@@ -242,20 +308,16 @@ async function loadEUR(){
     }catch(e){}
   }
   try{
-    const a = await caGet('latest','eur'); const d0 = a.date;
-    const l = a.eur.try;
+    const a = await caGet('latest','eur'); const d0 = a.date; const l = a.eur.try;
     let p=null; try{ p = (await caGet(addDays(d0,-1),'eur')).eur.try; }catch(e){}
     showMarket('eur', fmtNum(l,4)+' ₺', chgHTML(l,p), `Günlük ortalama kur (currency-api) · ${fmtDate(d0)}`);
     return;
   }catch(e){}
   fallbackMarket('eur');
 }
-
-// Gram altın = ons altın (TRY) / 31,1035
 async function loadGold(){
   try{
-    const a = await caGet('latest','xau'); const d0 = a.date;
-    const l = a.xau.try / OUNCE_G;
+    const a = await caGet('latest','xau'); const d0 = a.date; const l = a.xau.try / OUNCE_G;
     let p=null; try{ p = (await caGet(addDays(d0,-1),'xau')).xau.try / OUNCE_G; }catch(e){}
     showMarket('gold', fmtNum(l,2)+' ₺', chgHTML(l,p),
       `Hesaplanmış gram değer (ons altın × TRY ÷ 31,1035) · ${fmtDate(d0)} günlük veri · Kuyumcu/Kapalıçarşı fiyatı değildir`);
@@ -263,7 +325,7 @@ async function loadGold(){
   }catch(e){}
   try{
     const g = await getJSON('https://api.gold-api.com/price/XAU');
-    const fx = await getJSON(`https://api.frankfurter.app/latest?from=USD&to=TRY`);
+    const fx = await getJSON('https://api.frankfurter.app/latest?from=USD&to=TRY');
     const l = g.price * fx.rates.TRY / OUNCE_G;
     showMarket('gold', fmtNum(l,2)+' ₺', '<span class="flat">Değişim: veri yok</span>',
       `Hesaplanmış (ons ${fmtNum(g.price)} $ × USD/TRY ${fmtDate(fx.date)} ÷ 31,1035) · Ons: ${g.updatedAt?fmtDT(g.updatedAt):'zaman yok'} · Kuyumcu fiyatı değildir`);
@@ -271,24 +333,20 @@ async function loadGold(){
   }catch(e){}
   fallbackMarket('gold');
 }
-
-// BIST 100: Yahoo (doğrudan → proxy zinciri), her zaman son işlem günü kapanışı
 async function loadBIST(sheetRows){
-  const {wd,h,m} = (()=>{const p=new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());const g=t=>p.find(x=>x.type===t).value;return{wd:g('weekday'),h:+g('hour')%24,m:+g('minute')};})();
-  const open = !['Sat','Sun'].includes(wd) && (h*60+m)>=600 && (h*60+m)<1080;
+  const p=new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  const g=t=>p.find(x=>x.type===t).value; const wd=g('weekday'), mins=(+g('hour')%24)*60+(+g('minute'));
+  const open = !['Sat','Sun'].includes(wd) && mins>=600 && mins<1080;
   $('marketStatus').innerHTML = open ? '🟢 BIST açık (10:00–18:00). Veriler gecikmeli olabilir.' : '🔴 BIST kapalı — son işlem gününün kapanışı gösteriliyor.';
-
-  const hosts = ['query1','query2'];
-  for(const hst of hosts){
+  for(const hst of ['query1','query2']){
     try{
       const d = await getJSON(`https://${hst}.finance.yahoo.com/v8/finance/chart/XU100.IS?interval=1d&range=1mo`);
       const r = d.chart.result[0], ts=r.timestamp, cl=r.indicators.quote[0].close;
       const pts = ts.map((t,i)=>({t:t*1000,c:cl[i]})).filter(x=>x.c!=null);
       if(!pts.length) throw new Error('boş');
-      const l = pts.at(-1), p = pts.length>1 ? pts.at(-2) : null;
-      const isToday = ymd(new Date(l.t)) === ymd(new Date());
-      const label = (open && isToday) ? 'Anlık/gecikmeli fiyat' : 'Kapanış';
-      showMarket('bist', fmtNum(l.c,2), chgHTML(l.c, p&&p.c), `${label} · ${fmtDate(l.t)} · Kaynak: Yahoo Finance`);
+      const l = pts.at(-1), pr = pts.length>1 ? pts.at(-2) : null;
+      const label = (open && ymd(new Date(l.t))===ymd(new Date())) ? 'Anlık/gecikmeli fiyat' : 'Kapanış';
+      showMarket('bist', fmtNum(l.c,2), chgHTML(l.c, pr&&pr.c), `${label} · ${fmtDate(l.t)} · Kaynak: Yahoo Finance`);
       return;
     }catch(e){}
   }
@@ -301,7 +359,7 @@ async function loadBIST(sheetRows){
   fallbackMarket('bist');
 }
 
-// ================= 4. HABERLER (RSS) =================
+// ================= 6. HABERLER (RSS) =================
 const FEEDS = [
   {name:'TRT Haber',  grp:'TR',    url:'https://www.trthaber.com/manset_articles.rss'},
   {name:'AA',         grp:'TR',    url:'https://www.aa.com.tr/tr/rss/default?cat=guncel'},
@@ -309,7 +367,6 @@ const FEEDS = [
   {name:'DW Türkçe',  grp:'WORLD', url:'https://rss.dw.com/rdf/rss-tur-all'}
 ];
 async function readFeed(f){
-  // 1) rss2json  2) ham RSS (doğrudan/proxy)
   try{
     const j = await getJSON('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(f.url),{proxy:false});
     if(j.status==='ok' && j.items?.length)
@@ -333,19 +390,15 @@ async function loadNews(sheetRows){
   const all = res.flatMap(r=>r.status==='fulfilled'?r.value:[])
     .filter(i=>i.title && i.link && /^https?:/.test(i.link) && !isNaN(i.date) && (Date.now()-i.date) < 48*36e5)
     .sort((a,b)=>b.date-a.date);
-
   const picked = [];
   const tryAdd = i => { if(picked.some(p=>similar(p.title,i.title))) return false; picked.push(i); return true; };
   const take = (grp,n) => { let c=0; for(const i of all){ if(c>=n) break; if(i.grp===grp && tryAdd(i)) c++; } };
-  // acil olanlar önce
   all.filter(i=>URGENT.test(i.title)).slice(0,2).forEach(tryAdd);
   take('TR', 3); take('WORLD', 2);
   const items = picked.sort((a,b)=>b.date-a.date).slice(0,5);
 
-  // Tablodaki elle girilen haberler (varsa) en üste
   const manual = (sheetRows||[]).filter(i=>i.kategori==='05_GÜNDEM' && String(i.durum||'').toLowerCase()==='aktif')
     .map(i=>`<div class="brief-item"><span class="bullet">▪</span><span><strong>${esc(i.baslik)}</strong>${i.detay?': '+esc(i.detay):''}<span class="src">${esc([i.zaman,i.kaynak].filter(Boolean).join(' · '))}</span></span></div>`).join('');
-
   const html = items.map(i=>`<div class="brief-item"><span class="bullet">${URGENT.test(i.title)?'⚠️':'▪'}</span><span><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a><span class="src">${esc(i.src)} · ${fmtDT(i.date)}</span></span></div>`).join('');
 
   if(manual || html){
@@ -361,7 +414,7 @@ async function loadNews(sheetRows){
   }
 }
 
-// ================= 5. GOOGLE TABLO (opsiyonel) =================
+// ================= 7. GOOGLE TABLO (opsiyonel) =================
 // Sütunlar: kategori | baslik | detay | durum | zaman | kaynak
 const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
 function renderItems(rows, cat, bullet='▪'){
@@ -386,6 +439,8 @@ async function fetchSheetData(){
 // ================= BAŞLAT =================
 (async ()=>{
   fetchWeather();
+  loadEGO();
+  loadX();
   loadEUR(); loadGold();
   const rows = await fetchSheetData();
   loadBIST(rows);
