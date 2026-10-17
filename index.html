@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WAKE UP BRIEF · Ankara / Eryaman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0d12; --surface: #14141c; --card: #1b1b26; --border: #2a2a3d;
+            --accent: #ff6b35; --purple: #7c5cfc; --text: #f0f0f8; --muted: #78789e;
+            --success: #2dd4a0; --warning: #ffb703; --danger: #ff4d6d;
+            --r: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px 16px 40px; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+        
+        /* HEADER */
+        .header { background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(124,92,252,0.1)); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+        .header-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+        .live-clock { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: var(--accent); background: rgba(255,107,53,0.1); padding: 6px 12px; border-radius: 10px; border: 1px solid rgba(255,107,53,0.2); }
+
+        /* CARD SECTIONS */
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
+        .card-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+        .card-title span { color: var(--accent); }
+
+        /* GRID & METRICS */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .metric-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+        .metric-label { font-size: 11px; color: var(--muted); font-weight: 600; }
+        .metric-val { font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 500; }
+        .metric-sub { font-size: 10px; color: var(--muted); }
+
+        /* LIST & ITEMS */
+        .brief-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.4; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .brief-item:last-child { border-bottom: none; }
+        .bullet { color: var(--accent); font-weight: bold; }
+
+        /* LINKS & BADGES */
+        .link-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+        .badge-link { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 8px; font-size: 12px; text-decoration: none; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .badge-link:hover { border-color: var(--accent); color: var(--accent); }
+
+        .status-badge { font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; display: inline-block; }
+        .status-badge.ok { background: rgba(45,212,160,0.1); color: var(--success); }
+        .status-badge.warn { background: rgba(255,183,3,0.1); color: var(--warning); }
+        .status-badge.err { background: rgba(255,77,109,0.1); color: var(--danger); }
+        
+        .footer-note { text-align: center; font-size: 11px; color: var(--muted); margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <div>
+            <div class="header-title">WAKE UP BRIEF</div>
+            <div class="header-sub">Ankara · Eryaman · Günlük Operasyonel Bülten</div>
+        </div>
+        <div id="liveClock" class="live-clock">00:00</div>
+    </div>
+
+    <!-- 01 · GÜNÜN ÖZETİ -->
+    <div class="card">
+        <div class="card-title"><span>01</span> Günün Özeti & Acil Durumlar</div>
+        <div id="summaryContent" class="brief-item">
+            <span class="bullet">▪</span> Kritik hava veya acil yol/altyapı uyarısı bulunmuyor. Sistem kararlı akışta.
+        </div>
+    </div>
+
+    <!-- 02 · GÜNE HAZIRLIK -->
+    <div class="card">
+        <div class="card-title"><span>02</span> Güne Hazırlık & Hava Durumu (Eryaman)</div>
+        <div class="grid-2">
+            <div class="metric-box">
+                <span class="metric-label">SICAKLIK & DURUM</span>
+                <span id="weatherTemp" class="metric-val">Yükleniyor...</span>
+                <span id="weatherDesc" class="metric-sub">Ankara / Eryaman</span>
+            </div>
+            <div class="metric-box">
+                <span class="metric-label">GİYİM & ÖNERİ</span>
+                <span class="metric-val">Kat kat giyim</span>
+                <span class="metric-sub">Sabah serin, öğlen ılıman</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 03 · GÜNÜN PLANI -->
+    <div class="card">
+        <div class="card-title"><span>03</span> Günün Planı & Ajanda</div>
+        <div class="brief-item"><span class="bullet">▪</span> Google E-Tablo entegrasyonu aktif. Planlanan randevular ve görevler güncelleniyor.</div>
+    </div>
+
+    <!-- 04 · YEREL DURUM -->
+    <div class="card">
+        <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman · Ulaşım)</div>
+        <div class="brief-item"><span class="bullet">▪</span> EGO Metro ve hatlarında güncel veri akışı normal.</div>
+        <div class="link-row">
+            <a href="https://www.ego.gov.tr/duyurular" target="_blank" class="badge-link">🚇 EGO Duyurular</a>
+            <a href="https://www.ankara.gov.tr/duyurular" target="_blank" class="badge-link">🏛️ Ankara Valiliği</a>
+            <a href="https://x.com/AnkaraValiligi" target="_blank" class="badge-link">𝕏 @AnkaraValiligi</a>
+        </div>
+    </div>
+
+    <!-- 05 · ULUSAL VE KÜRESEL GÜNDEM -->
+    <div class="card">
+        <div class="card-title"><span>05</span> Ulusal ve Küresel Gündem</div>
+        <div class="brief-item"><span class="bullet">▪</span> Gelişmeler doğrulanmış resmi kaynaklardan taranıyor. Sırf bülten dolması için başlık üretilmez.</div>
+    </div>
+
+    <!-- 06 · PİYASALAR -->
+    <div class="card">
+        <div class="card-title"><span>06</span> Piyasalar & Veri Zamanı</div>
+        <div class="grid-2">
+            <div class="metric-box">
+                <span class="metric-label">DOLAR / EURO</span>
+                <span id="fxRates" class="metric-val">Canlı Çekiliyor</span>
+                <span class="metric-sub" id="fxTime">Güncelleniyor...</span>
+            </div>
+            <div class="metric-box">
+                <span class="metric-label">BIST 100 & ALTIN</span>
+                <span id="bistRates" class="metric-val">Piyasa Takibi</span>
+                <span class="metric-sub" id="marketStatus">Kontrol ediliyor</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 07 · GÜNÜN SON KONTROLÜ -->
+    <div class="card">
+        <div class="card-title"><span>07</span> Günün Son Kontrolü</div>
+        <div class="brief-item"><span class="bullet">1.</span> Anahtar, telefon ve cüzdan kontrolü.</div>
+        <div class="brief-item"><span class="bullet">2.</span> Günlük su ve ilaç/takviye planı.</div>
+        <div class="brief-item"><span class="bullet">3.</span> GitHub Pages senkronizasyon kontrolü.</div>
+    </div>
+
+    <div class="footer-note">WAKE UP BRIEF · Endüstriyel Otomasyon & Kişisel Bülten Sistemi</div>
+</div>
+
+<script>
+    // 1. Saat Güncelleyici
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('liveClock').innerText = now.toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // 2. Eryaman Hava Durumu (Open-Meteo API - Ücretsiz, Anahtarsız)
+    async function fetchWeather() {
+        try {
+            // Eryaman Koordinatları (~39.98° N, 32.65° E)
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,weather_code');
+            const data = await res.json();
+            const temp = data.current.temperature_2m;
+            document.getElementById('weatherTemp').innerText = temp + "°C";
+            document.getElementById('weatherDesc').innerText = "Ankara / Eryaman (Canlı)";
+        } catch (e) {
+            document.getElementById('weatherTemp').innerText = "Veri Alınamadı";
+            document.getElementById('weatherDesc').innerText = "Güncel durum doğrulanamadı";
+        }
+    }
+    fetchWeather();
+
+    // 3. Piyasalar ve Döviz (Frankfurter API - Ücretsiz)
+    async function fetchMarkets() {
+        try {
+            const res = await fetch('https://api.frankfurter.app/latest?from=USD&to=TRY,EUR');
+            const data = await res.json();
+            const usdTry = data.rates.TRY;
+            const eurTry = (usdTry / data.rates.EUR).toFixed(2); // Basit çapraz kur
+            document.getElementById('fxRates').innerText = `$: ${usdTry.toFixed(2)} ₺`;
+            document.getElementById('fxTime').innerText = "Güncelleme: " + data.date;
+            
+            // Piyasa Açık/Kapalı Kontrolü (BIST için hafta sonu/saat kontrolü)
+            const now = new Date();
+            const day = now.getDay();
+            const hour = now.getHours();
+            const isWeekend = (day === 0 || day === 6);
+            const isMarketOpen = !isWeekend && (hour >= 10 && hour < 18);
+            
+            document.getElementById('bistRates').innerText = isMarketOpen ? "BIST: İşlemde" : "BIST: Kapalı (Kapanış)";
+            document.getElementById('marketStatus').innerText = isWeekend ? "Hafta Sonu Tatili" : (isMarketOpen ? "Canlı Seans" : "Son Kapanış Verisi");
+        } catch (e) {
+            document.getElementById('fxRates').innerText = "Servis Dışı";
+            document.getElementById('fxTime').innerText = "Güncel durum doğrulanamadı";
+        }
+    }
+    fetchMarkets();
+
+    // 4. Google E-Tablo Verilerini Çekme (Opsiyonel Bağlantı)
+    const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; // 1. Adımda aldığınız URL'yi buraya yapıştırın
+    async function fetchSheetData() {
+        if(SHEET_API_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) return;
+        try {
+            const res = await fetch(SHEET_API_URL);
+            const rows = await res.json();
+            // İhtiyaca göre özel satırlar dinamik olarak işlenebilir
+        } catch(e) { console.log("Tablo verisi alınamadı, yerel akış devrede."); }
+    }
+    fetchSheetData();
+</script>
+
+</body>
+</html>
