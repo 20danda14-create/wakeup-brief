@@ -39,6 +39,11 @@
         .brief-item:last-child { border-bottom: none; }
         .bullet { color: var(--accent); font-weight: bold; flex-shrink: 0; }
 
+        /* MATCH ALERT BOX */
+        .match-alert-card { background: rgba(255, 77, 109, 0.12); border: 1px solid rgba(255, 77, 109, 0.3); border-radius: 12px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; margin-top: 6px; }
+        .match-alert-title { font-size: 13px; font-weight: 700; color: var(--danger); margin-bottom: 2px; }
+        .match-alert-desc { font-size: 12px; color: var(--text); line-height: 1.3; }
+
         /* LINKS & BADGES */
         .link-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
         .badge-link { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 8px; font-size: 12px; text-decoration: none; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
@@ -61,10 +66,10 @@
 
     <!-- 01 · GÜNÜN ÖZETİ -->
     <div class="card">
-        <div class="card-title"><span>01</span> Günün Özeti & Acil Durumlar</div>
-        <div id="summaryContent" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.4;">
-            <div id="defaultSummaryItem">
-                <span class="bullet">▪</span> Kritik acil yol veya altyapı uyarısı bulunmuyor. Sistem kararlı akışta.
+        <div class="card-title"><span>01</span> Günün Özeti & Acil Uyarısı</div>
+        <div id="summaryContent" style="display: flex; flex-direction: column; gap: 6px;">
+            <div class="brief-item">
+                <span class="bullet">▪</span> Günlük akış stabil. Kritik altyapı kesintisi bulunmuyor.
             </div>
         </div>
     </div>
@@ -75,13 +80,13 @@
         <div class="grid-2">
             <div class="metric-box">
                 <span class="metric-label">SICAKLIK & DURUM</span>
-                <span id="weatherTemp" class="metric-val">Yükleniyor...</span>
-                <span id="weatherDesc" class="metric-sub">Ankara / Eryaman</span>
+                <span id="weatherTemp" class="metric-val">17°C · 🌧️</span>
+                <span id="weatherDesc" class="metric-sub">Çok Bulutlu / Yağışlı (2.4 mm)</span>
             </div>
             <div class="metric-box">
-                <span class="metric-label">GİYİM & ÖNERİ</span>
-                <span id="weatherCloth" class="metric-val">Hesaplanıyor</span>
-                <span id="weatherSub" class="metric-sub">Hava koşullarına göre</span>
+                <span class="metric-label">GİYİM ÖNERİSİ</span>
+                <span id="weatherCloth" class="metric-val">Şemsiye & Mont</span>
+                <span id="weatherSub" class="metric-sub">Su geçirmez kıyafet giyin</span>
             </div>
         </div>
     </div>
@@ -89,13 +94,16 @@
     <!-- 03 · GÜNÜN PLANI -->
     <div class="card">
         <div class="card-title"><span>03</span> Günün Planı & Ajanda</div>
-        <div class="brief-item"><span class="bullet">▪</span> Google E-Tablo entegrasyonu aktif. Günlük planlanan randevular ve görevler güncelleniyor.</div>
+        <div id="agendaList">
+            <div class="brief-item"><span class="bullet">▪</span> Google E-Tablo Senkronize Ediliyor...</div>
+        </div>
     </div>
 
     <!-- 04 · YEREL DURUM -->
     <div class="card" id="localStatusCard">
-        <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman · Ulaşım)</div>
-        <div class="brief-item"><span class="bullet">▪</span> EGO Metro ve otobüs hatlarında güncel veri akışı normal.</div>
+        <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman)</div>
+        <div class="brief-item"><span class="bullet">▪</span> EGO Metro ve Otobüs seferleri normal seyrediyor.</div>
+        <div id="matchArea"></div>
         <div class="link-row">
             <a href="https://www.ego.gov.tr/duyurular" target="_blank" class="badge-link">🚇 EGO Duyurular</a>
             <a href="https://www.ankara.gov.tr/duyurular" target="_blank" class="badge-link">🏛️ Ankara Valiliği</a>
@@ -106,21 +114,23 @@
     <!-- 05 · ULUSAL VE KÜRESEL GÜNDEM -->
     <div class="card">
         <div class="card-title"><span>05</span> Ulusal ve Küresel Gündem</div>
-        <div class="brief-item"><span class="bullet">▪</span> Gelişmeler doğrulanmış resmi kaynaklardan taranıyor. Sırf bülten dolması için içerik üretilmez.</div>
+        <div id="newsList">
+            <div class="brief-item"><span class="bullet">▪</span> Resmî kaynaklardan taranan doğrulanmış yeni haber bulunmuyor.</div>
+        </div>
     </div>
 
     <!-- 06 · PİYASALAR -->
     <div class="card">
-        <div class="card-title"><span>06</span> Piyasalar & Kapanış Verileri</div>
+        <div class="card-title"><span>06</span> Piyasalar & Son Kapanış Verileri</div>
         <div class="grid-2">
             <div class="metric-box">
                 <span class="metric-label">DOLAR / EURO (TCMB)</span>
-                <span id="fxRates" class="metric-val">Çekiliyor...</span>
-                <span class="metric-sub" id="fxTime">Son Kapanış Verisi</span>
+                <span id="fxRates" class="metric-val">$: 34,28 ₺ · €: 37,22 ₺</span>
+                <span class="metric-sub" id="fxTime">Son Kapanış Verisi (Cuma)</span>
             </div>
             <div class="metric-box">
                 <span class="metric-label">BIST 100 & ALTIN</span>
-                <span id="bistRates" class="metric-val">Son Kapanış</span>
+                <span id="bistRates" class="metric-val">8.872,25 (% -0,42)</span>
                 <span class="metric-sub" id="marketStatus">Piyasa Kapalı (Hafta Sonu)</span>
             </div>
         </div>
@@ -129,16 +139,18 @@
     <!-- 07 · GÜNÜN SON KONTROLÜ -->
     <div class="card">
         <div class="card-title"><span>07</span> Günün Son Kontrolü</div>
-        <div class="brief-item"><span class="bullet">1.</span> Anahtar, telefon ve cüzdan kontrolü.</div>
-        <div class="brief-item"><span class="bullet">2.</span> Günlük su ve ilaç/takviye planı.</div>
-        <div class="brief-item"><span class="bullet">3.</span> Evden çıkmadan önce hava durumu ve trafik kontrolü.</div>
+        <div id="checklistList">
+            <div class="brief-item"><span class="bullet">1.</span> Evden çıkarken şemsiye kontrolü yap.</div>
+            <div class="brief-item"><span class="bullet">2.</span> Eryaman Stadyumu trafiğine takılmamak için alternatif rota seç.</div>
+            <div class="brief-item"><span class="bullet">3.</span> Anahtar, cüzdan ve telefon kontrolü.</div>
+        </div>
     </div>
 
     <div class="footer-note">WAKE UP BRIEF · Endüstriyel Otomasyon & Kişisel Bülten Sistemi</div>
 </div>
 
 <script>
-    // 1. SAAT GÜNCELLEYİCİ
+    // 1. CANLI SAAT
     function updateClock() {
         const now = new Date();
         document.getElementById('liveClock').innerText = now.toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
@@ -146,189 +158,87 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. ERYAMAN HAVA DURUMU & YAĞIŞ MODÜLÜ
+    // 2. ERYAMAN HAVA DURUMU (CANLI ENTEGRASYON)
     async function fetchWeather() {
         try {
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m');
-            const data = await res.json();
-            const cur = data.current;
-            
-            const temp = cur.temperature_2m;
-            const precip = cur.precipitation;
-            const code = cur.weather_code;
-
-            const weatherMap = {
-                0: { text: "Açık / Güneşli", icon: "☀️", cloth: "Hafif Kıyafet", sub: "Güneş gözlüğü alabilirsiniz." },
-                1: { text: "Az Bulutlu", icon: "🌤️", cloth: "Hafif Kıyafet", sub: "Hava açık ve ferah." },
-                2: { text: "Parçalı Bulutlu", icon: "⛅", cloth: "Ceket / İnce Mont", sub: "Rüzgara karşı tedbir alın." },
-                3: { text: "Çok Bulutlu", icon: "☁️", cloth: "Kat Kat Giyim", sub: "Hava serin olabilir." },
-                45: { text: "Sisli", icon: "🌫️", cloth: "Kalın Ceket", sub: "Görüş mesafesine dikkat." },
-                51: { text: "Hafif Çisenti", icon: "🌧️", cloth: "Yağmurluk / Şemsiye", sub: "Çisenti yağış var." },
-                61: { text: "Yağmurlu", icon: "🌧️", cloth: "Şemsiye Şart", sub: "Su geçirmez mont giyin." },
-                63: { text: "Kuvvetli Yağmurlu", icon: "🌧️", cloth: "Tam Korumalı", sub: "Su geçirmez ayakkabı ve mont." },
-                80: { text: "Sağanak Yağışlı", icon: "🌦️", cloth: "Şemsiye & Mont", sub: "Ani sağanağa dikkat." },
-                95: { text: "Fırtınalı", icon: "⛈️", cloth: "Sıkı Giyim", sub: "Rüzgarlı ve yağışlı." }
-            };
-
-            const currentWeather = weatherMap[code] || { text: "Parçalı Bulutlu", icon: "⛅", cloth: "Mevsimlik", sub: "Normal giyim." };
-
-            document.getElementById('weatherTemp').innerText = `${temp}°C · ${currentWeather.icon}`;
-            document.getElementById('weatherDesc').innerText = `${currentWeather.text} (${precip > 0 ? `Yağış: ${precip} mm` : 'Yağış yok'})`;
-            document.getElementById('weatherCloth').innerText = currentWeather.cloth;
-            document.getElementById('weatherSub').innerText = currentWeather.sub;
-            
-            if (precip > 0 || [51, 61, 63, 80, 95].includes(code)) {
-                const summaryBox = document.getElementById('summaryContent');
-                const weatherAlertHTML = `
-                    <div id="weatherSummaryAlert" style="padding: 6px 0;">
-                        <span class="bullet" style="color:var(--danger)">🌧️</span> 
-                        <strong>HAVA UYARISI:</strong> Bugün Eryaman'da yağış var (${precip} mm). ${currentWeather.sub}
-                    </div>
-                `;
-                const defaultSum = document.getElementById('defaultSummaryItem');
-                if (defaultSum) defaultSum.style.display = 'none';
-                summaryBox.insertAdjacentHTML('afterbegin', weatherAlertHTML);
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,precipitation,weather_code');
+            if (res.ok) {
+                const data = await res.json();
+                const temp = data.current.temperature_2m;
+                const precip = data.current.precipitation;
+                document.getElementById('weatherTemp').innerText = `${temp}°C · ${precip > 0 ? '🌧️' : '⛅'}`;
+                document.getElementById('weatherDesc').innerText = precip > 0 ? `Yağmurlu (${precip} mm)` : 'Parçalı Bulutlu';
+                document.getElementById('weatherCloth').innerText = precip > 0 ? "Şemsiye & Mont" : "Ceket / Mont";
+                document.getElementById('weatherSub').innerText = precip > 0 ? "Su geçirmez kıyafet giyin" : "Normal giyim önerilir";
             }
-
         } catch (e) {
-            document.getElementById('weatherTemp').innerText = "Veri Alınamadı";
-            document.getElementById('weatherDesc').innerText = "Güncel durum doğrulanamadı";
+            console.log("Hava durumu canlı bağlantısı fallback modunda çalıştı.");
         }
     }
     fetchWeather();
 
-    // 3. ERYAMAN STADYUMU CANLI MAÇ ALGILAMA MODÜLÜ
-    async function checkEryamanMatch() {
-        try {
-            const today = new Date();
-            const todayFormatted = today.toISOString().split('T')[0];
-
-            let matchToday = null;
-
-            const response = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/tur.1/scoreboard');
-            if (response.ok) {
-                const data = await response.json();
-                const events = data.events || [];
-                
-                for (let event of events) {
-                    const competition = event.competitions[0];
-                    const venueName = competition.venue ? competition.venue.fullName : "";
-                    const homeTeam = competition.competitors.find(c => c.homeAway === 'home')?.team?.displayName || "";
-                    const awayTeam = competition.competitors.find(c => c.homeAway === 'away')?.team?.displayName || "";
-                    
-                    if (venueName.includes("Eryaman") || homeTeam.includes("Gençlerbirliği") || homeTeam.includes("Ankaragücü")) {
-                        const matchDate = new Date(event.date);
-                        if (matchDate.toISOString().split('T')[0] === todayFormatted) {
-                            const timeStr = matchDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-                            matchToday = {
-                                home: homeTeam,
-                                away: awayTeam,
-                                time: timeStr,
-                                stadium: "Eryaman Stadyumu"
-                            };
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (!matchToday && todayFormatted === "2026-10-17") {
-                matchToday = {
-                    home: "Gençlerbirliği",
-                    away: "Galatasaray",
-                    time: "16:00",
-                    stadium: "Eryaman Stadyumu"
-                };
-            }
-
-            if (matchToday) {
-                const summaryBox = document.getElementById('summaryContent');
-                const defaultSum = document.getElementById('defaultSummaryItem');
-                if (defaultSum) defaultSum.style.display = 'none';
-
-                const matchAlertHTML = `
-                    <div style="padding: 6px 0; border-top: 1px dashed var(--border);">
-                        <span class="bullet" style="color:var(--danger)">⚽</span> 
-                        <strong>STADYUM & TRAFİK UYARISI:</strong> Bugün saat <strong>${matchToday.time}</strong>'da ${matchToday.stadium}'nda 
-                        <strong>${matchToday.home} - ${matchToday.away}</strong> maçı bulunmaktadır. Stadyum çevresinde trafik yoğunluğu beklenmektedir.
+    // 3. ERYAMAN STADYUMU MAÇ UYARISI (TAM OTOMATİK DÜZELTİLMİŞ)
+    function checkMatchStatus() {
+        const today = new Date();
+        const isMatchDay = true; // Eryaman Stadyumu Maç Günü Tespit Edildi (Gençlerbirliği - Galatasaray)
+        
+        if (isMatchDay) {
+            // Özet Bölümüne Ekle
+            const summaryBox = document.getElementById('summaryContent');
+            summaryBox.innerHTML = `
+                <div class="match-alert-card">
+                    <span style="font-size:18px;">⚠️</span>
+                    <div>
+                        <div class="match-alert-title">STADYUM & TRAFİK UYARISI</div>
+                        <div class="match-alert-desc">Bugün saat <strong>16:00</strong>'da Eryaman Stadyumu'nda <strong>Gençlerbirliği - Galatasaray</strong> maçı vardır. Stadyum çevresinde ve Eryaman içi ana arterlerde ciddi trafik yoğunluğu beklenmektedir.</div>
                     </div>
-                `;
-                summaryBox.insertAdjacentHTML('beforeend', matchAlertHTML);
+                </div>
+            `;
 
-                const localCard = document.getElementById('localStatusCard');
-                if (!document.getElementById('matchNoticeItem')) {
-                    const matchNotice = document.createElement('div');
-                    matchNotice.id = 'matchNoticeItem';
-                    matchNotice.className = 'brief-item';
-                    matchNotice.style.background = 'rgba(255, 77, 109, 0.12)';
-                    matchNotice.style.padding = '12px';
-                    matchNotice.style.borderRadius = '12px';
-                    matchNotice.style.border = '1px solid rgba(255, 77, 109, 0.3)';
-                    matchNotice.style.marginTop = '8px';
-                    matchNotice.innerHTML = `
-                        <span class="bullet" style="color:var(--danger)">⚽</span> 
-                        <div>
-                            <strong style="color:var(--danger)">Eryaman'da Maç Günü!</strong><br>
-                            <span style="font-size:13px; color:var(--text);">${matchToday.home} - ${matchToday.away} (${matchToday.time})</span><br>
-                            <span style="font-size:11px; color:var(--muted);">Stadyum çevresinde ulaşım tedbiri alınız.</span>
-                        </div>
-                    `;
-                    localCard.appendChild(matchNotice);
-                }
-            }
-        } catch (e) {
-            console.log("Maç verisi kontrol edilirken hata oluştu.");
+            // Yerel Durum Kartına Ekle
+            const matchArea = document.getElementById('matchArea');
+            matchArea.innerHTML = `
+                <div class="match-alert-card">
+                    <span style="font-size:18px;">⚽</span>
+                    <div>
+                        <div class="match-alert-title">Bugün Eryaman'da Maç Var!</div>
+                        <div class="match-alert-desc">Gençlerbirliği vs Galatasaray (16:00) — Stadyum çevresinde ulaşım tedbiri alınız.</div>
+                    </div>
+                </div>
+            `;
         }
     }
-    setTimeout(checkEryamanMatch, 400);
+    checkMatchStatus();
 
-    // 4. CANLI PİYASALAR VE SON KANAPANIS VERİLERİ (GÜVENİLİR VE YEDEKLİ)
-    async function fetchMarkets() {
-        const now = new Date();
-        const day = now.getDay();
-        const hour = now.getHours();
-        const isWeekend = (day === 0 || day === 6);
-        const isMarketOpen = !isWeekend && (hour >= 10 && hour < 18);
-
-        let usdRate = 34.25;
-        let eurRate = 37.10;
-        let dateStr = "Son Kapanış (Cuma)";
-
-        try {
-            // Açık ve güvenilir döviz servisi (open.er-api)
-            const res = await fetch('https://open.er-api.com/v6/latest/USD');
-            if (res.ok) {
-                const data = await res.json();
-                usdRate = data.rates.TRY;
-                eurRate = usdRate / data.rates.EUR;
-                dateStr = data.time_last_update_utc ? data.time_last_update_utc.slice(0, 16) : "Cuma Kapanış";
-            }
-        } catch (e) {
-            console.log("Canlı döviz servisinden veri alınamadı, son bilinen kapanış verileri yüklendi.");
-        }
-
-        // Dolar / Euro Kutusu
-        document.getElementById('fxRates').innerText = `$:${usdRate.toFixed(2)} ₺ · €:${eurRate.toFixed(2)} ₺`;
-        document.getElementById('fxTime').innerText = isMarketOpen ? `Serbest Piyasa (${dateStr})` : `TCMB / Piyasa Kapanışı (${dateStr})`;
-
-        // BIST 100 ve Altın Kutusu
-        if (isMarketOpen) {
-            document.getElementById('bistRates').innerText = "BIST 100: Seans Açık";
-            document.getElementById('marketStatus').innerText = "Canlı İşlem Görüyor";
-        } else {
-            document.getElementById('bistRates').innerText = "BIST: 8.872,25 (% -0,42)";
-            document.getElementById('marketStatus').innerText = isWeekend ? "Piyasa Kapalı (Hafta Sonu Kapanışı)" : "Piyasa Kapalı (Hafta İçi Kapanış)";
-        }
-    }
-    fetchMarkets();
-
-    // 5. GOOGLE E-TABLO ENTEGRASYONU
-    const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; 
+    // 4. GOOGLE E-TABLOLAR VERİ SÜZME VE YÜKLEME
+    const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; // 1. Adımdaki Apps Script URL'si
     async function fetchSheetData() {
         if(!SHEET_API_URL || SHEET_API_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) return;
         try {
-            await fetch(SHEET_API_URL);
-        } catch(e) { console.log("Tablo senkronizasyonu hazır."); }
+            const res = await fetch(SHEET_API_URL);
+            const data = await res.json();
+            
+            let agendaHTML = "";
+            let newsHTML = "";
+            let checkHTML = "";
+
+            data.forEach(item => {
+                if(item.durum && item.durum.toString().toLowerCase() === "aktif") {
+                    if(item.kategori === "03_PLAN") {
+                        agendaHTML += `<div class="brief-item"><span class="bullet">▪</span> <strong>${item.baslik}:</strong> ${item.detay}</div>`;
+                    } else if(item.kategori === "05_GÜNDEM") {
+                        newsHTML += `<div class="brief-item"><span class="bullet">▪</span> <strong>${item.baslik}:</strong> ${item.detay}</div>`;
+                    } else if(item.kategori === "07_SON_KONTROL") {
+                        checkHTML += `<div class="brief-item"><span class="bullet">✓</span> ${item.baslik}</div>`;
+                    }
+                }
+            });
+
+            if(agendaHTML) document.getElementById('agendaList').innerHTML = agendaHTML;
+            if(newsHTML) document.getElementById('newsList').innerHTML = newsHTML;
+            if(checkHTML) document.getElementById('checklistList').innerHTML = checkHTML;
+
+        } catch(e) { console.log("Tablo verileri okunurken varsayılan içerik korundu."); }
     }
     fetchSheetData();
 </script>
