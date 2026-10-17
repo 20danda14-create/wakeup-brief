@@ -150,21 +150,55 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. Eryaman Hava Durumu (Open-Meteo API - Ücretsiz, Anahtarsız)
-    async function fetchWeather() {
-        try {
-            // Eryaman Koordinatları (~39.98° N, 32.65° E)
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,weather_code');
-            const data = await res.json();
-            const temp = data.current.temperature_2m;
-            document.getElementById('weatherTemp').innerText = temp + "°C";
-            document.getElementById('weatherDesc').innerText = "Ankara / Eryaman (Canlı)";
-        } catch (e) {
-            document.getElementById('weatherTemp').innerText = "Veri Alınamadı";
-            document.getElementById('weatherDesc').innerText = "Güncel durum doğrulanamadı";
+  // Gelişmiş Eryaman Hava Durumu ve Yağış Modülü
+async function fetchWeather() {
+    try {
+        // Sıcaklık, hava kodu ve yağış verisini çekiyoruz
+        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m');
+        const data = await res.json();
+        const cur = data.current;
+        
+        const temp = cur.temperature_2m;
+        const precip = cur.precipitation; // mm cinsinden yağış
+        const code = cur.weather_code;
+        const wind = cur.wind_speed_10m;
+
+        // WMO Hava Durumu Kodları Sözlüğü (Türkçe)
+        const weatherMap = {
+            0: { text: "Açık / Güneşli", icon: "☀️", cloth: "Güneş gözlüğü alabilirsiniz." },
+            1: { text: "Az Bulutlu", icon: "🌤️", cloth: "Hafif kıyafetler uygun." },
+            2: { text: "Parçalı Bulutlu", icon: "⛅", cloth: "Hafif bir mont yeterli." },
+            3: { text: "Çok Bulutlu", icon: "☁️", cloth: "Serin olabilir, kat kat giyinin." },
+            45: { text: "Sisli", icon: "🌫️", cloth: "Görüş mesafesine dikkat." },
+            51: { text: "Hafif Çisenti", icon: "🌧️", cloth: "Şemsiye almanzda fayda var." },
+            61: { text: "Yağmurlu", icon: "🌧️", cloth: "Kesinlikle şemsiye ve su geçirmez mont alın." },
+            63: { text: "Kuvvetli Yağmurlu", icon: "🌧️", cloth: "Su geçirmez kıyafetler giyin." },
+            80: { text: "Sağanak Yağışlı", icon: "🌦️", cloth: "Ani yağmurlara karşı şemsiye şart." },
+            95: { text: "Fırtınalı", icon: "⛈️", cloth: "Dikkatli olun, rüzgarlı ve yağışlı." }
+        };
+
+        const currentWeather = weatherMap[code] || { text: "Parçalı Bulutlu", icon: "⛅", cloth: "Mevsim kıyafetleri giyin." };
+
+        // Ekranı Güncelle
+        document.getElementById('weatherTemp').innerText = `${temp}°C · ${currentWeather.icon}`;
+        document.getElementById('weatherDesc').innerText = `${currentWeather.text} (${precip > 0 ? `Yağış: ${precip} mm` : 'Yağış yok'})`;
+        
+        // Eğer yağış varsa veya kod yağmura işaret ediyorsa Güne Hazırlık / Özet bölümünü uyar
+        if (precip > 0 || [51, 61, 63, 80, 95].includes(code)) {
+            const summaryBox = document.getElementById('summaryContent');
+            summaryBox.innerHTML = `
+                <span class="bullet" style="color:var(--danger)">🌧️</span> 
+                <strong>HAVA UYARISI:</strong> Bugün bölgede yağış bekleniyor (${precip} mm). 
+                ${currentWeather.cloth} Trafikte ve yürüyüşte dikkatli olun.
+            `;
         }
+
+    } catch (e) {
+        document.getElementById('weatherTemp').innerText = "Veri Alınamadı";
+        document.getElementById('weatherDesc').innerText = "Güncel durum doğrulanamadı";
     }
-    fetchWeather();
+}
+fetchWeather();
 
     // 3. Piyasalar ve Döviz (Frankfurter API - Ücretsiz)
     async function fetchMarkets() {
