@@ -398,109 +398,81 @@ async function loadNews(sheetRows){
 }
 
 // ================= 7. GOOGLE TABLO ENTEGRASYONU =================
-const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+// 🔴 YAYINLADIĞINIZ APPS SCRIPT WEB APP URL'SİNİ BURAYA YAZIN:
+const SHEET_API_URL = "BURAYA_WEB_APP_URL_YAZIN";
 
 async function fetchSheetData() {
+  const agendaBox = $('agendaList');
   let rows = [];
-  if (SHEET_API_URL && !SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')) {
-    try { 
-      rows = await getJSON(SHEET_API_URL, { proxy: false, ms: 10000 }); 
-      if (!Array.isArray(rows)) rows = []; 
-    } catch (e) {
-      console.error("Google Tablo verisi çekilemedi:", e);
-    }
+
+  if (!SHEET_API_URL || SHEET_API_URL.includes('BURAYA_WEB_APP_URL') || SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')) {
+    agendaBox.innerHTML = '<div class="empty unverified">SHEET_API_URL tanımlanmamış. Apps Script URL’sini koda ekleyin.</div>';
+    return [];
   }
 
-  if (!rows.length) return [];
+  try {
+    // Google Apps Script redirect takip edecek şekilde doğrudan fetch atıyoruz
+    const resp = await fetch(SHEET_API_URL, { redirect: 'follow' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    rows = await resp.json();
+  } catch (e) {
+    console.error("Google Tablo verisi çekilemedi:", e);
+    agendaBox.innerHTML = `<div class="empty unverified">Tablo verisi alınamadı (${esc(e.message)}). Web App izinlerini veya URL'yi kontrol edin.</div>`;
+    return [];
+  }
 
-  // Bugünün tarih formatları (ör. 19.10.2026 ve 2026-10-19)
-  const now = new Date();
-  const todayTR = now.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Europe/Istanbul' }); // "19.10.2026"
-  const todayISO = now.toISOString().slice(0, 10); // "2026-10-19"
+  if (!Array.isArray(rows) || !rows.length) {
+    agendaBox.innerHTML = '<div class="empty">Tablo boş veya geçerli veri bulunamadı.</div>';
+    return [];
+  }
 
   const isActive = i => {
-    const st = String(i.durum || '').trim().toLowerCase();
+    const st = String(i.durum || i.Durum || '').trim().toLowerCase();
     return st === 'aktif' || st === '' || st === 'true';
   };
 
-  const getItemDate = i => String(i.tarih || i.zaman || '').trim();
-
   // 1. Acil Uyarılar
-  const alerts = rows.filter(i => isActive(i) && String(i.kategori || '').toLowerCase().includes('uyari'));
+  const alerts = rows.filter(i => isActive(i) && String(i.kategori || i.Kategori || '').toLowerCase().includes('uyari'));
   if (alerts.length) {
     $('alertList').innerHTML = alerts.map(a => `
       <div class="match-alert-card" style="margin-bottom:8px">
         <span style="font-size:18px">⚠️</span>
         <div>
-          <div class="match-alert-title">${esc(a.baslik)}</div>
-          <div class="match-alert-desc">${esc(a.detay)}${a.tarih ? `<span class="src">${esc(a.tarih)}</span>` : ''}</div>
+          <div class="match-alert-title">${esc(a.baslik || a.Başlık)}</div>
+          <div class="match-alert-desc">${esc(a.detay || a.Detay)}${(a.tarih || a.Tarih) ? `<span class="src">${esc(a.tarih || a.Tarih)}</span>` : ''}</div>
         </div>
       </div>
     `).join('');
   }
 
-  // 2. Bugünün Planı (Tarihi Bugün olan VEYA Kategorisi Randevu/Hatırlatma/Plan olan Aktif Kayıtlar)
-  const planItems = rows.filter(i => {
-    if (!isActive(i)) return false;
-    const cat = String(i.kategori || '').toLowerCase();
-    const itemDate = getItemDate(i);
-    
-    // Tarihi bugün mü?
-    const isToday = itemDate === todayTR || itemDate === todayISO;
-    // Kategorisi plan/randevu/hatırlatma mı?
-    const isPlanCat = ['randevu', 'hatirlatma', 'plan', '03_plan'].some(k => cat.includes(k));
-    
-    return isToday || isPlanCat;
-  });
+  // 2. Bugünün Planı (Aktif olan TÜM Randevu, Hatırlatma ve Plan Maddeleri)
+  const planItems = rows.filter(i => isActive(i));
 
   if (planItems.length) {
-    $('agendaList').innerHTML = planItems.map(i => {
-      const dateStr = getItemDate(i);
-      const meta = [dateStr, i.saat, i.kaynak].filter(Boolean).map(esc).join(' · ');
+    agendaBox.innerHTML = planItems.map(i => {
+      const kat = i.kategori || i.Kategori || '';
+      const bas = i.baslik || i.Başlık || '';
+      const det = i.detay || i.Detay || '';
+      const tar = i.tarih || i.Tarih || '';
+      const saat = i.saat || i.Saat || '';
+      const meta = [tar, saat].filter(Boolean).map(esc).join(' · ');
+
       return `<div class="brief-item">
         <span class="bullet">▪</span>
         <span>
-          ${i.kategori ? `<strong style="color:var(--accent)">[${esc(i.kategori)}]</strong> ` : ''}
-          ${i.baslik ? `<strong>${esc(i.baslik)}</strong>` : ''}
-          ${i.baslik && i.detay ? ': ' : ''}${esc(i.detay)}
+          ${kat ? `<strong style="color:var(--accent)">[${esc(kat)}]</strong> ` : ''}
+          ${bas ? `<strong>${esc(bas)}</strong>` : ''}
+          ${bas && det ? ': ' : ''}${esc(det)}
           ${meta ? `<span class="src">${meta}</span>` : ''}
         </span>
       </div>`;
     }).join('');
+  } else {
+    agendaBox.innerHTML = '<div class="empty">Tabloda aktif plan maddesi yok.</div>';
   }
 
   return rows;
 }
-async function fetchSheetData() {
-  let rows = [];
-  if (SHEET_API_URL && !SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')) {
-    try { 
-      rows = await getJSON(SHEET_API_URL, { proxy: false, ms: 10000 }); 
-      if (!Array.isArray(rows)) rows = []; 
-    } catch (e) {
-      console.error("Google Tablo verisi çekilemedi:", e);
-    }
-  }
-
-  if (!rows.length) return [];
-
-  // 1. Acil Uyarılar (Kategori: UYARI veya UYARILAR)
-  const alerts = rows.filter(i => String(i.kategori || '').toLowerCase().includes('uyari') && String(i.durum || '').toLowerCase() === 'aktif');
-  if (alerts.length) {
-    $('alertList').innerHTML = alerts.map(a => `
-      <div class="match-alert-card" style="margin-bottom:8px">
-        <span style="font-size:18px">⚠️</span>
-        <div>
-          <div class="match-alert-title">${esc(a.baslik)}</div>
-          <div class="match-alert-desc">${esc(a.detay)}${a.zaman ? `<span class="src">${esc(a.zaman)}</span>` : ''}</div>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  // 2. Bugünün Planı (Kategori: Randevu, Hatırlatma, Plan veya 03_PLAN)
-  const plan = renderItemsFromSheet(rows, ['randevu', 'hatirlatma', 'plan', '03_plan']);
-  if (plan) $('agendaList').innerHTML = plan;
 
   // 3. Yerel Durum Ekstra Maddeler (Kategori: Yerel veya 04_YEREL)
   const loc = renderItemsFromSheet(rows, ['yerel', '04_yerel']);
