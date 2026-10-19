@@ -223,31 +223,24 @@ async function fetchWeather(){
   }catch(e){}
 }
 
-// ================= 3. YEREL: EGO DUYURULARI (GÜNCELLENEN KISIM) =================
+// ================= 3. YEREL: EGO DUYURULARI =================
 async function loadEGO(){
   const box = $('egoList');
   let items = null;
   try{
-    // GitHub Actions robotumuzun oluşturduğu JSON dosyasından veriyi okuyoruz
-    const r = await fetch('./duyurular.json?t=' + Date.now()); // önbelleği aşmak için timestamp ekli
+    const r = await fetch('./duyurular.json?t=' + Date.now());
     if(!r.ok) throw new Error('Duyuru dosyası yüklenemedi');
     items = await r.json();
   }catch(e){
     const c = store.get('ego');
     if(c) items = c.items;
   }
-
   if(!items || !items.length){
     box.innerHTML = '<div class="empty unverified">Henüz otomatik kaydedilmiş EGO duyurusu yok veya dosya yüklenemedi.</div>';
     return;
   }
-
-  // Tarayıcı hafızasına yedekliyoruz
   store.set('ego', {items, fetchedAt: new Date().toISOString()});
-
   const row = i => `<div class="brief-item"><span class="bullet">▪</span><span><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a>${i.date ? `<span class="src">EGO · ${esc(i.date)}</span>` : ''}</span></div>`;
-  
-  // İlk 5 duyuruyu listeliyoruz
   box.innerHTML = items.slice(0, 5).map(row).join('');
 }
 
@@ -399,19 +392,18 @@ async function loadNews(sheetRows){
 
 // ================= 7. GOOGLE TABLO ENTEGRASYONU =================
 // 🔴 YAYINLADIĞINIZ APPS SCRIPT WEB APP URL'SİNİ BURAYA YAZIN:
-const SHEET_API_URL = "BURAYA_WEB_APP_URL_YAZIN";
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec";
 
 async function fetchSheetData() {
   const agendaBox = $('agendaList');
   let rows = [];
 
-  if (!SHEET_API_URL || SHEET_API_URL.includes('BURAYA_WEB_APP_URL') || SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')) {
+  if (!SHEET_API_URL || SHEET_API_URL.includes(https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec) || SHEET_API_URL.includes(https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec)) {
     agendaBox.innerHTML = '<div class="empty unverified">SHEET_API_URL tanımlanmamış. Apps Script URL’sini koda ekleyin.</div>';
     return [];
   }
 
   try {
-    // Google Apps Script redirect takip edecek şekilde doğrudan fetch atıyoruz
     const resp = await fetch(SHEET_API_URL, { redirect: 'follow' });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     rows = await resp.json();
@@ -470,17 +462,6 @@ async function fetchSheetData() {
   } else {
     agendaBox.innerHTML = '<div class="empty">Tabloda aktif plan maddesi yok.</div>';
   }
-
-  return rows;
-}
-
-  // 3. Yerel Durum Ekstra Maddeler (Kategori: Yerel veya 04_YEREL)
-  const loc = renderItemsFromSheet(rows, ['yerel', '04_yerel']);
-  if (loc) $('localList').innerHTML += loc;
-
-  // 4. Çıkmadan Önce Son Kontrol (Kategori: Kontrol, Son Kontrol veya 07_SON_KONTROL)
-  const chk = renderItemsFromSheet(rows, ['kontrol', '07_son_kontrol'], '✓');
-  if (chk) $('checklistList').innerHTML = chk;
 
   return rows;
 }
