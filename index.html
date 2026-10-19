@@ -200,15 +200,14 @@ function fallbackMarket(key){
     $(key+'Meta').textContent = c.meta + ' (önbellek · kayıt: ' + fmtDT(c.saved) + ')';
   } else {
     $(key+'Val').innerHTML = '<span class="unverified">Doğrulanamadı</span>';
-    $(key+'Chg').innerHTML = ''; $(key+'Meta').textContent = 'Güncel veri alınamadı';
+    $(key+'Chg').innerHTML = '';$(key+'Meta').textContent = 'Güncel veri alınamadı';
   }
 }
 
 // ================= 1. SAAT =================
 function updateClock(){
   const n=new Date();
-  $('liveClock').innerText = n.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',timeZone:TZ});
-  $('dateLine').innerText = 'Ankara · Eryaman · ' + n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',timeZone:TZ});
+  $('liveClock').innerText = n.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',timeZone:TZ});$('dateLine').innerText = 'Ankara · Eryaman · ' + n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',timeZone:TZ});
 }
 setInterval(updateClock,1000); updateClock();
 
@@ -218,53 +217,38 @@ async function fetchWeather(){
     const d = await getJSON('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,precipitation&timezone=Europe%2FIstanbul',{proxy:false});
     const t=d.current.temperature_2m, p=d.current.precipitation;
     $('weatherTemp').innerText = `${t}°C · ${p>0?'🌧️':'⛅'}`;
-    $('weatherDesc').className='metric-sub';
-    $('weatherDesc').innerText = (p>0?`Yağışlı (${p} mm)`:'Yağış yok') + ' · ' + fmtDT(d.current.time);
+    $('weatherDesc').className='metric-sub';$('weatherDesc').innerText = (p>0?`Yağışlı (${p} mm)`:'Yağış yok') + ' · ' + fmtDT(d.current.time);
     $('weatherCloth').innerText = p>0?'Şemsiye & Mont':(t<12?'Mont':'Ceket');
     $('weatherSub').innerText = p>0?'Su geçirmez kıyafet giyin':'Normal giyim önerilir';
   }catch(e){}
 }
 
-// ================= 3. YEREL: EGO DUYURULARI =================
-const todayTR = () => new Date().toLocaleDateString('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:TZ});
-const trDateToObj = s => { const [d,m,y]=s.split('.'); return new Date(`${y}-${m}-${d}T12:00:00`); };
-
+// ================= 3. YEREL: EGO DUYURULARI (GÜNCELLENEN KISIM) =================
 async function loadEGO(){
   const box = $('egoList');
-  let items = null, fetchedAt = null;
+  let items = null;
   try{
-    const html = await getText('https://www.ego.gov.tr/duyurular', {check: t=>/\/duyuru\/\d+/.test(t)});
-    const doc = new DOMParser().parseFromString(html,'text/html');
-    const seen = new Set(); items = [];
-    doc.querySelectorAll('a[href*="/duyuru/"]').forEach(a=>{
-      const raw = (a.textContent||'').replace(/\s+/g,' ').trim();
-      const m = raw.match(/^(.*?)\s*(\d{2}\.\d{2}\.\d{4})$/);
-      if(!m) return;
-      let href = a.getAttribute('href') || '';
-      try{ href = new URL(href, 'https://www.ego.gov.tr/').href; }catch(e){ return; }
-      if(seen.has(href)) return; seen.add(href);
-      items.push({title:m[1].trim(), date:m[2], link:href});
-    });
-    if(!items.length) throw new Error('boş');
-    fetchedAt = new Date().toISOString();
-    store.set('ego', {items, fetchedAt});
+    // GitHub Actions robotumuzun oluşturduğu JSON dosyasından veriyi okuyoruz
+    const r = await fetch('./duyurular.json?t=' + Date.now()); // önbelleği aşmak için timestamp ekli
+    if(!r.ok) throw new Error('Duyuru dosyası yüklenemedi');
+    items = await r.json();
   }catch(e){
     const c = store.get('ego');
-    if(c){ items = c.items; fetchedAt = c.fetchedAt; box.dataset.cache = '1'; }
+    if(c) items = c.items;
   }
-  if(!items){
-    box.innerHTML = '<div class="empty unverified">EGO duyuruları alınamadı — doğrulanamadı. Bağlantıdan kontrol edin.</div>';
+
+  if(!items || !items.length){
+    box.innerHTML = '<div class="empty unverified">Henüz otomatik kaydedilmiş EGO duyurusu yok veya dosya yüklenemedi.</div>';
     return;
   }
-  const row = i => `<div class="brief-item"><span class="bullet">▪</span><span><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a><span class="src">EGO · ${esc(i.date)}</span></span></div>`;
-  const today = items.filter(i=>i.date===todayTR());
-  const note = box.dataset.cache ? `<div class="src unverified">Canlı veri alınamadı — önbellek (${fmtDT(fetchedAt)})</div>` : '';
-  if(today.length){
-    box.innerHTML = note + today.map(row).join('');
-  } else {
-    const last = items.slice().sort((a,b)=>trDateToObj(b.date)-trDateToObj(a.date)).slice(0,3);
-    box.innerHTML = note + `<div class="empty">Bugün (${todayTR()}) yayımlanmış yeni EGO duyurusu yok. Son duyurular:</div>` + last.map(row).join('');
-  }
+
+  // Tarayıcı hafızasına yedekliyoruz
+  store.set('ego', {items, fetchedAt: new Date().toISOString()});
+
+  const row = i => `<div class="brief-item"><span class="bullet">▪</span><span><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a>${i.date ? `<span class="src">EGO · ${esc(i.date)}</span>` : ''}</span></div>`;
+  
+  // İlk 5 duyuruyu listeliyoruz
+  box.innerHTML = items.slice(0, 5).map(row).join('');
 }
 
 // ================= 4. YEREL: @AnkaraValiligi (resmî X gömme) =================
@@ -352,8 +336,7 @@ async function loadBIST(sheetRows){
   }
   const row = (sheetRows||[]).find(i=>i.kategori==='06_PIYASA' && /bist/i.test(i.baslik||'') && String(i.durum||'').toLowerCase()==='aktif');
   if(row){
-    $('bistVal').innerText = row.detay; $('bistChg').innerHTML='';
-    $('bistMeta').textContent = 'Tablodan' + (row.zaman?' · '+row.zaman:'') + (row.kaynak?' · '+row.kaynak:'');
+    $('bistVal').innerText = row.detay; $('bistChg').innerHTML='';$('bistMeta').textContent = 'Tablodan' + (row.zaman?' · '+row.zaman:'') + (row.kaynak?' · '+row.kaynak:'');
     return;
   }
   fallbackMarket('bist');
