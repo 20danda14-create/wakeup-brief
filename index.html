@@ -398,32 +398,79 @@ async function loadNews(sheetRows){
 }
 
 // ================= 7. GOOGLE TABLO ENTEGRASYONU =================
-// Google Apps Script Web App URL'inizi buraya yapıştırın:
 const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
 
-function renderItemsFromSheet(rows, categoryKeywords, bullet = '▪') {
-  const keywords = Array.isArray(categoryKeywords) ? categoryKeywords : [categoryKeywords];
-  
-  return rows.filter(i => {
-    const cat = String(i.kategori || '').toLowerCase();
-    const st = String(i.durum || '').toLowerCase();
-    const isCatMatch = keywords.some(k => cat.includes(k.toLowerCase()));
-    const isActive = st === 'aktif' || st === '' || st === 'true';
-    return isCatMatch && isActive;
-  }).map(i => {
-    const dateStr = i.zaman || i.tarih ? (i.zaman || i.tarih) : '';
-    const meta = [dateStr, i.kaynak].filter(Boolean).map(esc).join(' · ');
-    return `<div class="brief-item">
-      <span class="bullet">${bullet}</span>
-      <span>
-        ${i.baslik ? `<strong>${esc(i.baslik)}</strong>` : ''}
-        ${i.baslik && i.detay ? ': ' : ''}${esc(i.detay)}
-        ${meta ? `<span class="src">${meta}</span>` : ''}
-      </span>
-    </div>`;
-  }).join('');
-}
+async function fetchSheetData() {
+  let rows = [];
+  if (SHEET_API_URL && !SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')) {
+    try { 
+      rows = await getJSON(SHEET_API_URL, { proxy: false, ms: 10000 }); 
+      if (!Array.isArray(rows)) rows = []; 
+    } catch (e) {
+      console.error("Google Tablo verisi çekilemedi:", e);
+    }
+  }
 
+  if (!rows.length) return [];
+
+  // Bugünün tarih formatları (ör. 19.10.2026 ve 2026-10-19)
+  const now = new Date();
+  const todayTR = now.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Europe/Istanbul' }); // "19.10.2026"
+  const todayISO = now.toISOString().slice(0, 10); // "2026-10-19"
+
+  const isActive = i => {
+    const st = String(i.durum || '').trim().toLowerCase();
+    return st === 'aktif' || st === '' || st === 'true';
+  };
+
+  const getItemDate = i => String(i.tarih || i.zaman || '').trim();
+
+  // 1. Acil Uyarılar
+  const alerts = rows.filter(i => isActive(i) && String(i.kategori || '').toLowerCase().includes('uyari'));
+  if (alerts.length) {
+    $('alertList').innerHTML = alerts.map(a => `
+      <div class="match-alert-card" style="margin-bottom:8px">
+        <span style="font-size:18px">⚠️</span>
+        <div>
+          <div class="match-alert-title">${esc(a.baslik)}</div>
+          <div class="match-alert-desc">${esc(a.detay)}${a.tarih ? `<span class="src">${esc(a.tarih)}</span>` : ''}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // 2. Bugünün Planı (Tarihi Bugün olan VEYA Kategorisi Randevu/Hatırlatma/Plan olan Aktif Kayıtlar)
+  const planItems = rows.filter(i => {
+    if (!isActive(i)) return false;
+    const cat = String(i.kategori || '').toLowerCase();
+    const itemDate = getItemDate(i);
+    
+    // Tarihi bugün mü?
+    const isToday = itemDate === todayTR || itemDate === todayISO;
+    // Kategorisi plan/randevu/hatırlatma mı?
+    const isPlanCat = ['randevu', 'hatirlatma', 'plan', '03_plan'].some(k => cat.includes(k));
+    
+    return isToday || isPlanCat;
+  });
+
+  if (planItems.length) {
+    $('agendaList').innerHTML = planItems.map(i => {
+      const dateStr = getItemDate(i);
+      const meta = [dateStr, i.saat, i.kaynak].filter(Boolean).map(esc).join(' · ');
+      return `<div class="brief-item">
+        <span class="bullet">▪</span>
+        <span>
+          ${i.kategori ? `<strong style="color:var(--accent)">[${esc(i.kategori)}]</strong> ` : ''}
+          ${i.baslik ? `<strong>${esc(i.baslik)}</strong>` : ''}
+          ${i.baslik && i.detay ? ': ' : ''}${esc(i.detay)}
+          ${meta ? `<span class="src">${meta}</span>` : ''}
+        </span>
+      </div>`;
+    }).join('');
+  }
+
+  return rows;
+}
 async function fetchSheetData() {
   let rows = [];
   if (SHEET_API_URL && !SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')) {
