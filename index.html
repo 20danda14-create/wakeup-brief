@@ -77,7 +77,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
   <div class="card">
     <div class="card-title"><span>03</span> Bugünün Planı</div>
-    <div id="agendaList"><div class="empty">Tabloda aktif plan maddesi yok.</div></div>
+    <div id="agendaList"><div class="empty">Yükleniyor…</div></div>
   </div>
 
   <!-- 04 · YEREL DURUM -->
@@ -391,30 +391,32 @@ async function loadNews(sheetRows){
 }
 
 // ================= 7. GOOGLE TABLO ENTEGRASYONU =================
-// 🔴 YAYINLADIĞINIZ APPS SCRIPT WEB APP URL'SİNİ BURAYA YAZIN:
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec";
 
 async function fetchSheetData() {
   const agendaBox = $('agendaList');
   let rows = [];
 
-  if (!SHEET_API_URL || SHEET_API_URL.includes(https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec) || SHEET_API_URL.includes(https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec)) {
-    agendaBox.innerHTML = '<div class="empty unverified">SHEET_API_URL tanımlanmamış. Apps Script URL’sini koda ekleyin.</div>';
-    return [];
-  }
-
   try {
-    const resp = await fetch(SHEET_API_URL, { redirect: 'follow' });
+    // CORS engellemesini aşmak için proxy kullanıyoruz
+    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(SHEET_API_URL);
+    const resp = await fetch(proxyUrl);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     rows = await resp.json();
   } catch (e) {
     console.error("Google Tablo verisi çekilemedi:", e);
-    agendaBox.innerHTML = `<div class="empty unverified">Tablo verisi alınamadı (${esc(e.message)}). Web App izinlerini veya URL'yi kontrol edin.</div>`;
-    return [];
+    // Alternatif doğrudan deneme
+    try {
+      const resp2 = await fetch(SHEET_API_URL, { redirect: 'follow' });
+      rows = await resp2.json();
+    } catch (err2) {
+      agendaBox.innerHTML = `<div class="empty unverified">Tablo verisi alınamadı. (CORS/Ağ hatası)</div>`;
+      return [];
+    }
   }
 
   if (!Array.isArray(rows) || !rows.length) {
-    agendaBox.innerHTML = '<div class="empty">Tablo boş veya geçerli veri bulunamadı.</div>';
+    agendaBox.innerHTML = '<div class="empty">Tabloda aktif plan maddesi yok.</div>';
     return [];
   }
 
@@ -437,7 +439,7 @@ async function fetchSheetData() {
     `).join('');
   }
 
-  // 2. Bugünün Planı (Aktif olan TÜM Randevu, Hatırlatma ve Plan Maddeleri)
+  // 2. Bugünün Planı (Tablodaki tüm aktif kayıtlar)
   const planItems = rows.filter(i => isActive(i));
 
   if (planItems.length) {
