@@ -397,25 +397,72 @@ async function loadNews(sheetRows){
   }
 }
 
-// ================= 7. GOOGLE TABLO (opsiyonel) =================
-// Sütunlar: kategori | baslik | detay | durum | zaman | kaynak
+// ================= 7. GOOGLE TABLO ENTEGRASYONU =================
+// Google Apps Script Web App URL'inizi buraya yapıştırın:
 const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
-function renderItems(rows, cat, bullet='▪'){
-  return rows.filter(i=>i.kategori===cat && String(i.durum||'').toLowerCase()==='aktif').map(i=>{
-    const meta=[i.zaman,i.kaynak].filter(Boolean).map(esc).join(' · ');
-    return `<div class="brief-item"><span class="bullet">${bullet}</span><span>${i.baslik?`<strong>${esc(i.baslik)}</strong>`:''}${i.baslik&&i.detay?': ':''}${esc(i.detay)}${meta?`<span class="src">${meta}</span>`:''}</span></div>`;
+
+function renderItemsFromSheet(rows, categoryKeywords, bullet = '▪') {
+  const keywords = Array.isArray(categoryKeywords) ? categoryKeywords : [categoryKeywords];
+  
+  return rows.filter(i => {
+    const cat = String(i.kategori || '').toLowerCase();
+    const st = String(i.durum || '').toLowerCase();
+    const isCatMatch = keywords.some(k => cat.includes(k.toLowerCase()));
+    const isActive = st === 'aktif' || st === '' || st === 'true';
+    return isCatMatch && isActive;
+  }).map(i => {
+    const dateStr = i.zaman || i.tarih ? (i.zaman || i.tarih) : '';
+    const meta = [dateStr, i.kaynak].filter(Boolean).map(esc).join(' · ');
+    return `<div class="brief-item">
+      <span class="bullet">${bullet}</span>
+      <span>
+        ${i.baslik ? `<strong>${esc(i.baslik)}</strong>` : ''}
+        ${i.baslik && i.detay ? ': ' : ''}${esc(i.detay)}
+        ${meta ? `<span class="src">${meta}</span>` : ''}
+      </span>
+    </div>`;
   }).join('');
 }
-async function fetchSheetData(){
-  let rows=[];
-  if(SHEET_API_URL && !SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')){
-    try{ rows = await getJSON(SHEET_API_URL,{proxy:false,ms:10000}); if(!Array.isArray(rows)) rows=[]; }catch(e){}
+
+async function fetchSheetData() {
+  let rows = [];
+  if (SHEET_API_URL && !SHEET_API_URL.includes('YOUR_GOOGLE_APPS_SCRIPT')) {
+    try { 
+      rows = await getJSON(SHEET_API_URL, { proxy: false, ms: 10000 }); 
+      if (!Array.isArray(rows)) rows = []; 
+    } catch (e) {
+      console.error("Google Tablo verisi çekilemedi:", e);
+    }
   }
-  const alerts = rows.filter(i=>i.kategori==='06_UYARI' && String(i.durum||'').toLowerCase()==='aktif');
-  if(alerts.length) $('alertList').innerHTML = alerts.map(a=>`<div class="match-alert-card" style="margin-bottom:8px"><span style="font-size:18px">⚠️</span><div><div class="match-alert-title">${esc(a.baslik)}</div><div class="match-alert-desc">${esc(a.detay)}${a.zaman?`<span class="src">${esc(a.zaman)}</span>`:''}</div></div></div>`).join('');
-  const plan = renderItems(rows,'03_PLAN');   if(plan) $('agendaList').innerHTML = plan;
-  const loc  = renderItems(rows,'04_YEREL');  if(loc)  $('localList').innerHTML = loc;
-  const chk  = renderItems(rows,'07_SON_KONTROL','✓'); if(chk) $('checklistList').innerHTML = chk;
+
+  if (!rows.length) return [];
+
+  // 1. Acil Uyarılar (Kategori: UYARI veya UYARILAR)
+  const alerts = rows.filter(i => String(i.kategori || '').toLowerCase().includes('uyari') && String(i.durum || '').toLowerCase() === 'aktif');
+  if (alerts.length) {
+    $('alertList').innerHTML = alerts.map(a => `
+      <div class="match-alert-card" style="margin-bottom:8px">
+        <span style="font-size:18px">⚠️</span>
+        <div>
+          <div class="match-alert-title">${esc(a.baslik)}</div>
+          <div class="match-alert-desc">${esc(a.detay)}${a.zaman ? `<span class="src">${esc(a.zaman)}</span>` : ''}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // 2. Bugünün Planı (Kategori: Randevu, Hatırlatma, Plan veya 03_PLAN)
+  const plan = renderItemsFromSheet(rows, ['randevu', 'hatirlatma', 'plan', '03_plan']);
+  if (plan) $('agendaList').innerHTML = plan;
+
+  // 3. Yerel Durum Ekstra Maddeler (Kategori: Yerel veya 04_YEREL)
+  const loc = renderItemsFromSheet(rows, ['yerel', '04_yerel']);
+  if (loc) $('localList').innerHTML += loc;
+
+  // 4. Çıkmadan Önce Son Kontrol (Kategori: Kontrol, Son Kontrol veya 07_SON_KONTROL)
+  const chk = renderItemsFromSheet(rows, ['kontrol', '07_son_kontrol'], '✓');
+  if (chk) $('checklistList').innerHTML = chk;
+
   return rows;
 }
 
