@@ -107,10 +107,42 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .match-alert-title{font-size:13px;font-weight:700;color:var(--danger);margin-bottom:2px}
 .match-alert-desc{font-size:12px;line-height:1.3}
 .empty{font-size:13px;color:var(--muted)}
-.link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-.badge-link{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:8px;font-size:12px;text-decoration:none;font-weight:500;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-.badge-link:hover{border-color:var(--accent);color:var(--accent)}
-.x-box{border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:60px;background:var(--surface);padding:6px}
+
+/* KARARLI DOKUNMATİK CANLI DUYURU BUTONLARI */
+.official-links-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:6px;
+}
+.official-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  text-decoration:none;
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  transition:all .2s;
+}
+.official-card:active{
+  border-color:var(--accent);
+  background:rgba(255,107,53,0.08);
+}
+.official-card .icon{
+  font-size:20px;
+}
+.official-card .title{
+  font-size:13px;
+  font-weight:700;
+}
+.official-card .sub{
+  font-size:11px;
+  color:var(--muted);
+}
+
 .footer-note{text-align:center;font-size:11px;color:var(--muted);margin-top:10px}
 </style>
 </head>
@@ -163,24 +195,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="card">
     <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman)</div>
 
-    <div id="localList">
-      <div class="brief-item"><span class="bullet">▪</span><span><strong>Metro / Ankaray işleyişi:</strong> <span class="unverified">Güncel durum doğrulanamadı</span> — aşağıdaki resmî duyurulara ve EGO'nun X hesabına bakın.</span></div>
-    </div>
+    <!-- E-Tablo'dan Girilen Anlık Yerel Duyurular -->
+    <div id="localCustomList"></div>
 
-    <div class="sub-title">🚌 EGO Genel Müdürlüğü · Duyurular</div>
-    <div id="egoList"><div class="empty">Yükleniyor…</div></div>
-
-    <div class="sub-title">🏛️ Ankara Valiliği · Duyurular</div>
-    <div class="empty">Valilik sitesi otomatik erişime izin vermediği için duyurular burada listelenemiyor. Güncel duyurular için bağlantıyı kullanın.</div>
-
-    <div class="sub-title">𝕏 @AnkaraValiligi · Paylaşımlar</div>
-    <div id="xBox" class="x-box"><div class="empty" style="padding:8px">Yükleniyor…</div></div>
-
-    <div class="link-row">
-      <a href="https://www.ego.gov.tr/duyurular" target="_blank" rel="noopener" class="badge-link">🚇 EGO Duyurular</a>
-      <a href="https://www.ankara.gov.tr/duyurular" target="_blank" rel="noopener" class="badge-link">🏛️ Ankara Valiliği</a>
-      <a href="https://x.com/AnkaraValiligi" target="_blank" rel="noopener" class="badge-link">𝕏 @AnkaraValiligi</a>
-      <a href="https://x.com/egobilgi" target="_blank" rel="noopener" class="badge-link">𝕏 @egobilgi</a>
+    <div class="sub-title">🚌 Resmî Canlı Duyuru Kanalları</div>
+    <div class="official-links-grid">
+      <a href="https://x.com/egobilgi" target="_blank" rel="noopener" class="official-card">
+        <span class="icon">🚌</span>
+        <span class="title">EGO Duyuruları</span>
+        <span class="sub">𝕏 @egobilgi canlı akışı</span>
+      </a>
+      <a href="https://x.com/AnkaraValiligi" target="_blank" rel="noopener" class="official-card">
+        <span class="icon">🏛️</span>
+        <span class="title">Ankara Valiliği</span>
+        <span class="sub">𝕏 @AnkaraValiligi duyuruları</span>
+      </a>
+      <a href="https://www.ego.gov.tr/duyurular" target="_blank" rel="noopener" class="official-card">
+        <span class="icon">🚇</span>
+        <span class="title">EGO Web Portalı</span>
+        <span class="sub">Resmî web duyuru listesi</span>
+      </a>
+      <a href="https://www.ankara.gov.tr/duyurular" target="_blank" rel="noopener" class="official-card">
+        <span class="icon">📜</span>
+        <span class="title">Valilik Portalı</span>
+        <span class="sub">Resmî haberler ve basın</span>
+      </a>
     </div>
   </div>
 
@@ -230,7 +269,6 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const fmtNum = (n,d=2) => Number(n).toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});
 const fmtDate = d => new Date(d).toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric',timeZone:TZ});
 const fmtDT = d => new Date(d).toLocaleString('tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ});
-const ymd = d => new Date(d).toISOString().slice(0,10);
 
 const store = {
   get(k){ try{ return JSON.parse(localStorage.getItem('wub_'+k)); }catch(e){ return null; } },
@@ -306,37 +344,7 @@ async function fetchWeather(){
   }catch(e){}
 }
 
-// ================= 3. YEREL: EGO DUYURULARI =================
-async function loadEGO(){
-  const box = $('egoList');
-  let items = null;
-  try{
-    const r = await fetch('./duyurular.json?t=' + Date.now());
-    if(!r.ok) throw new Error('Duyuru dosyası yüklenemedi');
-    items = await r.json();
-  }catch(e){
-    const c = store.get('ego');
-    if(c) items = c.items;
-  }
-  if(!items || !items.length){
-    box.innerHTML = '<div class="empty unverified">Henüz kaydedilmiş EGO duyurusu yok.</div>';
-    return;
-  }
-  store.set('ego', {items, fetchedAt: new Date().toISOString()});
-  const row = i => `<div class="brief-item"><span class="bullet">▪</span><span><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a>${i.date ? `<span class="src">EGO · ${esc(i.date)}</span>` : ''}</span></div>`;
-  box.innerHTML = items.slice(0, 5).map(row).join('');
-}
-
-// ================= 4. YEREL: @AnkaraValiligi =================
-function loadX(){
-  const box = $('xBox');
-  box.innerHTML = '<a class="twitter-timeline" data-theme="dark" data-height="420" data-chrome="noheader nofooter transparent" data-dnt="true" href="https://twitter.com/AnkaraValiligi">@AnkaraValiligi paylaşımları</a>';
-  const s = document.createElement('script');
-  s.src = 'https://platform.twitter.com/widgets.js'; s.async = true; s.charset = 'utf-8';
-  document.body.appendChild(s);
-}
-
-// ================= 5. PİYASALAR =================
+// ================= 3. PİYASALAR =================
 const OUNCE_G = 31.1034768;
 async function loadEUR(){
   try{
@@ -364,7 +372,7 @@ async function loadBIST(sheetRows){
   }catch(e){ fallbackMarket('bist'); }
 }
 
-// ================= 6. HABERLER (RSS) =================
+// ================= 4. HABERLER (RSS) =================
 const FEEDS = [
   {name:'TRT Haber',  grp:'TR',    url:'https://www.trthaber.com/manset_articles.rss'},
   {name:'AA',         grp:'TR',    url:'https://www.aa.com.tr/tr/rss/default?cat=guncel'}
@@ -395,15 +403,17 @@ async function loadNews(){
   }
 }
 
-// ================= 7. GOOGLE TABLO ENTEGRASYONU =================
+// ================= 5. GOOGLE TABLO ENTEGRASYONU =================
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec";
 
 function renderAgenda(rows) {
   const agendaBox = $('agendaList');
   const alertBox = $('alertList');
+  const customLocalBox = $('localCustomList');
   
   if (!Array.isArray(rows) || !rows.length) {
     agendaBox.innerHTML = '<div class="empty">Tabloda aktif plan maddesi yok.</div>';
+    if(customLocalBox) customLocalBox.innerHTML = '';
     return;
   }
 
@@ -412,6 +422,7 @@ function renderAgenda(rows) {
     return st === 'aktif' || st === '' || st === 'true';
   };
 
+  // Acil Uyarılar
   const alerts = rows.filter(i => isActive(i) && String(i.kategori || i.Kategori || '').toLowerCase().includes('uyari'));
   if (alerts.length) {
     alertBox.innerHTML = alerts.map(a => `
@@ -423,9 +434,27 @@ function renderAgenda(rows) {
         </div>
       </div>
     `).join('');
+  } else {
+    alertBox.innerHTML = '<div class="empty">Aktif acil uyarı yok.</div>';
   }
 
-  const planItems = rows.filter(i => isActive(i));
+  // Yerel Özel Duyurular (E-Tablo'dan)
+  const localCustom = rows.filter(i => isActive(i) && String(i.kategori || i.Kategori || '').toLowerCase().includes('yerel'));
+  if (customLocalBox) {
+    if (localCustom.length) {
+      customLocalBox.innerHTML = localCustom.map(l => `
+        <div class="brief-item">
+          <span class="bullet">📍</span>
+          <span><strong>${esc(l.baslik || l.Başlık)}:</strong> ${esc(l.detay || l.Detay)}</span>
+        </div>
+      `).join('');
+    } else {
+      customLocalBox.innerHTML = '';
+    }
+  }
+
+  // Bugünün Planı
+  const planItems = rows.filter(i => isActive(i) && !String(i.kategori || i.Kategori || '').toLowerCase().includes('yerel'));
   if (planItems.length) {
     agendaBox.innerHTML = planItems.map(i => {
       const kat = i.kategori || i.Kategori || '';
@@ -476,7 +505,6 @@ async function refreshAllData() {
   
   await Promise.all([
     fetchWeather(),
-    loadEGO(),
     loadEUR(),
     loadGold(),
     fetchSheetData(),
@@ -489,11 +517,9 @@ async function refreshAllData() {
   }, 500);
 }
 
-// ================= BAŞLAT (PARALEL) =================
+// ================= BAŞLAT =================
 (async ()=>{
   fetchWeather();
-  loadEGO();
-  loadX();
   loadEUR(); loadGold();
   
   const [rows] = await Promise.all([
