@@ -11,16 +11,16 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px 16px 40px;-webkit-font-smoothing:antialiased}
 .container{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
 
-/* HEADER DÜZENİ & SABAH MAHMURLUĞU OPTİMİZASYONU */
+/* HEADER & REFRESH BUTTON */
 .header{
   background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(124,92,252,0.15));
   border:1px solid var(--border);
   border-radius:var(--r);
-  padding:18px 20px;
+  padding:16px 18px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:12px
+  gap:10px
 }
 .header-title{
   font-family:'Syne',sans-serif;
@@ -48,17 +48,42 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   color:var(--accent);
   font-weight:700
 }
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0
+}
 .live-clock{
   font-family:'DM Mono',monospace;
-  font-size:32px;
+  font-size:28px;
   font-weight:500;
   color:var(--accent);
   background:rgba(255,107,53,.12);
-  padding:8px 14px;
-  border-radius:12px;
-  border:1px solid rgba(255,107,53,.25);
-  flex-shrink:0
+  padding:6px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,107,53,.25)
 }
+.btn-refresh{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:all .2s;
+  font-size:18px
+}
+.btn-refresh:active{transform:scale(0.92);border-color:var(--accent)}
+.btn-refresh.spinning span {
+  display: inline-block;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
 .card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);display:flex;align-items:center;gap:8px}
@@ -100,7 +125,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         Yükleniyor…
       </div>
     </div>
-    <div id="liveClock" class="live-clock">00:00</div>
+    <div class="header-right">
+      <div id="liveClock" class="live-clock">00:00</div>
+      <button class="btn-refresh" id="refreshBtn" onclick="refreshAllData()" title="Verileri Güncelle">
+        <span>🔄</span>
+      </button>
+    </div>
   </div>
 
   <div class="card">
@@ -249,7 +279,7 @@ function fallbackMarket(key){
   }
 }
 
-// ================= 1. SAAT & TARİH (SABAH OKUMA OPTİMİZASYONU) =================
+// ================= 1. SAAT & TARİH =================
 function updateClock(){
   const n = new Date();
   $('liveClock').innerText = n.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', timeZone: TZ });
@@ -257,7 +287,6 @@ function updateClock(){
   const dayName = n.toLocaleDateString('tr-TR', { weekday: 'long', timeZone: TZ });
   const dateStr = n.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', timeZone: TZ });
   
-  // Sabah ilk bakışta net okunur yüksek kontrastlı tarih düzeni
   $('dateLine').innerHTML = `
     <span class="location-tag">Ankara · Eryaman</span>
     <span class="date-highlight">${dayName}</span>, ${dateStr}
@@ -329,7 +358,7 @@ async function loadGold(){
 async function loadBIST(sheetRows){
   try{
     const d = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/XU100.IS?interval=1d&range=5d`, {ms:4000});
-    const r = d.chart.result[0], ts=r.timestamp, cl=r.indicators.quote[0].close;
+    const r = d.chart.result[0], cl=r.indicators.quote[0].close;
     const l = cl.filter(x=>x!=null).pop();
     showMarket('bist', fmtNum(l,2), '<span class="flat">BIST 100</span>', `Yahoo Finance`);
   }catch(e){ fallbackMarket('bist'); }
@@ -350,7 +379,7 @@ async function readFeed(f){
   return [];
 }
 
-async function loadNews(sheetRows){
+async function loadNews(){
   const cachedNews = store.get('news');
   if(cachedNews && cachedNews.html) {
     $('newsList').innerHTML = cachedNews.html;
@@ -383,7 +412,6 @@ function renderAgenda(rows) {
     return st === 'aktif' || st === '' || st === 'true';
   };
 
-  // Acil Uyarılar
   const alerts = rows.filter(i => isActive(i) && String(i.kategori || i.Kategori || '').toLowerCase().includes('uyari'));
   if (alerts.length) {
     alertBox.innerHTML = alerts.map(a => `
@@ -397,7 +425,6 @@ function renderAgenda(rows) {
     `).join('');
   }
 
-  // Bugünün Planı
   const planItems = rows.filter(i => isActive(i));
   if (planItems.length) {
     agendaBox.innerHTML = planItems.map(i => {
@@ -437,9 +464,29 @@ async function fetchSheetData() {
       return rows;
     }
   } catch (e) {
-    console.error("Tablo çekilemedi, önbellekteki gösteriliyor");
+    console.error("Tablo güncellenemedi");
   }
   return cachedData || [];
+}
+
+// ================= REFRESH İŞLEVİ =================
+async function refreshAllData() {
+  const btn = $('refreshBtn');
+  btn.classList.add('spinning');
+  
+  await Promise.all([
+    fetchWeather(),
+    loadEGO(),
+    loadEUR(),
+    loadGold(),
+    fetchSheetData(),
+    loadNews()
+  ]);
+  
+  setTimeout(() => {
+    btn.classList.remove('spinning');
+    $('footerNote').textContent = 'Son yenileme: ' + fmtDT(new Date()) + ' · Doğrulanamayan bilgi uydurulmaz.';
+  }, 500);
 }
 
 // ================= BAŞLAT (PARALEL) =================
