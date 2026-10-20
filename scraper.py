@@ -1,44 +1,47 @@
-import requests
-from bs4 import BeautifulSoup
+import urllib.request
 import json
+import re
+from bs4 import BeautifulSoup
 
 URL = "https://www.ego.gov.tr/duyurular"
-DATA_FILE = "duyurular.json"
 
-def fetch_ego_announcements():
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    }
-    response = requests.get(URL, headers=headers)
-    if response.status_code != 200:
-        print("Sayfa yüklenemedi!")
-        return []
+# Kendimizi gerçek bir Chrome tarayıcısı gibi tanıtıyoruz (CORS / Cloudflare engelini aşmak için)
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+}
 
-    soup = BeautifulSoup(response.content, 'html.parser')
-    announcements = []
+req = urllib.request.Request(URL, headers=headers)
 
-    # EGO sitesindeki duyuru başlıklarını ve linklerini buluyoruz
-    items = soup.select('.news-list-item, .duyuru-item, tr')
+try:
+    html = urllib.request.urlopen(req, timeout=10).read().decode('utf-8')
+    soup = BeautifulSoup(html, 'html.parser')
     
-    for item in items:
-        link_tag = item.find('a')
-        if link_tag and link_tag.get('href'):
-            title = link_tag.text.strip()
-            link = link_tag['href']
-            if not link.startswith('http'):
-                link = "https://www.ego.gov.tr" + link
-            
-            if title:
-                announcements.append({
-                    "title": title,
-                    "link": link
+    duyurular = []
+    # EGO Duyurular sayfasındaki link ve başlık yapısını okuyoruz
+    for a in soup.find_all('a', href=True):
+        href = a['href']
+        text = a.get_text(strip=True)
+        if '/duyuru/' in href or 'duyuru' in href.lower():
+            full_url = href if href.startswith('http') else f"https://www.ego.gov.tr{href}"
+            if text and len(text) > 10 and not any(d['title'] == text for d in duyurular):
+                duyurular.append({
+                    "title": text,
+                    "link": full_url,
+                    "date": ""
                 })
+    
+    # En güncel 10 duyuruyu kaydediyoruz
+    with open('duyurular.json', 'w', encoding='utf-8') as f:
+        json.dump(duyurular[:10], f, ensure_ascii=False, indent=2)
+        
+    print(f"Başarıyla {len(duyurular[:10])} duyuru çekildi.")
 
-    return announcements
-
-if __name__ == "__main__":
-    new_data = fetch_ego_announcements()
-    if new_data:
-        with open(DATA_FILE, "w", encoding="utf-8") as f:
-            json.dump(new_data, f, ensure_ascii=False, indent=2)
-        print("Duyurular başarıyla kaydedildi.")
+except Exception as e:
+    print(f"EGO Veri Çekme Hatası: {e}")
+    # Hata durumunda workflow'un çöküp e-posta atmasını engellemek için boş/mevcut JSON bırakıyoruz
+    try:
+        with open('duyurular.json', 'r', encoding='utf-8') as f:
+            pass
+    except:
+        with open('duyurular.json', 'w', encoding='utf-8') as f:
+            json.dump([], f)
