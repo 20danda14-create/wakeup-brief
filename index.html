@@ -4,16 +4,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>WAKE UP BRIEF · Ankara / Eryaman</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0d0d12;--surface:#14141c;--card:#1b1b26;--border:#2a2a3d;--accent:#ff6b35;--purple:#7c5cfc;--text:#f0f0f8;--muted:#78789e;--success:#2dd4a0;--warning:#ffb703;--danger:#ff4d6d;--r:16px}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px 16px 40px;-webkit-font-smoothing:antialiased}
 .container{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
-.header{background:linear-gradient(135deg,rgba(255,107,53,.1),rgba(124,92,252,.1));border:1px solid var(--border);border-radius:var(--r);padding:20px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.header-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px}
-.header-sub{font-size:30px;color:var(--muted);margin-top:4px}
-.live-clock{font-family:'DM Mono',monospace;font-size:35px;font-weight:500;color:var(--accent);background:rgba(255,107,53,.1);padding:6px 12px;border-radius:10px;border:1px solid rgba(255,107,53,.2)}
+
+/* HEADER DÜZENİ & SABAH MAHMURLUĞU OPTİMİZASYONU */
+.header{
+  background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(124,92,252,0.15));
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px
+}
+.header-title{
+  font-family:'Syne',sans-serif;
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.5px;
+  color:var(--text)
+}
+.header-sub{
+  font-size:15px;
+  font-weight:600;
+  color:#ffffff;
+  margin-top:6px;
+  line-height:1.3;
+  letter-spacing:-.2px
+}
+.header-sub .location-tag{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:500;
+  display:block;
+  margin-bottom:2px
+}
+.header-sub .date-highlight{
+  color:var(--accent);
+  font-weight:700
+}
+.live-clock{
+  font-family:'DM Mono',monospace;
+  font-size:32px;
+  font-weight:500;
+  color:var(--accent);
+  background:rgba(255,107,53,.12);
+  padding:8px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,107,53,.25);
+  flex-shrink:0
+}
+
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
 .card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);display:flex;align-items:center;gap:8px}
 .card-title span{color:var(--accent)}
@@ -49,7 +95,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="header">
     <div>
       <div class="header-title">WAKE UP BRIEF</div>
-      <div class="header-sub" id="dateLine">Ankara · Eryaman · Günlük Bülten</div>
+      <div class="header-sub" id="dateLine">
+        <span class="location-tag">Ankara · Eryaman</span>
+        Yükleniyor…
+      </div>
     </div>
     <div id="liveClock" class="live-clock">00:00</div>
   </div>
@@ -152,7 +201,6 @@ const fmtNum = (n,d=2) => Number(n).toLocaleString('tr-TR',{minimumFractionDigit
 const fmtDate = d => new Date(d).toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric',timeZone:TZ});
 const fmtDT = d => new Date(d).toLocaleString('tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ});
 const ymd = d => new Date(d).toISOString().slice(0,10);
-const addDays = (s,n) => ymd(new Date(new Date(s+'T12:00:00Z').getTime()+n*864e5));
 
 const store = {
   get(k){ try{ return JSON.parse(localStorage.getItem('wub_'+k)); }catch(e){ return null; } },
@@ -185,14 +233,6 @@ async function getJSON(url, opt={}){
   return JSON.parse(t);
 }
 
-function chgHTML(cur, prev){
-  if(prev==null || !isFinite(prev) || prev===0) return '<span class="flat">Değişim: veri yok</span>';
-  const pct=(cur-prev)/prev*100;
-  const cls=pct>0.005?'up':pct<-0.005?'down':'flat';
-  const ar=pct>0.005?'▲':pct<-0.005?'▼':'■';
-  return `<span class="${cls}">${ar} %${fmtNum(Math.abs(pct))}</span>`;
-}
-
 function showMarket(key, valText, chgHtml, meta){
   $(key+'Val').innerText = valText; $(key+'Chg').innerHTML = chgHtml; $(key+'Meta').textContent = meta;
   store.set(key, {valText, chgHtml, meta, saved:new Date().toISOString()});
@@ -209,12 +249,21 @@ function fallbackMarket(key){
   }
 }
 
-// ================= 1. SAAT =================
+// ================= 1. SAAT & TARİH (SABAH OKUMA OPTİMİZASYONU) =================
 function updateClock(){
-  const n=new Date();
-  $('liveClock').innerText = n.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',timeZone:TZ});$('dateLine').innerText = 'Ankara · Eryaman · ' + n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',timeZone:TZ});
+  const n = new Date();
+  $('liveClock').innerText = n.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', timeZone: TZ });
+  
+  const dayName = n.toLocaleDateString('tr-TR', { weekday: 'long', timeZone: TZ });
+  const dateStr = n.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', timeZone: TZ });
+  
+  // Sabah ilk bakışta net okunur yüksek kontrastlı tarih düzeni
+  $('dateLine').innerHTML = `
+    <span class="location-tag">Ankara · Eryaman</span>
+    <span class="date-highlight">${dayName}</span>, ${dateStr}
+  `;
 }
-setInterval(updateClock,1000); updateClock();
+setInterval(updateClock, 1000); updateClock();
 
 // ================= 2. HAVA =================
 async function fetchWeather(){
@@ -302,7 +351,6 @@ async function readFeed(f){
 }
 
 async function loadNews(sheetRows){
-  // Önce Önbellekten göster
   const cachedNews = store.get('news');
   if(cachedNews && cachedNews.html) {
     $('newsList').innerHTML = cachedNews.html;
@@ -375,18 +423,16 @@ function renderAgenda(rows) {
 }
 
 async function fetchSheetData() {
-  // Önce Önbellekten Anında Göster (Gecikmeyi Sıfırlar)
   const cachedData = store.get('sheet_rows');
   if (cachedData && Array.isArray(cachedData)) {
     renderAgenda(cachedData);
   }
 
   try {
-    // Doğrudan Apps Script'e hızlı istek
     const resp = await fetch(SHEET_API_URL + '?action=get', { redirect: 'follow' });
     if (resp.ok) {
       const rows = await resp.json();
-      store.set('sheet_rows', rows); // Önbelleğe kaydet
+      store.set('sheet_rows', rows);
       renderAgenda(rows);
       return rows;
     }
@@ -403,7 +449,6 @@ async function fetchSheetData() {
   loadX();
   loadEUR(); loadGold();
   
-  // Tablo ve Haberleri PARALEL başlatıyoruz (Gecikmesiz Yükleme)
   const [rows] = await Promise.all([
     fetchSheetData(),
     loadNews()
