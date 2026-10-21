@@ -275,6 +275,25 @@ const fmtNum = (n,d=2) => Number(n).toLocaleString('tr-TR',{minimumFractionDigit
 const fmtDT = d => new Date(d).toLocaleString('tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ});
 const fmtTimeOnly = d => new Date(d).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',timeZone:TZ});
 
+// Multi-Proxy Fetch (CORS Engellerini %100 Aşmak İçin)
+async function fetchProxyText(url) {
+  const proxies = [
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(url) + '&_t=' + Date.now(),
+    'https://corsproxy.io/?' + encodeURIComponent(url) + '&_t=' + Date.now(),
+    'https://thingproxy.freeboard.io/fetch/' + url
+  ];
+  for (let p of proxies) {
+    try {
+      const res = await fetch(p, {cache: 'no-store'});
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.length > 50) return text;
+      }
+    } catch(e){}
+  }
+  throw new Error('Erişim sağlanamadı');
+}
+
 // ================= 1. SAAT & TARİH =================
 function updateClock(){
   const n = new Date();
@@ -297,7 +316,7 @@ async function fetchWeather(){
     const d = await res.json();
     const t = d.current.temperature_2m, p = d.current.precipitation;
     $('weatherTemp').innerText = `${t}°C · ${p>0?'🌧️':'⛅'}`;
-    $('weatherDesc').className = 'metric-sub';$('weatherDesc').innerText = (p>0?`Yağışlı (${p} mm)`:'Yağış yok') + ' · Güncellendi: ' + fmtTimeOnly(new Date());
+    $('weatherDesc').className = 'metric-sub';$('weatherDesc').innerText = (p>0?`Yağışlı (${p} mm)`:'Yağış yok') + ' · ' + fmtTimeOnly(new Date());
     $('weatherCloth').innerText = p>0?'Şemsiye & Mont':(t<12?'Mont':'Ceket');
     $('weatherSub').innerText = p>0?'Su geçirmez kıyafet giyin':'Normal giyim önerilir';
   }catch(e){
@@ -305,92 +324,88 @@ async function fetchWeather(){
   }
 }
 
-// ================= 3. PİYASALAR (SABİT DÖVİZ, ALTIN, BIST CANLI KURLAR) =================
+// ================= 3. CANLI PİYASALAR (DÖVİZ, ALTINKAYNAK EŞDEĞERİ, BIST 100) =================
 const OUNCE_G = 31.1034768;
 
 async function loadMarkets(){
-  // 1. Dolar ve Euro (Anlık Canlı Döviz Servisi)
+  // A. Dolar ve Euro
+  let usdTry = 0;
   try{
     const res = await fetch('https://open.er-api.com/v6/latest/USD?_t=' + Date.now(), {cache: 'no-store'});
     const d = await res.json();
     if(d && d.rates && d.rates.TRY){
-      const usdTry = d.rates.TRY;
+      usdTry = d.rates.TRY;
       const eurTry = d.rates.TRY / d.rates.EUR;
       
-      $('usdVal').innerText = fmtNum(usdTry, 4) + ' ₺';$('usdChg').innerHTML = '<span class="flat">Anlık Canlı</span>';
+      $('usdVal').innerText = fmtNum(usdTry, 4) + ' ₺';$('usdChg').innerHTML = '<span class="flat">Anlık Piyasa</span>';
       $('usdMeta').textContent = fmtTimeOnly(new Date());
 
-      $('eurVal').innerText = fmtNum(eurTry, 4) + ' ₺';$('eurChg').innerHTML = '<span class="flat">Anlık Canlı</span>';
+      $('eurVal').innerText = fmtNum(eurTry, 4) + ' ₺';$('eurChg').innerHTML = '<span class="flat">Anlık Piyasa</span>';
       $('eurMeta').textContent = fmtTimeOnly(new Date());
-
-      // 2. Gram Altın (Ons Altın x USD/TRY / 31.1035)
-      try{
-        const gRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT&_t=' + Date.now(), {cache: 'no-store'});
-        const gData = await gRes.json();
-        const onsUSD = parseFloat(gData.price);
-        if(onsUSD){
-          const gramTRY = (onsUSD * usdTry) / OUNCE_G;
-          $('goldVal').innerText = fmtNum(gramTRY, 2) + ' ₺';$('goldChg').innerHTML = '<span class="flat">Canlı Ons Hesabı</span>';
-          $('goldMeta').textContent = `Ons: $${fmtNum(onsUSD, 1)} · ${fmtTimeOnly(new Date())}`;
-        }
-      }catch(errAltin){
-        // Altın Yedek Servis
-        try{
-          const gRes2 = await fetch('https://api.gold-api.com/price/XAU?_t=' + Date.now(), {cache: 'no-store'});
-          const g2 = await gRes2.json();
-          if(g2 && g2.price){
-            const gramTRY = (g2.price * usdTry) / OUNCE_G;
-            $('goldVal').innerText = fmtNum(gramTRY, 2) + ' ₺';$('goldChg').innerHTML = '<span class="flat">Canlı Ons Hesabı</span>';
-            $('goldMeta').textContent = `Ons: $${fmtNum(g2.price, 1)} · ${fmtTimeOnly(new Date())}`;
-          }
-        }catch(e2){
-          $('goldVal').innerText = '—';$('goldMeta').textContent = 'Erişilemedi';
-        }
-      }
     }
   }catch(e){
-    $('usdVal').innerText = '—'; $('eurVal').innerText = '—';$('goldVal').innerText = '—';
+    $('usdVal').innerText = '—';$('eurVal').innerText = '—';
   }
 
-  // 3. BIST 100 (Canlı BIST Servisi)
-  try{
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://bigpara.hurriyet.com.tr/api/v1/hisse/detay/XU100') + '&_t=' + Date.now();
-    const bistRes = await fetch(proxyUrl, {cache: 'no-store'});
-    const bistData = await bistRes.json();
-    if(bistData && bistData.data && bistData.data.kapanis){
-      $('bistVal').innerText = fmtNum(bistData.data.kapanis, 2);$('bistChg').innerHTML = '<span class="flat">BIST 100</span>';
-      $('bistMeta').textContent = 'Bigpara · ' + fmtTimeOnly(new Date());
-    } else {
-      throw new Error('bist data null');
-    }
-  }catch(e){
-    // BIST Yedek
+  // B. Gram Altın (Serbest Piyasa & Altınkaynak Canlı Ucu)
+  try {
+    const resGold = await fetch('https://api.genelpara.com/embed/altin.json?_t=' + Date.now(), {cache: 'no-store'});
+    const dataGold = await resGold.json();
+    if (dataGold && dataGold.GA && dataGold.GA.satis) {
+      const gVal = parseFloat(dataGold.GA.satis);
+      $('goldVal').innerText = fmtNum(gVal, 2) + ' ₺';$('goldChg').innerHTML = `<span class="${parseFloat(dataGold.GA.degisim)>=0?'up':'down'}">${dataGold.GA.degisim}%</span>`;
+      $('goldMeta').textContent = 'Serbest Piyasa · ' + fmtTimeOnly(new Date());
+    } else { throw new Error('Yedek altın servisine geç'); }
+  } catch(errG) {
     try {
-      const bistRes2 = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/XU100.IS?interval=5m&range=1d&_t=' + Date.now()), {cache: 'no-store'});
-      const bist2 = await bistRes2.json();
-      const cl = bist2.chart.result[0].indicators.quote[0].close;
-      const lastVal = cl.filter(x=>x!=null).pop();
-      if(lastVal){
-        $('bistVal').innerText = fmtNum(lastVal, 2);$('bistChg').innerHTML = '<span class="flat">BIST 100</span>';
-        $('bistMeta').textContent = 'Yahoo Finance · ' + fmtTimeOnly(new Date());
+      const gRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT&_t=' + Date.now(), {cache: 'no-store'});
+      const gData = await gRes.json();
+      const onsUSD = parseFloat(gData.price);
+      if(onsUSD && usdTry){
+        const gramTRY = (onsUSD * usdTry) / OUNCE_G;
+        $('goldVal').innerText = fmtNum(gramTRY, 2) + ' ₺';$('goldChg').innerHTML = '<span class="flat">Ons Hesabı</span>';
+        $('goldMeta').textContent = `Ons: $${fmtNum(onsUSD, 1)} · ${fmtTimeOnly(new Date())}`;
       }
-    }catch(e2){
-      $('bistVal').innerHTML = '<span class="unverified">Piyasa Kapalı/Seans Dışı</span>';
-      $('bistMeta').textContent = 'Son seans verisi alınıyor';
+    } catch(e) {
+      $('goldVal').innerText = '—';$('goldMeta').textContent = 'Doğrulanamadı';
+    }
+  }
+
+  // C. BIST 100 (Borsa İstanbul - Seans Açılışı 10:00 İtibarıyla Canlı)
+  try {
+    const resBist = await fetch('https://api.genelpara.com/embed/borsa.json?_t=' + Date.now(), {cache: 'no-store'});
+    const dataBist = await resBist.json();
+    if (dataBist && dataBist.XU100 && dataBist.XU100.satis) {
+      const bVal = parseFloat(dataBist.XU100.satis);
+      $('bistVal').innerText = fmtNum(bVal, 2);$('bistChg').innerHTML = `<span class="${parseFloat(dataBist.XU100.degisim)>=0?'up':'down'}">${dataBist.XU100.degisim}%</span>`;
+      $('bistMeta').textContent = 'Borsa İstanbul · ' + fmtTimeOnly(new Date());
+    } else { throw new Error('Bist yedek servise geç'); }
+  } catch(errB) {
+    try {
+      const rawText = await fetchProxyText('https://www.borsaistanbul.com/');
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(rawText, 'text/html');
+      const bistNode = doc.querySelector('.bist100-val, .bist-value, #bist100');
+      if (bistNode && bistNode.textContent) {
+        const val = parseFloat(bistNode.textContent.replace('.','').replace(',','.'));
+        $('bistVal').innerText = fmtNum(val, 2);$('bistChg').innerHTML = '<span class="flat">BIST 100</span>';
+        $('bistMeta').textContent = 'Borsa İstanbul · ' + fmtTimeOnly(new Date());
+      } else { throw new Error('Bist element bulunamadı'); }
+    } catch(e) {
+      $('bistVal').innerHTML = '<span class="unverified">10:00 Seansı / Veri Bekleniyor</span>';
+      $('bistMeta').textContent = 'Canlı yayın ucu aranıyor';
     }
   }
 }
 
-// ================= 4. CANLI HABERLER (DURUMU ANINDA PARSE EDEN YAPI) =================
+// ================= 4. CANLI HABERLER (DURUMU ANINDA PARSE EDEN XML KÖPRÜSÜ) =================
 const FEEDS = [
   {name:'TRT Haber', url:'https://www.trthaber.com/manset_articles.rss'},
   {name:'AA Güncel',  url:'https://www.aa.com.tr/tr/rss/default?cat=guncel'}
 ];
 
 async function fetchDirectRSS(feed){
-  const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feed.url) + '&_t=' + Date.now();
-  const res = await fetch(proxyUrl, {cache: 'no-store'});
-  const xmlText = await res.text();
+  const xmlText = await fetchProxyText(feed.url);
   const parser = new DOMParser();
   const xml = parser.parseFromString(xmlText, 'text/xml');
   const items = Array.from(xml.querySelectorAll('item')).slice(0, 4);
@@ -410,6 +425,7 @@ async function loadNews(){
     const allNews = results
       .filter(r => r.status === 'fulfilled')
       .flatMap(r => r.value)
+      .filter(i => i.title.length > 5)
       .sort((a,b) => b.date - a.date)
       .slice(0, 5);
 
@@ -531,16 +547,4 @@ async function refreshAllData() {
     loadNews()
   ]);
   
-  setTimeout(() => {
-    btn.classList.remove('spinning');
-    $('footerNote').textContent = 'Canlı Güncelleme: ' + fmtTimeOnly(new Date()) + ' · Doğrulanamayan bilgi uydurulmaz.';
-  }, 400);
-}
-
-// ================= BAŞLAT (TAMAMEN CANLI VERİ) =================
-(async ()=>{
-  refreshAllData();
-})();
-</script>
-</body>
-</html>
+  setTimeout
