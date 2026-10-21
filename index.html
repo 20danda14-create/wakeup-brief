@@ -11,7 +11,6 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px 16px 40px;-webkit-font-smoothing:antialiased}
 .container{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
 
-/* HEADER & REFRESH BUTTON */
 .header{
   background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(124,92,252,0.15));
   border:1px solid var(--border);
@@ -22,67 +21,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   align-items:center;
   gap:10px
 }
-.header-title{
-  font-family:'Syne',sans-serif;
-  font-size:20px;
-  font-weight:800;
-  letter-spacing:-.5px;
-  color:var(--text)
-}
-.header-sub{
-  font-size:15px;
-  font-weight:600;
-  color:#ffffff;
-  margin-top:6px;
-  line-height:1.3;
-  letter-spacing:-.2px
-}
-.header-sub .location-tag{
-  font-size:12px;
-  color:var(--muted);
-  font-weight:500;
-  display:block;
-  margin-bottom:2px
-}
-.header-sub .date-highlight{
-  color:var(--accent);
-  font-weight:700
-}
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-shrink:0
-}
-.live-clock{
-  font-family:'DM Mono',monospace;
-  font-size:28px;
-  font-weight:500;
-  color:var(--accent);
-  background:rgba(255,107,53,.12);
-  padding:6px 10px;
-  border-radius:10px;
-  border:1px solid rgba(255,107,53,.25)
-}
-.btn-refresh{
-  background:var(--surface);
-  border:1px solid var(--border);
-  color:var(--text);
-  width:42px;
-  height:42px;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  transition:all .2s;
-  font-size:18px
-}
+.header-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
+.header-sub{font-size:15px;font-weight:600;color:#ffffff;margin-top:6px;line-height:1.3;letter-spacing:-.2px}
+.header-sub .location-tag{font-size:12px;color:var(--muted);font-weight:500;display:block;margin-bottom:2px}
+.header-sub .date-highlight{color:var(--accent);font-weight:700}
+.header-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.live-clock{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--accent);background:rgba(255,107,53,.12);padding:6px 10px;border-radius:10px;border:1px solid rgba(255,107,53,.25)}
+.btn-refresh{background:var(--surface);border:1px solid var(--border);color:var(--text);width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:18px}
 .btn-refresh:active{transform:scale(0.92);border-color:var(--accent)}
-.btn-refresh.spinning span {
-  display: inline-block;
-  animation: spin 0.8s linear infinite;
-}
+.btn-refresh.spinning span {display: inline-block;animation: spin 0.8s linear infinite;}
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
@@ -108,40 +55,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .match-alert-desc{font-size:12px;line-height:1.3}
 .empty{font-size:13px;color:var(--muted)}
 
-.official-links-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:6px;
-}
-.official-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:14px;
-  text-decoration:none;
-  color:var(--text);
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  transition:all .2s;
-}
-.official-card:active{
-  border-color:var(--accent);
-  background:rgba(255,107,53,0.08);
-}
-.official-card .icon{
-  font-size:20px;
-}
-.official-card .title{
-  font-size:13px;
-  font-weight:700;
-}
-.official-card .sub{
-  font-size:11px;
-  color:var(--muted);
-}
-
+.official-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+.official-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:6px;transition:all .2s;}
+.official-card:active{border-color:var(--accent);background:rgba(255,107,53,0.08);}
+.official-card .icon{font-size:20px;}
+.official-card .title{font-size:13px;font-weight:700;}
+.official-card .sub{font-size:11px;color:var(--muted);}
 .footer-note{text-align:center;font-size:11px;color:var(--muted);margin-top:10px}
 </style>
 </head>
@@ -175,7 +94,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="metric-box">
         <span class="metric-label">SICAKLIK & DURUM</span>
         <span id="weatherTemp" class="metric-val">—</span>
-        <span id="weatherDesc" class="metric-sub unverified">Güncel durum doğrulanamadı</span>
+        <span id="weatherDesc" class="metric-sub">Yükleniyor...</span>
       </div>
       <div class="metric-box">
         <span class="metric-label">GİYİM ÖNERİSİ</span>
@@ -190,12 +109,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div id="agendaList"><div class="empty">Yükleniyor…</div></div>
   </div>
 
-  <!-- 04 · YEREL DURUM -->
   <div class="card">
     <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman)</div>
-
     <div id="localCustomList"></div>
-
     <div class="sub-title">🚌 Resmî Canlı Duyuru Kanalları</div>
     <div class="official-links-grid">
       <a href="https://x.com/egobilgi" target="_blank" rel="noopener" class="official-card">
@@ -223,13 +139,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
   <div class="card">
     <div class="card-title"><span>05</span> Türkiye & Dünya Gündemi</div>
-    <div id="newsList"><div class="empty">Yükleniyor…</div></div>
+    <div id="newsList"><div class="empty">Haber akışı yükleniyor…</div></div>
   </div>
 
-  <!-- 06 · PİYASALAR -->
   <div class="card">
     <div class="card-title"><span>06</span> Piyasalar (Canlı)</div>
-    <div id="marketStatus" class="metric-sub"></div>
     <div class="grid-2">
       <div class="metric-box">
         <span class="metric-label">USD / TL</span>
@@ -267,190 +181,123 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </div>
 
 <script>
-// ================= YARDIMCILAR =================
 const $ = id => document.getElementById(id);
 const TZ = 'Europe/Istanbul';
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtNum = (n,d=2) => Number(n).toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});
-const fmtDT = d => new Date(d).toLocaleString('tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ});
 const fmtTimeOnly = d => new Date(d).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',timeZone:TZ});
 
-// Multi-Proxy Fetch (CORS Engellerini %100 Aşmak İçin)
-async function fetchProxyText(url) {
-  const proxies = [
-    'https://api.allorigins.win/raw?url=' + encodeURIComponent(url) + '&_t=' + Date.now(),
-    'https://corsproxy.io/?' + encodeURIComponent(url) + '&_t=' + Date.now(),
-    'https://thingproxy.freeboard.io/fetch/' + url
-  ];
-  for (let p of proxies) {
-    try {
-      const res = await fetch(p, {cache: 'no-store'});
-      if (res.ok) {
-        const text = await res.text();
-        if (text && text.length > 50) return text;
-      }
-    } catch(e){}
-  }
-  throw new Error('Erişim sağlanamadı');
-}
-
-// ================= 1. SAAT & TARİH =================
+// Saat & Tarih
 function updateClock(){
   const n = new Date();
   $('liveClock').innerText = n.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', timeZone: TZ });
-  
   const dayName = n.toLocaleDateString('tr-TR', { weekday: 'long', timeZone: TZ });
   const dateStr = n.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', timeZone: TZ });
-  
-  $('dateLine').innerHTML = `
-    <span class="location-tag">Ankara · Eryaman</span>
-    <span class="date-highlight">${dayName}</span>, ${dateStr}
-  `;
+  $('dateLine').innerHTML = `<span class="location-tag">Ankara · Eryaman</span><span class="date-highlight">${dayName}</span>, ${dateStr}`;
 }
 setInterval(updateClock, 1000); updateClock();
 
-// ================= 2. HAVA =================
+// 1. Hava Durumu (Open-Meteo)
 async function fetchWeather(){
   try{
-    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,precipitation&timezone=Europe%2FIstanbul&_t=' + Date.now(), {cache: 'no-store'});
+    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,precipitation&timezone=Europe%2FIstanbul');
     const d = await res.json();
     const t = d.current.temperature_2m, p = d.current.precipitation;
     $('weatherTemp').innerText = `${t}°C · ${p>0?'🌧️':'⛅'}`;
-    $('weatherDesc').className = 'metric-sub';$('weatherDesc').innerText = (p>0?`Yağışlı (${p} mm)`:'Yağış yok') + ' · ' + fmtTimeOnly(new Date());
+    $('weatherDesc').innerText = (p>0?`Yağışlı (${p} mm)`:'Yağış yok') + ' · ' + fmtTimeOnly(new Date());
     $('weatherCloth').innerText = p>0?'Şemsiye & Mont':(t<12?'Mont':'Ceket');
     $('weatherSub').innerText = p>0?'Su geçirmez kıyafet giyin':'Normal giyim önerilir';
   }catch(e){
-    $('weatherTemp').innerText = '—';$('weatherDesc').innerText = 'Güncel durum doğrulanamadı';
+    $('weatherTemp').innerText = '—';$('weatherDesc').innerText = 'Hava durumu alınamadı';
   }
 }
 
-// ================= 3. CANLI PİYASALAR (DÖVİZ, ALTINKAYNAK EŞDEĞERİ, BIST 100) =================
-const OUNCE_G = 31.1034768;
-
+// 2. Piyasalar (Döviz, Altın, BIST)
 async function loadMarkets(){
-  // A. Dolar ve Euro
-  let usdTry = 0;
+  // Dolar & Euro
   try{
-    const res = await fetch('https://open.er-api.com/v6/latest/USD?_t=' + Date.now(), {cache: 'no-store'});
+    const res = await fetch('https://open.er-api.com/v6/latest/USD');
     const d = await res.json();
     if(d && d.rates && d.rates.TRY){
-      usdTry = d.rates.TRY;
+      const usdTry = d.rates.TRY;
       const eurTry = d.rates.TRY / d.rates.EUR;
       
-      $('usdVal').innerText = fmtNum(usdTry, 4) + ' ₺';$('usdChg').innerHTML = '<span class="flat">Anlık Piyasa</span>';
+      $('usdVal').innerText = fmtNum(usdTry, 4) + ' ₺';$('usdChg').innerHTML = '<span class="flat">Canlı</span>';
       $('usdMeta').textContent = fmtTimeOnly(new Date());
 
-      $('eurVal').innerText = fmtNum(eurTry, 4) + ' ₺';$('eurChg').innerHTML = '<span class="flat">Anlık Piyasa</span>';
+      $('eurVal').innerText = fmtNum(eurTry, 4) + ' ₺';$('eurChg').innerHTML = '<span class="flat">Canlı</span>';
       $('eurMeta').textContent = fmtTimeOnly(new Date());
+
+      // Gram Altın
+      try{
+        const gRes = await fetch('https://api.genelpara.com/embed/altin.json');
+        const gData = await gRes.json();
+        if(gData && gData.GA){
+          $('goldVal').innerText = fmtNum(gData.GA.satis, 2) + ' ₺';$('goldChg').innerHTML = `<span class="${parseFloat(gData.GA.degisim)>=0?'up':'down'}">${gData.GA.degisim}%</span>`;
+          $('goldMeta').textContent = 'Serbest Piyasa';
+        }
+      }catch(err){
+        const ons = (await (await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT')).json()).price;
+        const gram = (ons * usdTry) / 31.1034768;
+        $('goldVal').innerText = fmtNum(gram, 2) + ' ₺';$('goldMeta').textContent = 'Ons Hesabı';
+      }
     }
   }catch(e){
-    $('usdVal').innerText = '—';$('eurVal').innerText = '—';
+    $('usdVal').innerText = '—'; $('eurVal').innerText = '—';$('goldVal').innerText = '—';
   }
 
-  // B. Gram Altın (Serbest Piyasa & Altınkaynak Canlı Ucu)
-  try {
-    const resGold = await fetch('https://api.genelpara.com/embed/altin.json?_t=' + Date.now(), {cache: 'no-store'});
-    const dataGold = await resGold.json();
-    if (dataGold && dataGold.GA && dataGold.GA.satis) {
-      const gVal = parseFloat(dataGold.GA.satis);
-      $('goldVal').innerText = fmtNum(gVal, 2) + ' ₺';$('goldChg').innerHTML = `<span class="${parseFloat(dataGold.GA.degisim)>=0?'up':'down'}">${dataGold.GA.degisim}%</span>`;
-      $('goldMeta').textContent = 'Serbest Piyasa · ' + fmtTimeOnly(new Date());
-    } else { throw new Error('Yedek altın servisine geç'); }
-  } catch(errG) {
-    try {
-      const gRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT&_t=' + Date.now(), {cache: 'no-store'});
-      const gData = await gRes.json();
-      const onsUSD = parseFloat(gData.price);
-      if(onsUSD && usdTry){
-        const gramTRY = (onsUSD * usdTry) / OUNCE_G;
-        $('goldVal').innerText = fmtNum(gramTRY, 2) + ' ₺';$('goldChg').innerHTML = '<span class="flat">Ons Hesabı</span>';
-        $('goldMeta').textContent = `Ons: $${fmtNum(onsUSD, 1)} · ${fmtTimeOnly(new Date())}`;
-      }
-    } catch(e) {
-      $('goldVal').innerText = '—';$('goldMeta').textContent = 'Doğrulanamadı';
-    }
-  }
-
-  // C. BIST 100 (Borsa İstanbul - Seans Açılışı 10:00 İtibarıyla Canlı)
-  try {
-    const resBist = await fetch('https://api.genelpara.com/embed/borsa.json?_t=' + Date.now(), {cache: 'no-store'});
-    const dataBist = await resBist.json();
-    if (dataBist && dataBist.XU100 && dataBist.XU100.satis) {
-      const bVal = parseFloat(dataBist.XU100.satis);
-      $('bistVal').innerText = fmtNum(bVal, 2);$('bistChg').innerHTML = `<span class="${parseFloat(dataBist.XU100.degisim)>=0?'up':'down'}">${dataBist.XU100.degisim}%</span>`;
-      $('bistMeta').textContent = 'Borsa İstanbul · ' + fmtTimeOnly(new Date());
-    } else { throw new Error('Bist yedek servise geç'); }
-  } catch(errB) {
-    try {
-      const rawText = await fetchProxyText('https://www.borsaistanbul.com/');
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(rawText, 'text/html');
-      const bistNode = doc.querySelector('.bist100-val, .bist-value, #bist100');
-      if (bistNode && bistNode.textContent) {
-        const val = parseFloat(bistNode.textContent.replace('.','').replace(',','.'));
-        $('bistVal').innerText = fmtNum(val, 2);$('bistChg').innerHTML = '<span class="flat">BIST 100</span>';
-        $('bistMeta').textContent = 'Borsa İstanbul · ' + fmtTimeOnly(new Date());
-      } else { throw new Error('Bist element bulunamadı'); }
-    } catch(e) {
-      $('bistVal').innerHTML = '<span class="unverified">10:00 Seansı / Veri Bekleniyor</span>';
-      $('bistMeta').textContent = 'Canlı yayın ucu aranıyor';
-    }
-  }
-}
-
-// ================= 4. CANLI HABERLER (DURUMU ANINDA PARSE EDEN XML KÖPRÜSÜ) =================
-const FEEDS = [
-  {name:'TRT Haber', url:'https://www.trthaber.com/manset_articles.rss'},
-  {name:'AA Güncel',  url:'https://www.aa.com.tr/tr/rss/default?cat=guncel'}
-];
-
-async function fetchDirectRSS(feed){
-  const xmlText = await fetchProxyText(feed.url);
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(xmlText, 'text/xml');
-  const items = Array.from(xml.querySelectorAll('item')).slice(0, 4);
-
-  return items.map(item => {
-    const title = item.querySelector('title')?.textContent || '';
-    const link = item.querySelector('link')?.textContent || '#';
-    const pubDateStr = item.querySelector('pubDate')?.textContent || '';
-    const pubDate = pubDateStr ? new Date(pubDateStr) : new Date();
-    return { title, link, date: pubDate, src: feed.name };
-  });
-}
-
-async function loadNews(){
-  try {
-    const results = await Promise.allSettled(FEEDS.map(fetchDirectRSS));
-    const allNews = results
-      .filter(r => r.status === 'fulfilled')
-      .flatMap(r => r.value)
-      .filter(i => i.title.length > 5)
-      .sort((a,b) => b.date - a.date)
-      .slice(0, 5);
-
-    if(allNews.length){
-      const html = allNews.map(i => {
-        const timeStr = isNaN(i.date) ? '' : ' · ' + fmtTimeOnly(i.date);
-        return `<div class="brief-item">
-          <span class="bullet">▪</span>
-          <span>
-            <a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a>
-            <span class="src">${esc(i.src)}${timeStr}</span>
-          </span>
-        </div>`;
-      }).join('');
-      $('newsList').innerHTML = html;
+  // BIST 100
+  try{
+    const res = await fetch('https://api.genelpara.com/embed/borsa.json');
+    const data = await res.json();
+    if(data && data.XU100){
+      $('bistVal').innerText = fmtNum(data.XU100.satis, 2);$('bistChg').innerHTML = `<span class="${parseFloat(data.XU100.degisim)>=0?'up':'down'}">${data.XU100.degisim}%</span>`;
+      $('bistMeta').textContent = 'Borsa İstanbul';
     } else {
-      $('newsList').innerHTML = '<div class="empty">Güncel haber yüklenemedi.</div>';
+      throw new Error();
     }
-  } catch(e) {
-    $('newsList').innerHTML = '<div class="empty">Haber akışı güncellenemiyor.</div>';
+  }catch(e){
+    $('bistVal').innerText = 'Kapalı/Veri Bekleniyor';
+    $('bistMeta').textContent = 'Seans Dışı';
   }
 }
 
-// ================= 5. GOOGLE TABLO ENTEGRASYONU =================
+// 3. Haberler (Güvenli Fallback RSS)
+async function loadNews(){
+  try{
+    const res = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.trthaber.com/manset_articles.rss'));
+    const text = await res.text();
+    const xml = new DOMParser().parseFromString(text, 'text/xml');
+    const items = Array.from(xml.querySelectorAll('item')).slice(0, 4);
+    
+    if(items.length){
+      $('newsList').innerHTML = items.map(i => {
+        const title = i.querySelector('title')?.textContent || '';
+        const link = i.querySelector('link')?.textContent || '#';
+        return `<div class="brief-item"><span class="bullet">▪</span><span><a href="${esc(link)}" target="_blank" rel="noopener">${esc(title)}</a><span class="src">TRT Haber</span></span></div>`;
+      }).join('');
+    } else {
+      throw new Error();
+    }
+  }catch(e){
+    $('newsList').innerHTML = `<div class="brief-item"><span class="bullet">▪</span><span><a href="https://www.trthaber.com" target="_blank" rel="noopener">TRT Haber Gündemi için tıklayın</a><span class="src">Resmî Portal</span></span></div>`;
+  }
+}
+
+// 4. Google Tablo (Plan & Görevler)
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec";
+
+async function fetchSheetData() {
+  try {
+    const resp = await fetch(SHEET_API_URL + '?action=get&_t=' + Date.now(), { redirect: 'follow' });
+    if (resp.ok) {
+      const rows = await resp.json();
+      renderAgenda(rows);
+    }
+  } catch (e) {
+    $('agendaList').innerHTML = '<div class="empty">Tablo verisi yüklenemedi.</div>';
+  }
+}
 
 function renderAgenda(rows) {
   const agendaBox = $('agendaList');
@@ -459,8 +306,6 @@ function renderAgenda(rows) {
   
   if (!Array.isArray(rows) || !rows.length) {
     agendaBox.innerHTML = '<div class="empty">Tabloda aktif plan maddesi yok.</div>';
-    alertBox.innerHTML = '<div class="empty">Aktif acil uyarı yok.</div>';
-    if(customLocalBox) customLocalBox.innerHTML = '';
     return;
   }
 
@@ -471,80 +316,34 @@ function renderAgenda(rows) {
 
   const alerts = rows.filter(i => isActive(i) && String(i.kategori || i.Kategori || '').toLowerCase().includes('uyari'));
   if (alerts.length) {
-    alertBox.innerHTML = alerts.map(a => `
-      <div class="match-alert-card" style="margin-bottom:8px">
-        <span style="font-size:18px">⚠️</span>
-        <div>
-          <div class="match-alert-title">${esc(a.baslik || a.Başlık)}</div>
-          <div class="match-alert-desc">${esc(a.detay || a.Detay)}${(a.tarih || a.Tarih) ? `<span class="src">${esc(a.tarih || a.Tarih)}</span>` : ''}</div>
-        </div>
-      </div>
-    `).join('');
-  } else {
-    alertBox.innerHTML = '<div class="empty">Aktif acil uyarı yok.</div>';
+    alertBox.innerHTML = alerts.map(a => `<div class="match-alert-card" style="margin-bottom:8px"><span>⚠️</span><div><div class="match-alert-title">${esc(a.baslik || a.Başlık)}</div><div class="match-alert-desc">${esc(a.detay || a.Detay)}</div></div></div>`).join('');
   }
 
-  const localCustom = rows.filter(i => isActive(i) && String(i.kategori || i.Kategori || '').toLowerCase().includes('yerel'));
-  if (customLocalBox) {
-    if (localCustom.length) {
-      customLocalBox.innerHTML = localCustom.map(l => `
-        <div class="brief-item">
-          <span class="bullet">📍</span>
-          <span><strong>${esc(l.baslik || l.Başlık)}:</strong> ${esc(l.detay || l.Detay)}</span>
-        </div>
-      `).join('');
-    } else {
-      customLocalBox.innerHTML = '';
-    }
-  }
-
-  const planItems = rows.filter(i => isActive(i) && !String(i.kategori || i.Kategori || '').toLowerCase().includes('yerel') && !String(i.kategori || i.Kategori || '').toLowerCase().includes('uyari'));
+  const planItems = rows.filter(i => isActive(i) && !String(i.kategori || i.Kategori || '').toLowerCase().includes('uyari') && !String(i.kategori || i.Kategori || '').toLowerCase().includes('yerel'));
   if (planItems.length) {
     agendaBox.innerHTML = planItems.map(i => {
       const kat = i.kategori || i.Kategori || '';
       const bas = i.baslik || i.Başlık || '';
       const det = i.detay || i.Detay || '';
-      const tar = i.tarih || i.Tarih || '';
-      const meta = [tar].filter(Boolean).map(esc).join(' · ');
-
-      return `<div class="brief-item">
-        <span class="bullet">▪</span>
-        <span>
-          ${kat ? `<strong style="color:var(--accent)">[${esc(kat)}]</strong> ` : ''}
-          ${bas ? `<strong>${esc(bas)}</strong>` : ''}
-          ${bas && det ? ': ' : ''}${esc(det)}
-          ${meta ? `<span class="src">${meta}</span>` : ''}
-        </span>
-      </div>`;
+      return `<div class="brief-item"><span class="bullet">▪</span><span>${kat?`<strong>[${esc(kat)}]</strong> `:''}${esc(bas)}${bas&&det?': ':''}${esc(det)}</span></div>`;
     }).join('');
   } else {
     agendaBox.innerHTML = '<div class="empty">Tabloda aktif plan maddesi yok.</div>';
   }
 }
 
-async function fetchSheetData() {
-  try {
-    const resp = await fetch(SHEET_API_URL + '?action=get&_t=' + Date.now(), { redirect: 'follow', cache: 'no-store' });
-    if (resp.ok) {
-      const rows = await resp.json();
-      renderAgenda(rows);
-      return rows;
-    }
-  } catch (e) {
-    $('agendaList').innerHTML = '<div class="empty unverified">Canlı tablo çekilemedi.</div>';
-  }
-}
-
-// ================= CANLI REFRESH =================
+// Refresh
 async function refreshAllData() {
   const btn = $('refreshBtn');
   btn.classList.add('spinning');
-  
-  await Promise.allSettled([
-    fetchWeather(),
-    loadMarkets(),
-    fetchSheetData(),
-    loadNews()
-  ]);
-  
-  setTimeout
+  await Promise.allSettled([fetchWeather(), loadMarkets(), fetchSheetData(), loadNews()]);
+  setTimeout(() => btn.classList.remove('spinning'), 400);
+}
+
+// Başlat
+(async ()=>{
+  refreshAllData();
+})();
+</script>
+</body>
+</html>
