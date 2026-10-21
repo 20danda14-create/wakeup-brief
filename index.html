@@ -226,12 +226,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div id="newsList"><div class="empty">Yükleniyor…</div></div>
   </div>
 
+  <!-- 06 · PİYASALAR -->
   <div class="card">
-    <div class="card-title"><span>06</span> Piyasalar</div>
+    <div class="card-title"><span>06</span> Piyasalar (Canlı)</div>
     <div id="marketStatus" class="metric-sub"></div>
     <div class="grid-2">
       <div class="metric-box">
-        <span class="metric-label">EURO / TL</span>
+        <span class="metric-label">USD / TL</span>
+        <span id="usdVal" class="metric-val">…</span>
+        <span id="usdChg" class="metric-sub"></span>
+        <span id="usdMeta" class="metric-sub"></span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label">EUR / TL</span>
         <span id="eurVal" class="metric-val">…</span>
         <span id="eurChg" class="metric-sub"></span>
         <span id="eurMeta" class="metric-sub"></span>
@@ -242,7 +249,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <span id="goldChg" class="metric-sub"></span>
         <span id="goldMeta" class="metric-sub"></span>
       </div>
-      <div class="metric-box wide">
+      <div class="metric-box">
         <span class="metric-label">BIST 100</span>
         <span id="bistVal" class="metric-val">…</span>
         <span id="bistChg" class="metric-sub"></span>
@@ -265,7 +272,6 @@ const $ = id => document.getElementById(id);
 const TZ = 'Europe/Istanbul';
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtNum = (n,d=2) => Number(n).toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});
-const fmtDate = d => new Date(d).toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric',timeZone:TZ});
 const fmtDT = d => new Date(d).toLocaleString('tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ});
 const fmtTimeOnly = d => new Date(d).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',timeZone:TZ});
 
@@ -299,49 +305,79 @@ async function fetchWeather(){
   }
 }
 
-// ================= 3. PİYASALAR (CANLI SIFIR GECİKME) =================
+// ================= 3. PİYASALAR (SABİT DÖVİZ, ALTIN, BIST CANLI KURLAR) =================
 const OUNCE_G = 31.1034768;
 
-async function loadEUR(){
+async function loadMarkets(){
+  // 1. Dolar ve Euro (Anlık Canlı Döviz Servisi)
   try{
-    // Doğrudan anlık döviz servisi
-    const res = await fetch('https://open.er-api.com/v6/latest/EUR?_t=' + Date.now(), {cache: 'no-store'});
+    const res = await fetch('https://open.er-api.com/v6/latest/USD?_t=' + Date.now(), {cache: 'no-store'});
     const d = await res.json();
-    const l = d.rates.TRY;
-    $('eurVal').innerText = fmtNum(l,4) + ' ₺';$('eurChg').innerHTML = '<span class="flat">Anlık Canlı Kuru</span>';
-    $('eurMeta').textContent = 'Son Veri: ' + fmtTimeOnly(new Date());
-  }catch(e){
-    $('eurVal').innerHTML = '<span class="unverified">Doğrulanamadı</span>';
-    $('eurMeta').textContent = 'Güncel veri alınamadı';
-  }
-}
+    if(d && d.rates && d.rates.TRY){
+      const usdTry = d.rates.TRY;
+      const eurTry = d.rates.TRY / d.rates.EUR;
+      
+      $('usdVal').innerText = fmtNum(usdTry, 4) + ' ₺';$('usdChg').innerHTML = '<span class="flat">Anlık Canlı</span>';
+      $('usdMeta').textContent = fmtTimeOnly(new Date());
 
-async function loadGold(){
-  try{
-    const gRes = await fetch('https://api.gold-api.com/price/XAU?_t=' + Date.now(), {cache: 'no-store'});
-    const g = await gRes.json();
-    const fxRes = await fetch('https://open.er-api.com/v6/latest/USD?_t=' + Date.now(), {cache: 'no-store'});
-    const fx = await fxRes.json();
-    const l = (g.price * fx.rates.TRY) / OUNCE_G;
-    $('goldVal').innerText = fmtNum(l,2) + ' ₺';$('goldChg').innerHTML = '<span class="flat">Anlık Ons Hesabı</span>';
-    $('goldMeta').textContent = `Ons: $${fmtNum(g.price,1)} · ${fmtTimeOnly(new Date())}`;
-  }catch(e){
-    $('goldVal').innerHTML = '<span class="unverified">Doğrulanamadı</span>';
-    $('goldMeta').textContent = 'Güncel veri alınamadı';
-  }
-}
+      $('eurVal').innerText = fmtNum(eurTry, 4) + ' ₺';$('eurChg').innerHTML = '<span class="flat">Anlık Canlı</span>';
+      $('eurMeta').textContent = fmtTimeOnly(new Date());
 
-async function loadBIST(){
-  try{
-    const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/XU100.IS?interval=1m&range=1d&_t=` + Date.now(), {cache: 'no-store'});
-    const d = await res.json();
-    const r = d.chart.result[0], cl = r.indicators.quote[0].close;
-    const l = cl.filter(x=>x!=null).pop();
-    $('bistVal').innerText = fmtNum(l,2);$('bistChg').innerHTML = '<span class="flat">BIST 100</span>';
-    $('bistMeta').textContent = 'Yahoo Finance · ' + fmtTimeOnly(new Date());
+      // 2. Gram Altın (Ons Altın x USD/TRY / 31.1035)
+      try{
+        const gRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT&_t=' + Date.now(), {cache: 'no-store'});
+        const gData = await gRes.json();
+        const onsUSD = parseFloat(gData.price);
+        if(onsUSD){
+          const gramTRY = (onsUSD * usdTry) / OUNCE_G;
+          $('goldVal').innerText = fmtNum(gramTRY, 2) + ' ₺';$('goldChg').innerHTML = '<span class="flat">Canlı Ons Hesabı</span>';
+          $('goldMeta').textContent = `Ons: $${fmtNum(onsUSD, 1)} · ${fmtTimeOnly(new Date())}`;
+        }
+      }catch(errAltin){
+        // Altın Yedek Servis
+        try{
+          const gRes2 = await fetch('https://api.gold-api.com/price/XAU?_t=' + Date.now(), {cache: 'no-store'});
+          const g2 = await gRes2.json();
+          if(g2 && g2.price){
+            const gramTRY = (g2.price * usdTry) / OUNCE_G;
+            $('goldVal').innerText = fmtNum(gramTRY, 2) + ' ₺';$('goldChg').innerHTML = '<span class="flat">Canlı Ons Hesabı</span>';
+            $('goldMeta').textContent = `Ons: $${fmtNum(g2.price, 1)} · ${fmtTimeOnly(new Date())}`;
+          }
+        }catch(e2){
+          $('goldVal').innerText = '—';$('goldMeta').textContent = 'Erişilemedi';
+        }
+      }
+    }
   }catch(e){
-    $('bistVal').innerHTML = '<span class="unverified">Kapalı/Erişilemedi</span>';
-    $('bistMeta').textContent = 'Son seans verisi alınıyor';
+    $('usdVal').innerText = '—'; $('eurVal').innerText = '—';$('goldVal').innerText = '—';
+  }
+
+  // 3. BIST 100 (Canlı BIST Servisi)
+  try{
+    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://bigpara.hurriyet.com.tr/api/v1/hisse/detay/XU100') + '&_t=' + Date.now();
+    const bistRes = await fetch(proxyUrl, {cache: 'no-store'});
+    const bistData = await bistRes.json();
+    if(bistData && bistData.data && bistData.data.kapanis){
+      $('bistVal').innerText = fmtNum(bistData.data.kapanis, 2);$('bistChg').innerHTML = '<span class="flat">BIST 100</span>';
+      $('bistMeta').textContent = 'Bigpara · ' + fmtTimeOnly(new Date());
+    } else {
+      throw new Error('bist data null');
+    }
+  }catch(e){
+    // BIST Yedek
+    try {
+      const bistRes2 = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/XU100.IS?interval=5m&range=1d&_t=' + Date.now()), {cache: 'no-store'});
+      const bist2 = await bistRes2.json();
+      const cl = bist2.chart.result[0].indicators.quote[0].close;
+      const lastVal = cl.filter(x=>x!=null).pop();
+      if(lastVal){
+        $('bistVal').innerText = fmtNum(lastVal, 2);$('bistChg').innerHTML = '<span class="flat">BIST 100</span>';
+        $('bistMeta').textContent = 'Yahoo Finance · ' + fmtTimeOnly(new Date());
+      }
+    }catch(e2){
+      $('bistVal').innerHTML = '<span class="unverified">Piyasa Kapalı/Seans Dışı</span>';
+      $('bistMeta').textContent = 'Son seans verisi alınıyor';
+    }
   }
 }
 
@@ -490,9 +526,7 @@ async function refreshAllData() {
   
   await Promise.allSettled([
     fetchWeather(),
-    loadEUR(),
-    loadGold(),
-    loadBIST(),
+    loadMarkets(),
     fetchSheetData(),
     loadNews()
   ]);
@@ -500,10 +534,10 @@ async function refreshAllData() {
   setTimeout(() => {
     btn.classList.remove('spinning');
     $('footerNote').textContent = 'Canlı Güncelleme: ' + fmtTimeOnly(new Date()) + ' · Doğrulanamayan bilgi uydurulmaz.';
-  }, 300);
+  }, 400);
 }
 
-// ================= BAŞLAT =================
+// ================= BAŞLAT (TAMAMEN CANLI VERİ) =================
 (async ()=>{
   refreshAllData();
 })();
