@@ -11,7 +11,6 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px 16px 40px;-webkit-font-smoothing:antialiased}
 .container{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
 
-/* HEADER & REFRESH BUTTON */
 .header{
   background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(124,92,252,0.15));
   border:1px solid var(--border);
@@ -43,9 +42,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .metric-label{font-size:11px;color:var(--muted);font-weight:600}
 .metric-val{font-family:'DM Mono',monospace;font-size:16px;font-weight:500}
 .metric-sub{font-size:10px;color:var(--muted);line-height:1.35}
-.up{color:var(--success)}.down{color:var(--danger)}.flat{color:var(--muted)}
 
-/* HABER VE İÇERİK MADDELERİ */
 .brief-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.4;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .brief-item:last-child{border-bottom:none}
 .brief-item .news-content{display:flex;flex-direction:column;gap:3px;flex:1}
@@ -142,39 +139,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 
-  <!-- 05 · UYGULAMA İÇİNDE CANLI HABER AKIŞI -->
   <div class="card">
     <div class="card-title"><span>05</span> Türkiye & Dünya Gündemi</div>
     <div id="newsList"><div class="empty">Haber akışı güncelleniyor…</div></div>
   </div>
 
-  <!-- 06 · PİYASALAR & BIST 100 -->
   <div class="card">
     <div class="card-title"><span>06</span> Piyasalar (Canlı)</div>
     <div class="grid-2">
       <div class="metric-box">
         <span class="metric-label">USD / TL</span>
         <span id="usdVal" class="metric-val">…</span>
-        <span id="usdChg" class="metric-sub"></span>
-        <span id="usdMeta" class="metric-sub"></span>
+        <span id="usdMeta" class="metric-sub">Canlı</span>
       </div>
       <div class="metric-box">
         <span class="metric-label">EUR / TL</span>
         <span id="eurVal" class="metric-val">…</span>
-        <span id="eurChg" class="metric-sub"></span>
-        <span id="eurMeta" class="metric-sub"></span>
+        <span id="eurMeta" class="metric-sub">Canlı</span>
       </div>
       <div class="metric-box">
         <span class="metric-label">GRAM ALTIN (TL)</span>
         <span id="goldVal" class="metric-val">…</span>
-        <span id="goldChg" class="metric-sub"></span>
-        <span id="goldMeta" class="metric-sub"></span>
+        <span id="goldMeta" class="metric-sub">Serbest Piyasa</span>
       </div>
       <div class="metric-box">
         <span class="metric-label">BIST 100</span>
         <span id="bistVal" class="metric-val">…</span>
-        <span id="bistChg" class="metric-sub"></span>
-        <span id="bistMeta" class="metric-sub"></span>
+        <span id="bistMeta" class="metric-sub">Borsa İstanbul</span>
       </div>
     </div>
   </div>
@@ -194,7 +185,6 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const fmtNum = (n,d=2) => Number(n).toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});
 const fmtTimeOnly = d => new Date(d).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',timeZone:TZ});
 
-// Saat & Tarih
 function updateClock(){
   const n = new Date();
   $('liveClock').innerText = n.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', timeZone: TZ });
@@ -204,7 +194,6 @@ function updateClock(){
 }
 setInterval(updateClock, 1000); updateClock();
 
-// 1. Hava Durumu
 async function fetchWeather(){
   try{
     const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.98&longitude=32.65&current=temperature_2m,precipitation&timezone=Europe%2FIstanbul');
@@ -215,131 +204,49 @@ async function fetchWeather(){
     $('weatherCloth').innerText = p>0?'Şemsiye & Mont':(t<12?'Mont':'Ceket');
     $('weatherSub').innerText = p>0?'Su geçirmez kıyafet giyin':'Normal giyim önerilir';
   }catch(e){
-    $('weatherTemp').innerText = '—';$('weatherDesc').innerText = 'Hava durumu alınamadı';
+    $('weatherTemp').innerText = '—';
   }
 }
 
-// 2. Canlı Piyasalar (Döviz, Altın ve BIST 100)
-async function loadMarkets(){
-  // Döviz ve Gram Altın
-  try{
-    const res = await fetch('https://open.er-api.com/v6/latest/USD');
-    const d = await res.json();
-    if(d && d.rates && d.rates.TRY){
-      const usdTry = d.rates.TRY;
-      const eurTry = d.rates.TRY / d.rates.EUR;
-      
-      $('usdVal').innerText = fmtNum(usdTry, 4) + ' ₺';$('usdChg').innerHTML = '<span class="flat">Canlı</span>';
-      $('usdMeta').textContent = fmtTimeOnly(new Date());
-
-      $('eurVal').innerText = fmtNum(eurTry, 4) + ' ₺';$('eurChg').innerHTML = '<span class="flat">Canlı</span>';
-      $('eurMeta').textContent = fmtTimeOnly(new Date());
-
-      // Altın
-      try{
-        const gRes = await fetch('https://api.genelpara.com/embed/altin.json');
-        const gData = await gRes.json();
-        if(gData && gData.GA){
-          $('goldVal').innerText = fmtNum(parseFloat(gData.GA.satis), 2) + ' ₺';$('goldChg').innerHTML = `<span class="${parseFloat(gData.GA.degisim)>=0?'up':'down'}">%${gData.GA.degisim}</span>`;
-          $('goldMeta').textContent = 'Serbest Piyasa · ' + fmtTimeOnly(new Date());
-        }
-      }catch(err){
-        $('goldVal').innerText = '—';
-      }
-    }
-  }catch(e){
-    $('usdVal').innerText = '—'; $('eurVal').innerText = '—';$('goldVal').innerText = '—';
-  }
-
-  // BIST 100 (Borsa İstanbul Canlı Verisi)
-  try{
-    const res = await fetch('https://api.genelpara.com/embed/borsa.json');
-    const data = await res.json();
-    if(data && data.XU100 && data.XU100.satis){
-      const bistVal = parseFloat(data.XU100.satis);
-      const bistChg = parseFloat(data.XU100.degisim);
-      $('bistVal').innerText = fmtNum(bistVal, 2);$('bistChg').innerHTML = `<span class="${bistChg>=0?'up':'down'}">%${bistChg}</span>`;
-      $('bistMeta').textContent = 'Borsa İstanbul · ' + fmtTimeOnly(new Date());
-    } else {
-      throw new Error();
-    }
-  }catch(e){
-    $('bistVal').innerText = '—';$('bistMeta').textContent = 'Seans Bilgisi Alınamadı';
-  }
-}
-
-// 3. Haberler (Doğrudan Uygulama İçinde XML Parse İle Liste)
-const FEEDS = [
-  {name:'BBC Türkçe', url:'https://feeds.bbci.co.uk/turkce/rss.xml'},
-  {name:'TRT Haber',   url:'https://www.trthaber.com/manset_articles.rss'},
-  {name:'AA Güncel',   url:'https://www.aa.com.tr/tr/rss/default?cat=guncel'}
-];
-
-async function fetchDirectXml(feed){
-  try {
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feed.url) + '&_t=' + Date.now();
-    const res = await fetch(proxyUrl);
-    if(!res.ok) throw new Error();
-    const xmlText = await res.text();
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(xmlText, 'text/xml');
-    const items = Array.from(xml.querySelectorAll('item')).slice(0, 3);
-
-    return items.map(item => {
-      const title = item.querySelector('title')?.textContent || '';
-      const link = item.querySelector('link')?.textContent || '#';
-      const pubDateStr = item.querySelector('pubDate')?.textContent || '';
-      const pubDate = pubDateStr ? new Date(pubDateStr) : new Date();
-      return { title, link, date: pubDate, src: feed.name };
-    });
-  } catch(e) {
-    return [];
-  }
-}
-
-async function loadNews(){
-  try{
-    const results = await Promise.allSettled(FEEDS.map(fetchDirectXml));
-    const allNews = results
-      .filter(r => r.status === 'fulfilled')
-      .flatMap(r => r.value)
-      .filter(i => i.title.length > 5)
-      .sort((a,b) => b.date - a.date)
-      .slice(0, 6);
-
-    if(allNews.length){
-      $('newsList').innerHTML = allNews.map(i => `
-        <div class="brief-item">
-          <span class="bullet">▪</span>
-          <div class="news-content">
-            <a href="${esc(i.link)}" target="_blank" rel="noopener" class="news-title">${esc(i.title)}</a>
-            <div class="src">
-              <span class="src-tag">${esc(i.src)}</span>
-              ${isNaN(i.date) ? '' : '· ' + fmtTimeOnly(i.date)}
-            </div>
-          </div>
-        </div>
-      `).join('');
-    } else {
-      $('newsList').innerHTML = '<div class="empty">Haber akışı güncelleniyor…</div>';
-    }
-  }catch(e){
-    $('newsList').innerHTML = '<div class="empty">Haberler yüklenirken hata oluştu.</div>';
-  }
-}
-
-// 4. Google Tablo Entegrasyonu
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec";
 
-async function fetchSheetData() {
+async function fetchAllBackendData() {
   try {
     const resp = await fetch(SHEET_API_URL + '?action=get&_t=' + Date.now(), { redirect: 'follow' });
     if (resp.ok) {
-      const rows = await resp.json();
-      renderAgenda(rows);
+      const data = await resp.json();
+      renderAgenda(data.rows || []);
+      renderMarkets(data.markets || {});
+      renderNews(data.news || []);
     }
   } catch (e) {
-    $('agendaList').innerHTML = '<div class="empty">Tablo verisi yüklenemedi.</div>';
+    $('agendaList').innerHTML = '<div class="empty">Veri yüklenemedi.</div>';
+  }
+}
+
+function renderMarkets(m) {
+  if (m.usd) $('usdVal').innerText = (isNaN(m.usd) ? m.usd : fmtNum(m.usd, 4)) + ' ₺';
+  if (m.eur) $('eurVal').innerText = (isNaN(m.eur) ? m.eur : fmtNum(m.eur, 4)) + ' ₺';
+  if (m.gold) $('goldVal').innerText = (isNaN(m.gold) ? m.gold : fmtNum(m.gold, 2)) + ' ₺';
+  if (m.bist) $('bistVal').innerText = (isNaN(m.bist) ? m.bist : fmtNum(m.bist, 2));
+}
+
+function renderNews(news) {
+  const newsBox = $('newsList');
+  if (Array.isArray(news) && news.length) {
+    newsBox.innerHTML = news.map(i => `
+      <div class="brief-item">
+        <span class="bullet">▪</span>
+        <div class="news-content">
+          <a href="${esc(i.link)}" target="_blank" rel="noopener" class="news-title">${esc(i.title)}</a>
+          <div class="src">
+            <span class="src-tag">${esc(i.src)}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  } else {
+    newsBox.innerHTML = '<div class="empty">Güncel haber yüklenemedi.</div>';
   }
 }
 
@@ -375,19 +282,16 @@ function renderAgenda(rows) {
   }
 }
 
-// Yenile
 async function refreshAllData() {
   const btn = $('refreshBtn');
   btn.classList.add('spinning');
-  await Promise.allSettled([fetchWeather(), loadMarkets(), fetchSheetData(), loadNews()]);
+  await Promise.allSettled([fetchWeather(), fetchAllBackendData()]);
   setTimeout(() => btn.classList.remove('spinning'), 400);
 }
 
-// Başlat
 (async ()=>{
   refreshAllData();
 })();
 </script>
 </body>
 </html>
-
