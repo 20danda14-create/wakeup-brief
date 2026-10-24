@@ -36,10 +36,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);display:flex;align-items:center;gap:8px}
 .card-title span{color:var(--accent)}
 .sub-title{font-size:12px;font-weight:600;color:var(--muted);margin-top:6px}
+
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
 .metric-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
 .metric-label{font-size:11px;color:var(--muted);font-weight:600}
-.metric-val{font-family:'DM Mono',monospace;font-size:16px;font-weight:500}
+.metric-val{font-family:'DM Mono',monospace;font-size:15px;font-weight:500}
 .metric-sub{font-size:10px;color:var(--muted);line-height:1.35}
 
 .brief-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.4;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
@@ -139,32 +142,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 
   <div class="card">
-    <div class="card-title"><span>05</span> Türkiye & Dünya Gündemi</div>
+    <div class="card-title"><span>05</span> Türkiye & Dünya Gündemi (Google News)</div>
     <div id="newsList"><div class="empty">Haber akışı güncelleniyor…</div></div>
   </div>
 
   <div class="card">
     <div class="card-title"><span>06</span> Piyasalar (Google Finance)</div>
-    <div class="grid-2">
+    <div class="grid-3">
       <div class="metric-box">
         <span class="metric-label">USD / TL</span>
         <span id="usdVal" class="metric-val">…</span>
-        <span id="usdMeta" class="metric-sub">Google Finance</span>
+        <span id="usdMeta" class="metric-sub">H1 Hücresi</span>
       </div>
       <div class="metric-box">
         <span class="metric-label">EUR / TL</span>
         <span id="eurVal" class="metric-val">…</span>
-        <span id="eurMeta" class="metric-sub">Google Finance</span>
-      </div>
-      <div class="metric-box">
-        <span class="metric-label">GRAM ALTIN / ONS</span>
-        <span id="goldVal" class="metric-val">…</span>
-        <span id="goldMeta" class="metric-sub">Google Finance</span>
+        <span id="eurMeta" class="metric-sub">I1 Hücresi</span>
       </div>
       <div class="metric-box">
         <span class="metric-label">BIST 100</span>
         <span id="bistVal" class="metric-val">…</span>
-        <span id="bistMeta" class="metric-sub">Borsa İstanbul</span>
+        <span id="bistMeta" class="metric-sub">J1 Hücresi</span>
       </div>
     </div>
   </div>
@@ -226,7 +224,6 @@ async function fetchAllBackendData() {
 function renderMarkets(m) {
   if (m.usd) $('usdVal').innerText = (isNaN(m.usd) ? m.usd : fmtNum(m.usd, 4)) + ' ₺';
   if (m.eur) $('eurVal').innerText = (isNaN(m.eur) ? m.eur : fmtNum(m.eur, 4)) + ' ₺';
-  if (m.gold) $('goldVal').innerText = (isNaN(m.gold) ? m.gold : fmtNum(m.gold, 2));
   if (m.bist) $('bistVal').innerText = (isNaN(m.bist) ? m.bist : fmtNum(m.bist, 2));
 }
 
