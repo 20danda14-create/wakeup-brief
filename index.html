@@ -210,14 +210,13 @@ async function fetchWeather(){
 
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec";
 
-async function fetchAllBackendData() {
+async function fetchSheetAndMarkets() {
   try {
     const resp = await fetch(SHEET_API_URL + '?action=get&_t=' + Date.now(), { redirect: 'follow' });
     if (resp.ok) {
       const data = await resp.json();
       renderAgenda(data.rows || []);
       renderMarkets(data.markets || {});
-      renderNews(data.news || []);
     }
   } catch (e) {
     $('agendaList').innerHTML = '<div class="empty">Veri yüklenemedi.</div>';
@@ -230,22 +229,27 @@ function renderMarkets(m) {
   if (m.bist) $('bistVal').innerText = fmtNum(m.bist, 2);
 }
 
-function renderNews(news) {
-  const newsBox = $('newsList');
-  if (Array.isArray(news) && news.length) {
-    newsBox.innerHTML = news.map(i => `
-      <div class="brief-item">
-        <span class="bullet">▪</span>
-        <div class="news-content">
-          <a href="${esc(i.link)}" target="_blank" rel="noopener" class="news-title">${esc(i.title)}</a>
-          <div class="src">
-            <span class="src-tag">${esc(i.src)}</span>
+async function fetchGoogleNewsDirect() {
+  try {
+    const rssUrl = encodeURIComponent('https://news.google.com/rss?hl=tr&gl=TR&ceid=TR:tr');
+    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + rssUrl);
+    const json = await res.json();
+    
+    if (json.status === 'ok' && json.items && json.items.length) {
+      $('newsList').innerHTML = json.items.slice(0, 5).map(i => `
+        <div class="brief-item">
+          <span class="bullet">▪</span>
+          <div class="news-content">
+            <a href="${esc(i.link)}" target="_blank" rel="noopener" class="news-title">${esc(i.title)}</a>
+            <div class="src"><span class="src-tag">Google Haberler</span></div>
           </div>
         </div>
-      </div>
-    `).join('');
-  } else {
-    newsBox.innerHTML = '<div class="empty">Güncel haber yüklenemedi.</div>';
+      `).join('');
+    } else {
+      $('newsList').innerHTML = '<div class="empty">Google Haberler akışı alınamadı.</div>';
+    }
+  } catch(e) {
+    $('newsList').innerHTML = '<div class="empty">Haberler yüklenirken bağlantı hatası.</div>';
   }
 }
 
@@ -284,7 +288,7 @@ function renderAgenda(rows) {
 async function refreshAllData() {
   const btn = $('refreshBtn');
   btn.classList.add('spinning');
-  await Promise.allSettled([fetchWeather(), fetchAllBackendData()]);
+  await Promise.allSettled([fetchWeather(), fetchSheetAndMarkets(), fetchGoogleNewsDirect()]);
   setTimeout(() => btn.classList.remove('spinning'), 400);
 }
 
