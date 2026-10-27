@@ -1,527 +1,262 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0d0d12">
-<title>WAKE UP BRIEF · Ankara / Eryaman</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0d0d12;--surface:#14141c;--card:#1b1b26;--border:#2a2a3d;--accent:#ff6b35;--purple:#7c5cfc;--text:#f0f0f8;--muted:#78789e;--success:#2dd4a0;--warning:#ffb703;--danger:#ff4d6d;--r:16px;color-scheme:dark}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px 16px 40px;-webkit-font-smoothing:antialiased}
-.container{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+#!/usr/bin/env python3
+"""Wake Up Brief - sunucu tarafı veri toplayıcı (GitHub Actions'ta çalışır).
 
-.header{background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(124,92,252,0.15));border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.header-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
-.header-sub{font-size:15px;font-weight:600;color:#fff;margin-top:6px;line-height:1.3;letter-spacing:-.2px}
-.header-sub .location-tag{font-size:12px;color:var(--muted);font-weight:500;display:block;margin-bottom:2px}
-.header-sub .date-highlight{color:var(--accent);font-weight:700}
-.header-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.live-clock{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--accent);background:rgba(255,107,53,.12);padding:6px 10px;border-radius:10px;border:1px solid rgba(255,107,53,.25)}
-.btn-refresh{background:var(--surface);border:1px solid var(--border);color:var(--text);width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:18px}
-.btn-refresh:active{transform:scale(0.92);border-color:var(--accent)}
-.btn-refresh.spinning span{display:inline-block;animation:spin .8s linear infinite}
-@keyframes spin{100%{transform:rotate(360deg)}}
+Çıktı: data.json  (index.html aynı origin'den okur; CORS/rss2json bağımlılığı yok)
+ - ego:  EGO duyuruları (başlık, link, ISO tarih)
+ - news: Google Haberler RSS (Türkiye + Dünya)
+Bir kaynak başarısız olursa o kaynağın ÖNCEKİ verisi korunur (sayfa boşalmaz).
+Tüm kaynaklar başarısızsa çıkış kodu 1 olur (workflow kırmızı olur, haberdar olursun).
+"""
+import json
+import os
+import re
+import sys
+import time
+import urllib.request
+import xml.etree.ElementTree as ET
+from datetime import datetime
+from email.utils import parsedate_to_datetime
+from urllib.parse import urljoin
+from zoneinfo import ZoneInfo
 
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
-.card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);display:flex;align-items:center;gap:8px}
-.card-title span{color:var(--accent)}
-.sub-title{font-size:12px;font-weight:600;color:var(--muted);margin-top:6px}
+from bs4 import BeautifulSoup
 
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.metric-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px;min-width:0}
-.metric-label{font-size:11px;color:var(--muted);font-weight:600}
-.metric-val{font-family:'DM Mono',monospace;font-size:15px;font-weight:500;overflow-wrap:anywhere}
-.metric-sub{font-size:10px;color:var(--muted);line-height:1.35}
-.metric-sub.stale{color:var(--warning)}
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(HERE, "data.json")
+TZ = ZoneInfo("Europe/Istanbul")
+UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
 
-.brief-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.4;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
-.brief-item:last-child{border-bottom:none}
-.brief-item .news-content{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
-.brief-item .news-title{color:var(--text);font-weight:500;text-decoration:none}
-.brief-item .news-title:hover{color:var(--accent)}
-.bullet{color:var(--accent);font-weight:bold;flex-shrink:0;margin-top:2px}
-.src{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.src-tag{background:rgba(255,107,53,0.12);color:var(--accent);padding:1px 6px;border-radius:4px;font-weight:600;font-size:10px}
-.badge-new{background:rgba(45,212,160,.15);color:var(--success);padding:1px 6px;border-radius:4px;font-weight:700;font-size:10px}
+EGO_URL = "https://www.ego.gov.tr/duyurular"
+NEWS_FEEDS = [
+    ("Türkiye", "https://news.google.com/rss?hl=tr&gl=TR&ceid=TR:tr", 5),
+    ("Dünya", "https://news.google.com/rss/headlines/section/topic/WORLD?hl=tr&gl=TR&ceid=TR:tr", 3),
+]
 
-.match-alert-card{background:rgba(255,77,109,.12);border:1px solid rgba(255,77,109,.3);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
-.match-alert-card:last-child{margin-bottom:0}
-.match-alert-title{font-size:13px;font-weight:700;color:var(--danger);margin-bottom:2px}
-.match-alert-desc{font-size:12px;line-height:1.3}
-.empty{font-size:13px;color:var(--muted)}
+DATE_RE = re.compile(r"\s*(\d{2})\.(\d{2})\.(\d{4})\s*$")
+ID_RE = re.compile(r"/duyuru/(\d+)(?:/|$)")
 
-.check-item{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.4;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;user-select:none}
-.check-item:last-child{border-bottom:none}
-.check-item .box{flex-shrink:0;width:18px;height:18px;border:1.5px solid var(--muted);border-radius:5px;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent}
-.check-item.done{color:var(--muted);text-decoration:line-through}
-.check-item.done .box{background:var(--success);border-color:var(--success);color:#0d0d12}
 
-.official-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
-.official-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:6px;transition:all .2s}
-.official-card:active{border-color:var(--accent);background:rgba(255,107,53,0.08)}
-.official-card .icon{font-size:20px}
-.official-card .title{font-size:13px;font-weight:700}
-.official-card .sub{font-size:11px;color:var(--muted)}
-.footer-note{text-align:center;font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5}
-</style>
-</head>
-<body>
-<div class="container">
+def http_get(url, timeout=20, retries=3):
+    last = None
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers={
+                "User-Agent": UA,
+                "Accept-Language": "tr-TR,tr;q=0.9",
+            })
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                raw = r.read()
+                charset = r.headers.get_content_charset() or "utf-8"
+            return raw.decode(charset, errors="replace")
+        except Exception as e:  # noqa: BLE001
+            last = e
+            time.sleep(2 * (attempt + 1))
+    raise last
 
-  <div class="header">
-    <div>
-      <div class="header-title">WAKE UP BRIEF</div>
-      <div class="header-sub" id="dateLine">
-        <span class="location-tag">Ankara · Eryaman</span>
-        Yükleniyor…
-      </div>
-    </div>
-    <div class="header-right">
-      <div id="liveClock" class="live-clock" aria-label="Saat">00:00</div>
-      <button class="btn-refresh" id="refreshBtn" type="button" aria-label="Verileri güncelle" title="Verileri güncelle">
-        <span>🔄</span>
-      </button>
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="card-title"><span>01</span> Günün Özeti &amp; Acil Uyarılar</div>
-    <div id="alertList"><div class="empty">Aktif acil uyarı yok.</div></div>
-  </div>
+def parse_ego(html, base=EGO_URL, limit=8):
+    """EGO duyuru listesi: <a href='/tr/duyuru/<id>/<slug>'>Başlık dd.mm.yyyy</a>."""
+    soup = BeautifulSoup(html, "html.parser")
+    seen, items = set(), []
+    for a in soup.find_all("a", href=True):
+        m = ID_RE.search(a["href"])
+        if not m:
+            continue  # menü/sayfalama linklerini (/duyurular, #pagination) ele
+        did = int(m.group(1))
+        if did in seen:
+            continue
+        seen.add(did)
+        text = " ".join(a.get_text(" ", strip=True).split()) or (a.get("title") or "").strip()
+        date_iso = ""
+        dm = DATE_RE.search(text)
+        if dm:
+            d, mo, y = dm.groups()
+            date_iso = f"{y}-{mo}-{d}"
+            text = text[:dm.start()].strip()
+        if len(text) < 5:
+            continue
+        items.append({"id": did, "title": text, "link": urljoin(base, a["href"]), "date": date_iso})
+    items.sort(key=lambda x: x["id"], reverse=True)  # id artan = yeniden eskiye
+    return items[:limit]
 
-  <div class="card">
-    <div class="card-title"><span>02</span> Güne Hazırlık &amp; Hava (Eryaman)</div>
-    <div class="grid-2">
-      <div class="metric-box">
-        <span class="metric-label">SICAKLIK &amp; DURUM</span>
-        <span id="weatherTemp" class="metric-val">—</span>
-        <span id="weatherDesc" class="metric-sub">Yükleniyor…</span>
-      </div>
-      <div class="metric-box">
-        <span class="metric-label">GİYİM ÖNERİSİ</span>
-        <span id="weatherCloth" class="metric-val">—</span>
-        <span id="weatherSub" class="metric-sub"></span>
-      </div>
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="card-title"><span>03</span> Bugünün Planı</div>
-    <div id="agendaList"><div class="empty">Yükleniyor…</div></div>
-  </div>
+def parse_news(xml_text, tag, limit):
+    root = ET.fromstring(xml_text)
+    out = []
+    for it in root.iter("item"):
+        title = (it.findtext("title") or "").strip()
+        link = (it.findtext("link") or "").strip()
+        src_el = it.find("source")
+        source = (src_el.text or "").strip() if src_el is not None else ""
+        if source and title.endswith(" - " + source):
+            title = title[: -(len(source) + 3)].rstrip()
+        elif not source and " - " in title:
+            title, source = [p.strip() for p in title.rsplit(" - ", 1)]
+        published = ""
+        pub = it.findtext("pubDate")
+        if pub:
+            try:
+                published = parsedate_to_datetime(pub).astimezone(TZ).isoformat(timespec="minutes")
+            except Exception:  # noqa: BLE001
+                pass
+        if title and link.startswith("http"):
+            out.append({"title": title, "link": link, "source": source, "tag": tag, "published": published})
+        if len(out) >= limit:
+            break
+    return out
 
-  <div class="card">
-    <div class="card-title"><span>04</span> Yerel Durum (Ankara · Eryaman)</div>
-    <div id="localCustomList"></div>
-    <div class="sub-title">🚌 Resmî Canlı Duyuru Kanalları</div>
-    <div class="official-links-grid">
-      <a href="https://x.com/egobilgi" target="_blank" rel="noopener" class="official-card">
-        <span class="icon">🚌</span>
-        <span class="title">EGO Duyuruları</span>
-        <span class="sub">𝕏 @egobilgi canlı akışı</span>
-      </a>
-      <a href="https://x.com/AnkaraValiligi" target="_blank" rel="noopener" class="official-card">
-        <span class="icon">🏛️</span>
-        <span class="title">Ankara Valiliği</span>
-        <span class="sub">𝕏 @AnkaraValiligi duyuruları</span>
-      </a>
-      <a href="https://www.ego.gov.tr/duyurular" target="_blank" rel="noopener" class="official-card">
-        <span class="icon">🚇</span>
-        <span class="title">EGO Web Portalı</span>
-        <span class="sub">Resmî web duyuru listesi</span>
-      </a>
-      <a href="https://www.ankara.gov.tr/duyurular" target="_blank" rel="noopener" class="official-card">
-        <span class="icon">📜</span>
-        <span class="title">Valilik Portalı</span>
-        <span class="sub">Resmî haberler ve basın</span>
-      </a>
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="card-title"><span>05</span> Türkiye &amp; Dünya Gündemi (Google Haberler)</div>
-    <div id="newsList"><div class="empty">Haber akışı güncelleniyor…</div></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span>06</span> Piyasalar (Google Finance)</div>
-    <div class="grid-3">
-      <div class="metric-box">
-        <span class="metric-label">USD / TL</span>
-        <span id="usdVal" class="metric-val">—</span>
-        <span id="usdMeta" class="metric-sub"></span>
-      </div>
-      <div class="metric-box">
-        <span class="metric-label">EUR / TL</span>
-        <span id="eurVal" class="metric-val">—</span>
-        <span id="eurMeta" class="metric-sub"></span>
-      </div>
-      <div class="metric-box">
-        <span class="metric-label">BIST 100</span>
-        <span id="bistVal" class="metric-val">—</span>
-        <span id="bistMeta" class="metric-sub"></span>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span>07</span> Çıkmadan Önce Son Kontrol</div>
-    <div id="checklistList"><div class="empty">Kontrol maddesi yok.</div></div>
-  </div>
-
-  <div class="footer-note" id="footerNote">Doğrulanamayan bilgi uydurulmaz.</div>
-</div>
-<noscript><p style="text-align:center;color:#78789e;margin-top:20px">Bu sayfa JavaScript gerektirir.</p></noscript>
-
-<script>
-'use strict';
-/* ====================== Ayarlar ====================== */
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxgcuLb7vnCYc__YrPCYRVkj2lGDqvzE5r7aWf1HPMnt06rR9PYjX6jS8Aq26-_N83uiA/exec";
-const DATA_URL = "./data.json";               // scraper.py çıktısı (EGO + haber)
-const LAT = 39.98, LON = 32.65;               // Eryaman
-const TZ = 'Europe/Istanbul';
-const REFRESH_MS = 10 * 60 * 1000;            // otomatik yenileme
-const FILTER_BY_DATE = true;                  // tabloda tarih sütunu varsa sadece bugünü göster
-
-/* ====================== Yardımcılar ====================== */
-const $ = id => document.getElementById(id);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-// Türkçe-güvenli normalize: "Uyarı"/"UYARI"/"uyari" -> "uyari", "AKTİF" -> "aktif"
-const norm = s => String(s ?? '').toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ı/g, 'i').trim();
-const safeUrl = u => { try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : '#'; } catch { return '#'; } };
-
-function parseNum(v) {
-  if (typeof v === 'number') return isFinite(v) ? v : NaN;
-  let s = String(v ?? '').replace(/[^\d,.\-]/g, '');
-  if (!s) return NaN;
-  const lc = s.lastIndexOf(','), ld = s.lastIndexOf('.');
-  if (lc > -1 && ld > -1) s = lc > ld ? s.replace(/\./g, '').replace(',', '.') : s.replace(/,/g, '');
-  else if (lc > -1) s = s.replace(',', '.');
-  else if (ld > -1 && (s.match(/\./g) || []).length > 1) s = s.replace(/\./g, '');
-  return Number(s);
+GF_HEADERS = {
+    "User-Agent": UA,
+    "Accept-Language": "en-US,en;q=0.9",
+    # Avrupa/consent yönlendirmesini atlatmak için
+    "Cookie": "CONSENT=YES+cb; SOCS=CAESHAgBEhJnd3NfMjAyMzA4MTAtMF9SQzIaAmVuIAEaBgiAo_CmBg",
 }
-const fmtNum = (n, d = 2) => { const v = parseNum(n); return isNaN(v) ? '—' : v.toLocaleString('tr-TR', {minimumFractionDigits: d, maximumFractionDigits: d}); };
-const fmtTime = d => new Date(d).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit', timeZone: TZ});
-const todayISO = () => new Date().toLocaleDateString('sv-SE', {timeZone: TZ});
-
-function toISODate(v) {
-  if (v instanceof Date || typeof v === 'number') return new Date(v).toLocaleDateString('sv-SE', {timeZone: TZ});
-  const s = String(v ?? '').trim();
-  if (!s) return '';
-  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
-  if (/^\d{4}-\d{2}-\d{2}T/.test(s)) { const d = new Date(s); return isNaN(d) ? '' : d.toLocaleDateString('sv-SE', {timeZone: TZ}); }
-  const m = s.match(/^(\d{1,2})[./](\d{1,2})[./](\d{4})/);
-  return m ? `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}` : '';
+# anahtar: (Google Finance sembolü, makul değer aralığı)
+GF_SYMBOLS = {
+    "usd": ("USD-TRY", (1, 1000)),
+    "eur": ("EUR-TRY", (1, 1000)),
+    "bist": ("XU100:INDEXIST", (1000, 1_000_000)),
 }
-const daysAgo = iso => iso ? Math.floor((new Date(todayISO()) - new Date(iso)) / 864e5) : 9999;
-function agoText(iso) {
-  const t = new Date(iso).getTime(); if (!t) return '';
-  const m = Math.round((Date.now() - t) / 60000);
-  if (m < 1) return 'şimdi';
-  if (m < 60) return `${m} dk önce`;
-  if (m < 1440) return `${Math.floor(m / 60)} sa önce`;
-  return `${Math.floor(m / 1440)} gün önce`;
-}
+GF_PRICE_RES = [
+    re.compile(r'data-last-price="([0-9][0-9.,]*)"'),
+    re.compile(r'class="YMlKec fxKbKc"[^>]*>[^0-9<]*([0-9][0-9.,]*)<'),
+]
 
-async function fetchJSON(url, {timeout = 12000, retries = 1} = {}) {
-  let last;
-  for (let a = 0; a <= retries; a++) {
-    const ac = new AbortController(), t = setTimeout(() => ac.abort(), timeout);
-    try {
-      const r = await fetch(url, {signal: ac.signal});
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return await r.json();
-    } catch (e) {
-      last = e;
-      if (a < retries) await new Promise(r => setTimeout(r, 800));
-    } finally { clearTimeout(t); }
-  }
-  throw last;
-}
-const cacheGet = k => { try { return JSON.parse(localStorage.getItem('wub:' + k)); } catch { return null; } };
-const cacheSet = (k, v) => { try { localStorage.setItem('wub:' + k, JSON.stringify({t: Date.now(), v})); } catch {} };
 
-/* Sayfanın son bilinen durumu (kontrol listesi bunlardan üretilir) */
-const S = {weather: null, alertCount: 0, checkRows: [], ego: [], failed: new Set()};
+def parse_google_finance(html):
+    """Google Finance quote sayfasından son fiyatı (hl=en => nokta ondalık) çıkarır."""
+    for rx in GF_PRICE_RES:
+        m = rx.search(html)
+        if m:
+            return float(m.group(1).replace(",", ""))
+    raise ValueError("fiyat bulunamadı (sayfa yapısı değişmiş olabilir)")
 
-/* ====================== Saat ====================== */
-let lastDateLine = '';
-function updateClock() {
-  const n = new Date();
-  $('liveClock').textContent = n.toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit', timeZone: TZ});
-  const dayName = n.toLocaleDateString('tr-TR', {weekday: 'long', timeZone: TZ});
-  const dateStr = n.toLocaleDateString('tr-TR', {day: 'numeric', month: 'long', timeZone: TZ});
-  const line = `${dayName}, ${dateStr}`;
-  if (line !== lastDateLine) {
-    lastDateLine = line;
-    $('dateLine').innerHTML = `<span class="location-tag">Ankara · Eryaman</span><span class="date-highlight">${esc(dayName)}</span>, ${esc(dateStr)}`;
-  }
-}
-setInterval(updateClock, 1000); updateClock();
 
-/* ====================== Hava ====================== */
-const WMO = [
-  [[0], 'Açık', '☀️'], [[1], 'Çoğunlukla açık', '🌤️'], [[2], 'Parçalı bulutlu', '⛅'], [[3], 'Kapalı', '☁️'],
-  [[45, 48], 'Sisli', '🌫️'], [[51, 53, 55, 56, 57], 'Çisenti', '🌦️'], [[61, 63, 65, 66, 67], 'Yağmurlu', '🌧️'],
-  [[71, 73, 75, 77, 85, 86], 'Karlı', '❄️'], [[80, 81, 82], 'Sağanak', '🌧️'], [[95, 96, 99], 'Gök gürültülü fırtına', '⛈️']
-];
-const wmo = c => WMO.find(([codes]) => codes.includes(c)) || [[], 'Bilinmiyor', '🌡️'];
-const RAIN_CODES = [51, 52, 53, 54, 55, 56, 57, 61, 62, 63, 64, 65, 66, 67, 80, 81, 82, 85, 86, 71, 73, 75, 77, 95, 96, 99];
+def http_get_headers(url, headers, timeout=20, retries=2):
+    last = None
+    for attempt in range(retries + 1):
+        try:
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return r.read().decode("utf-8", errors="replace")
+        except Exception as e:  # noqa: BLE001
+            last = e
+            time.sleep(2 * (attempt + 1))
+    raise last
 
-function clothing(feel) {
-  if (feel <= 0)  return ['Kalın mont', 'Atkı, bere, eldiven'];
-  if (feel <= 8)  return ['Mont', 'Kat kat giyin'];
-  if (feel <= 15) return ['Ceket / hırka', 'Akşam serinleyebilir'];
-  if (feel <= 21) return ['İnce ceket', 'Normal giyim'];
-  if (feel <= 27) return ['Tişört', 'Hafif giyim'];
-  return ['Hafif giyim', 'Şapka ve su alın'];
-}
 
-async function fetchWeather() {
-  try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}` +
-      `&current=temperature_2m,apparent_temperature,precipitation,weather_code` +
-      `&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max` +
-      `&timezone=Europe%2FIstanbul&forecast_days=1`;
-    const d = await fetchJSON(url);
-    const c = d.current, dl = d.daily || {};
-    const t = Number(c.temperature_2m), feel = Number(c.apparent_temperature ?? t), p = Number(c.precipitation || 0);
-    const prob = dl.precipitation_probability_max?.[0], tmin = dl.temperature_2m_min?.[0], tmax = dl.temperature_2m_max?.[0];
-    const [, text, icon] = wmo(c.weather_code);
-    const rain = p > 0 || RAIN_CODES.includes(c.weather_code) || (prob ?? 0) >= 50;
-    const [cloth, clothSub] = clothing(feel);
+def fallback_price(key):
+    """Google Finance çalışmazsa ücretsiz yedek kaynaklar."""
+    if key in ("usd", "eur"):
+        cur = key.upper()
+        for url, getter in (
+            (f"https://api.frankfurter.app/latest?from={cur}&to=TRY", lambda j: j["rates"]["TRY"]),
+            (f"https://open.er-api.com/v6/latest/{cur}", lambda j: j["rates"]["TRY"]),
+        ):
+            try:
+                return float(getter(json.loads(http_get(url, retries=1)))), url.split("/")[2]
+            except Exception:  # noqa: BLE001
+                continue
+    if key == "bist":
+        try:
+            j = json.loads(http_get("https://query1.finance.yahoo.com/v8/finance/chart/XU100.IS?range=1d&interval=1d", retries=1))
+            return float(j["chart"]["result"][0]["meta"]["regularMarketPrice"]), "Yahoo Finance"
+        except Exception:  # noqa: BLE001
+            pass
+    raise RuntimeError("yedek kaynak da başarısız")
 
-    $('weatherTemp').textContent = `${Math.round(t)}°C · ${icon}`;
-    $('weatherDesc').textContent = [text, tmin != null && tmax != null ? `${Math.round(tmin)}°/${Math.round(tmax)}°` : '',
-      prob != null ? `yağış %${prob}` : '', fmtTime(new Date())].filter(Boolean).join(' · ');
-    $('weatherCloth').textContent = rain ? `${cloth} + Şemsiye` : cloth;
-    $('weatherSub').textContent = rain ? 'Su geçirmez kıyafet giyin' : clothSub;
-    S.weather = {t, feel, rain};
-    S.failed.delete('weather');
-  } catch (e) {
-    S.failed.add('weather');
-    $('weatherTemp').textContent = '—';
-    $('weatherDesc').textContent = 'Hava verisi alınamadı';
-    $('weatherCloth').textContent = '—';
-    $('weatherSub').textContent = '';
-  }
-  renderChecklist();
-}
 
-/* ====================== Google Sheet (Apps Script) ====================== */
-function extractSheet(d) {
-  if (Array.isArray(d)) return {rows: d, markets: {}};
-  if (d && (d.error || d.ok === false)) throw new Error(d.error || 'Apps Script hatası');
-  const rows = d.rows || d.data || d.items || [];
-  const markets = d.markets || d.piyasa || {usd: d.usd, eur: d.eur, bist: d.bist};
-  return {rows: Array.isArray(rows) ? rows : [], markets: markets || {}};
-}
+def fetch_markets(prev):
+    """Her kur/endeks bağımsız: biri çökerse sadece o önceki değeriyle (eski zaman damgasıyla) kalır."""
+    now = datetime.now(TZ).isoformat(timespec="minutes")
+    out, fresh = {}, 0
+    for key, (sym, (lo, hi)) in GF_SYMBOLS.items():
+        entry = None
+        try:
+            html = http_get_headers(f"https://www.google.com/finance/quote/{sym}?hl=en", GF_HEADERS)
+            v = parse_google_finance(html)
+            if not lo <= v <= hi:
+                raise ValueError(f"makul aralık dışı: {v}")
+            entry = {"v": v, "src": "Google Finance", "t": now}
+        except Exception as e:  # noqa: BLE001
+            print(f"Google Finance {key} hatası: {e}", file=sys.stderr)
+            try:
+                v, src = fallback_price(key)
+                if lo <= v <= hi:
+                    entry = {"v": v, "src": src, "t": now}
+            except Exception as e2:  # noqa: BLE001
+                print(f"Yedek {key} hatası: {e2}", file=sys.stderr)
+        if entry:
+            fresh += 1
+        else:
+            entry = (prev or {}).get(key)  # eski değeri koru
+        if entry:
+            out[key] = entry
+    return out, fresh > 0
 
-async function fetchSheetAndMarkets() {
-  let rows, markets, fromCache = false, cachedAt = 0;
-  try {
-    const d = await fetchJSON(SHEET_API_URL + '?action=get&_t=' + Date.now(), {timeout: 15000, retries: 1});
-    ({rows, markets} = extractSheet(d));
-    cacheSet('sheet', {rows, markets});
-    S.failed.delete('sheet');
-  } catch (e) {
-    S.failed.add('sheet');
-    const c = cacheGet('sheet');
-    if (c) { ({rows, markets} = c.v); fromCache = true; cachedAt = c.t; }
-  }
-  if (rows) {
-    renderAgenda(rows, fromCache ? cachedAt : 0);
-    renderMarkets(markets || {}, fromCache ? cachedAt : 0);
-  } else {
-    $('agendaList').innerHTML = '<div class="empty">Plan verisi yüklenemedi. 🔄 ile tekrar deneyin.</div>';
-    $('alertList').innerHTML = '<div class="empty">Uyarılar alınamadı.</div>';
-    ['usd', 'eur', 'bist'].forEach(k => { $(k + 'Meta').textContent = 'veri alınamadı'; $(k + 'Meta').className = 'metric-sub stale'; });
-    S.alertCount = 0; S.checkRows = [];
-  }
-  renderChecklist();
-}
 
-function renderMarkets(m, cachedAt) {
-  const meta = cachedAt ? `önbellek · ${fmtTime(cachedAt)}` : `güncel · ${fmtTime(Date.now())}`;
-  [['usd', 4, ' ₺'], ['eur', 4, ' ₺'], ['bist', 2, '']].forEach(([k, dec, suf]) => {
-    const v = parseNum(m[k]);
-    if (isNaN(v)) { $(k + 'Val').textContent = '—'; $(k + 'Meta').textContent = 'değer yok'; $(k + 'Meta').className = 'metric-sub stale'; return; }
-    $(k + 'Val').textContent = fmtNum(v, dec) + suf;
-    $(k + 'Meta').textContent = meta;
-    $(k + 'Meta').className = 'metric-sub' + (cachedAt ? ' stale' : '');
-  });
-}
+def load_previous():
+    try:
+        with open(OUT, "r", encoding="utf-8") as f:
+            d = json.load(f)
+            return d if isinstance(d, dict) else {}
+    except Exception:  # noqa: BLE001
+        return {}
 
-/* Satırlar: başlıklar Türkçe/aksanlı/büyük-küçük harf farkından bağımsız okunur */
-function normRow(r) { const o = {}; for (const k in (r || {})) o[norm(k)] = r[k]; return o; }
-function pick(o, ...keys) { for (const k of keys) { const v = o[k]; if (v !== undefined && v !== null && String(v).trim() !== '') return String(v).trim(); } return ''; }
-const ACTIVE = new Set(['', 'aktif', 'true', 'evet', 'yes', '1', 'x']);
 
-function parseRows(rows) {
-  const today = todayISO();
-  return (Array.isArray(rows) ? rows : []).map((r, idx) => {
-    const o = normRow(r);
-    const cat = pick(o, 'kategori', 'category', 'tur');
-    return {
-      idx, cat, catN: norm(cat),
-      durum: norm(pick(o, 'durum', 'status')),
-      baslik: pick(o, 'baslik', 'title'),
-      detay: pick(o, 'detay', 'aciklama', 'detail'),
-      saat: (pick(o, 'saat', 'time').match(/^\d{1,2}:\d{2}/) || [''])[0],
-      start: toISODate(pick(o, 'tarih', 'baslangic', 'date')),
-      end: toISODate(pick(o, 'bitis', 'bitis tarihi', 'end'))
-    };
-  }).filter(r => {
-    if (!ACTIVE.has(r.durum)) return false;
-    if (!r.baslik && !r.detay) return false;
-    if (FILTER_BY_DATE && r.start) {
-      const end = r.end || r.start;
-      if (today < r.start || today > end) return false;
+def main():
+    prev = load_previous()
+    ok = {"ego": False, "news": False, "markets": False}
+
+    ego = prev.get("ego", [])
+    try:
+        fresh = parse_ego(http_get(EGO_URL))
+        if fresh:
+            ego, ok["ego"] = fresh, True
+        else:
+            print("EGO: sayfa alındı ama duyuru bulunamadı (HTML yapısı değişmiş olabilir)", file=sys.stderr)
+    except Exception as e:  # noqa: BLE001
+        print(f"EGO hatası: {e}", file=sys.stderr)
+
+    news, news_errors = [], 0
+    for tag, url, limit in NEWS_FEEDS:
+        try:
+            news += parse_news(http_get(url), tag, limit)
+        except Exception as e:  # noqa: BLE001
+            news_errors += 1
+            print(f"Haber hatası ({tag}): {e}", file=sys.stderr)
+    if news:
+        ok["news"] = True
+    else:
+        news = prev.get("news", [])
+
+    markets, ok["markets"] = fetch_markets(prev.get("markets"))
+
+    if not any(ok.values()):
+        print("Hiçbir kaynak alınamadı; mevcut data.json korundu.", file=sys.stderr)
+        if not os.path.exists(OUT):
+            with open(OUT, "w", encoding="utf-8") as f:
+                json.dump({"updated": "", "ego": [], "news": [], "ok": ok}, f, ensure_ascii=False, indent=2)
+        sys.exit(1)
+
+    data = {
+        "updated": datetime.now(TZ).isoformat(timespec="minutes"),
+        "ego": ego,
+        "news": news,
+        "markets": markets,
+        "ok": ok,
     }
-    return true;
-  }).sort((a, b) => (a.saat || '99:99').localeCompare(b.saat || '99:99') || a.idx - b.idx);
-}
+    # Gereksiz commit'i önle: içerik (updated hariç) değişmediyse dosyaya dokunma.
+    strip = lambda d: {k: v for k, v in d.items() if k != "updated"}  # noqa: E731
+    if os.path.exists(OUT) and strip(prev) == strip(data):
+        print("Değişiklik yok.")
+        return
+    with open(OUT, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    print(f"data.json yazıldı: {len(ego)} EGO duyurusu, {len(news)} haber, piyasa={list(markets)}, ok={ok}")
 
-function renderAgenda(rawRows, cachedAt) {
-  const rows = parseRows(rawRows);
-  const alerts = rows.filter(r => r.catN.includes('uyari'));
-  const locals = rows.filter(r => r.catN.includes('yerel'));
-  const checks = rows.filter(r => r.catN.includes('kontrol') || r.catN.includes('checklist'));
-  const plan = rows.filter(r => !r.catN.includes('uyari') && !r.catN.includes('yerel') && !r.catN.includes('kontrol') && !r.catN.includes('checklist'));
 
-  S.alertCount = alerts.length;
-  S.checkRows = checks;
-  S.localRows = locals;
-
-  $('alertList').innerHTML = alerts.length
-    ? alerts.map(a => `<div class="match-alert-card"><span>⚠️</span><div><div class="match-alert-title">${esc(a.baslik)}</div><div class="match-alert-desc">${esc(a.detay)}</div></div></div>`).join('')
-    : '<div class="empty">Aktif acil uyarı yok.</div>';
-
-  const note = cachedAt ? `<div class="empty" style="margin-bottom:6px">⚠︎ Canlı veri alınamadı, ${esc(fmtTime(cachedAt))} önbelleği gösteriliyor.</div>` : '';
-  $('agendaList').innerHTML = note + (plan.length
-    ? plan.map(i => `<div class="brief-item"><span class="bullet">▪</span><span>${i.saat ? `<strong>${esc(i.saat)}</strong> ` : ''}${i.cat ? `<strong>[${esc(i.cat)}]</strong> ` : ''}${esc(i.baslik)}${i.baslik && i.detay ? ': ' : ''}${esc(i.detay)}</span></div>`).join('')
-    : '<div class="empty">Bugün için aktif plan maddesi yok.</div>');
-  renderLocal();
-}
-
-/* ====================== Yerel durum: tablo (yerel) + EGO duyuruları ====================== */
-function renderLocal() {
-  const parts = [];
-  (S.localRows || []).forEach(r => parts.push(
-    `<div class="brief-item"><span class="bullet">📍</span><span>${esc(r.baslik)}${r.baslik && r.detay ? ': ' : ''}${esc(r.detay)}</span></div>`));
-  if (S.ego.length) {
-    parts.push('<div class="sub-title">🚌 EGO Son Duyurular</div>');
-    S.ego.slice(0, 5).forEach(e => {
-      const age = daysAgo(e.date), isNew = age <= 3;
-      const dd = e.date ? e.date.split('-').reverse().slice(0, 2).join('.') : '';
-      parts.push(`<div class="brief-item"><span class="bullet">▪</span><div class="news-content">
-        <a href="${esc(safeUrl(e.link))}" target="_blank" rel="noopener" class="news-title">${esc(e.title)}</a>
-        <div class="src">${dd ? `<span>${esc(dd)}</span>` : ''}${isNew ? '<span class="badge-new">YENİ</span>' : ''}</div></div></div>`);
-    });
-  }
-  $('localCustomList').innerHTML = parts.join('');
-}
-
-/* ====================== Haber + EGO (data.json), yedek: rss2json ====================== */
-let dataMeta = null;
-async function fetchServerData() {
-  let news = null;
-  try {
-    const d = await fetchJSON(DATA_URL + '?_t=' + Date.now(), {retries: 1});
-    dataMeta = d.updated || null;
-    S.ego = Array.isArray(d.ego) ? d.ego : [];
-    if (Array.isArray(d.news) && d.news.length) news = d.news;
-    S.failed.delete('data');
-  } catch (e) {
-    S.failed.add('data');
-  }
-  renderLocal();
-
-  if (!news) news = await fetchNewsFallback();
-  if (news && news.length) {
-    $('newsList').innerHTML = news.slice(0, 8).map(n => `
-      <div class="brief-item"><span class="bullet">▪</span><div class="news-content">
-        <a href="${esc(safeUrl(n.link))}" target="_blank" rel="noopener" class="news-title">${esc(n.title)}</a>
-        <div class="src"><span class="src-tag">${esc(n.tag || 'Google Haberler')}</span>${n.source ? `<span>${esc(n.source)}</span>` : ''}${n.published ? `<span>${esc(agoText(n.published))}</span>` : ''}</div>
-      </div></div>`).join('');
-    S.failed.delete('news');
-  } else {
-    S.failed.add('news');
-    $('newsList').innerHTML = '<div class="empty">Haber akışı şu an alınamadı. 🔄 ile tekrar deneyin.</div>';
-  }
-  renderChecklist();
-}
-
-async function fetchNewsFallback() {
-  try {
-    const rss = encodeURIComponent('https://news.google.com/rss?hl=tr&gl=TR&ceid=TR:tr');
-    const j = await fetchJSON('https://api.rss2json.com/v1/api.json?rss_url=' + rss);
-    if (j.status !== 'ok' || !j.items?.length) return null;
-    return j.items.map(i => {
-      const m = String(i.title || '').match(/^(.*) - ([^-]+)$/);
-      return {title: m ? m[1] : i.title, source: m ? m[2].trim() : '', link: i.link, tag: 'Google Haberler', published: i.pubDate ? new Date(i.pubDate.replace(' ', 'T') + 'Z').toISOString() : ''};
-    });
-  } catch { return null; }
-}
-
-/* ====================== Son kontrol listesi (veriden üretilir) ====================== */
-function renderChecklist() {
-  const items = ['Anahtar · cüzdan · telefon'];
-  const w = S.weather;
-  if (w?.rain) items.push('Şemsiye / yağmurluk al');
-  if (w && w.feel <= 8) items.push('Sıcak tut: atkı, eldiven');
-  if (w && w.feel >= 27) items.push('Su ve güneş koruması al');
-  if (S.alertCount) items.push(`${S.alertCount} acil uyarıyı oku (Bölüm 01)`);
-  if (S.ego.some(e => daysAgo(e.date) <= 3)) items.push('Yeni EGO duyurusu var: hat/güzergâhını kontrol et');
-  (S.checkRows || []).forEach(r => items.push(r.baslik + (r.detay ? ': ' + r.detay : '')));
-
-  const key = 'wub:check:' + todayISO();
-  let done = {}; try { done = JSON.parse(localStorage.getItem(key)) || {}; } catch {}
-  $('checklistList').innerHTML = items.map((t, i) =>
-    `<div class="check-item${done[t] ? ' done' : ''}" data-k="${esc(t)}" role="checkbox" aria-checked="${!!done[t]}" tabindex="0"><span class="box">✓</span><span>${esc(t)}</span></div>`).join('');
-}
-function toggleCheck(el) {
-  const key = 'wub:check:' + todayISO();
-  let done = {}; try { done = JSON.parse(localStorage.getItem(key)) || {}; } catch {}
-  const k = el.dataset.k; done[k] = !done[k];
-  try { localStorage.setItem(key, JSON.stringify(done)); } catch {}
-  el.classList.toggle('done', !!done[k]); el.setAttribute('aria-checked', String(!!done[k]));
-}
-$('checklistList').addEventListener('click', e => { const el = e.target.closest('.check-item'); if (el) toggleCheck(el); });
-$('checklistList').addEventListener('keydown', e => {
-  if (e.key !== ' ' && e.key !== 'Enter') return;
-  const el = e.target.closest('.check-item'); if (el) { e.preventDefault(); toggleCheck(el); }
-});
-
-/* ====================== Yenileme ====================== */
-let busy = false, lastRefresh = 0;
-const NAMES = {weather: 'hava', sheet: 'tablo', data: 'EGO', news: 'haber'};
-async function refreshAllData() {
-  if (busy) return;
-  busy = true;
-  const btn = $('refreshBtn');
-  btn.classList.add('spinning');
-  try {
-    await Promise.allSettled([fetchWeather(), fetchSheetAndMarkets(), fetchServerData()]);
-  } finally {
-    lastRefresh = Date.now();
-    const bad = [...S.failed].map(k => NAMES[k] || k);
-    $('footerNote').innerHTML = `Son güncelleme ${esc(fmtTime(lastRefresh))}` +
-      (bad.length ? ` · <span style="color:var(--warning)">alınamayan: ${esc(bad.join(', '))}</span>` : '') +
-      '<br>Doğrulanamayan bilgi uydurulmaz.';
-    busy = false;
-    setTimeout(() => btn.classList.remove('spinning'), 400);
-  }
-}
-$('refreshBtn').addEventListener('click', refreshAllData);
-setInterval(refreshAllData, REFRESH_MS);
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && Date.now() - lastRefresh > 5 * 60 * 1000) refreshAllData();
-});
-refreshAllData();
-</script>
-</body>
-</html>
+if __name__ == "__main__":
+    main()
