@@ -1,31 +1,45 @@
-name: EGO Duyuru Otomasyonu
+name: Veri Güncelleme (EGO + Haber)
 
 on:
   schedule:
-    - cron: '0 * * * *' # Her saat başı çalışır
+    - cron: '7,37 * * * *'   # her 30 dk (saat başından kaçınmak için :07 / :37)
   workflow_dispatch:
+
+permissions:
+  contents: write            # data.json'u push edebilmek için şart
+
+concurrency:
+  group: wakeup-data
+  cancel-in-progress: false
 
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - name: Kodları İndir
-        uses: actions/checkout@v3
+      - name: Kodları indir
+        uses: actions/checkout@v4
 
-      - name: Python Kur
-        uses: actions/setup-python@v4
+      - name: Python kur
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
-      - name: Gerekli Kütüphaneleri Yükle
-        run: pip install requests beautifulsoup4
+      - name: Kütüphaneleri yükle
+        run: pip install beautifulsoup4
 
-      - name: Botu Çalıştır
+      - name: Veriyi çek
         run: python scraper.py
 
-      - name: Değişiklikleri Kaydet ve Yayınla
+      - name: Değişiklik varsa kaydet ve yayınla
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add duyurular.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Otomatik duyurular güncellendi" && git push)
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          if git diff --cached --quiet; then
+            echo "Commit edilecek değişiklik yok."
+          else
+            git commit -m "Otomatik veri güncellendi"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            git push
+          fi
