@@ -338,20 +338,38 @@ async function fetchSheetAndMarkets() {
   } else {
     $('agendaList').innerHTML = '<div class="empty">Plan verisi yüklenemedi. 🔄 ile tekrar deneyin.</div>';
     $('alertList').innerHTML = '<div class="empty">Uyarılar alınamadı.</div>';
-    ['usd', 'eur', 'bist'].forEach(k => { $(k + 'Meta').textContent = 'veri alınamadı'; $(k + 'Meta').className = 'metric-sub stale'; });
+    renderMarkets({}, 0);   // tablo yok: data.json'daki piyasa verisi varsa onu göster
     S.alertCount = 0; S.checkRows = [];
   }
   renderChecklist();
 }
 
+/* Piyasa: önce data.json (Google Finance, scraper), yoksa tablodaki GOOGLEFINANCE hücreleri */
 function renderMarkets(m, cachedAt) {
-  const meta = cachedAt ? `önbellek · ${fmtTime(cachedAt)}` : `güncel · ${fmtTime(Date.now())}`;
+  if (m !== undefined) S.sheetMk = {m: m || {}, cachedAt: cachedAt || 0};
+  const sheet = S.sheetMk || {m: {}, cachedAt: 0};
   [['usd', 4, ' ₺'], ['eur', 4, ' ₺'], ['bist', 2, '']].forEach(([k, dec, suf]) => {
-    const v = parseNum(m[k]);
-    if (isNaN(v)) { $(k + 'Val').textContent = '—'; $(k + 'Meta').textContent = 'değer yok'; $(k + 'Meta').className = 'metric-sub stale'; return; }
+    const srv = S.srvMarkets?.[k], sv = parseNum(srv?.v);
+    let v, meta, stale;
+    if (!isNaN(sv)) {
+      v = sv;
+      const age = Date.now() - new Date(srv.t).getTime();
+      stale = !(age < 3 * 3600e3);                    // 3 saatten eski veya tarihsiz = eski
+      meta = `${srv.src || 'Google Finance'} · ${srv.t ? agoText(srv.t) : ''}`.replace(/ · $/, '');
+    } else {
+      v = parseNum(sheet.m[k]);
+      stale = !!sheet.cachedAt;
+      meta = sheet.cachedAt ? `tablo · önbellek ${fmtTime(sheet.cachedAt)}` : `tablo · ${fmtTime(Date.now())}`;
+    }
+    if (isNaN(v)) {
+      $(k + 'Val').textContent = '—';
+      $(k + 'Meta').textContent = S.sheetMk || S.srvMarkets ? 'değer yok' : 'yükleniyor…';
+      $(k + 'Meta').className = 'metric-sub stale';
+      return;
+    }
     $(k + 'Val').textContent = fmtNum(v, dec) + suf;
     $(k + 'Meta').textContent = meta;
-    $(k + 'Meta').className = 'metric-sub' + (cachedAt ? ' stale' : '');
+    $(k + 'Meta').className = 'metric-sub' + (stale ? ' stale' : '');
   });
 }
 
@@ -433,12 +451,14 @@ async function fetchServerData() {
     const d = await fetchJSON(DATA_URL + '?_t=' + Date.now(), {retries: 1});
     dataMeta = d.updated || null;
     S.ego = Array.isArray(d.ego) ? d.ego : [];
+    S.srvMarkets = d.markets && typeof d.markets === 'object' ? d.markets : null;
     if (Array.isArray(d.news) && d.news.length) news = d.news;
     S.failed.delete('data');
   } catch (e) {
     S.failed.add('data');
   }
   renderLocal();
+  renderMarkets();
 
   if (!news) news = await fetchNewsFallback();
   if (news && news.length) {
