@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-28T16:29+03:00",
+  "updated": "2026-10-28T22:05+03:00",
   "ego": [
     {
       "id": 7782,
@@ -52,25 +52,11 @@
   ],
   "news": [
     {
-      "title": "İsrail seçimleri: Netanyahu önde ama çoğunluk için yeterli değil",
-      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOWEZZTlJXZUtOMGJhMFIyVzJiTGdhM2N1QWhkZkhjUGxpVy00TnRlU0VlSzZWQmo5a0ZDeThLSnU4VEFtZE9VMkZtQ3pmNjE2OXpEa25JMDlJa20yMnRFMGtJbzVpWnpYVjZfRG1wc3lJdG5LOElBUHVWV0tCM1RQU0x0VEVwSmQ4NUpneDNBR0FXYTNzYUtmUF9xaU5oYjl5T2hieWlUYmVjUnNsWXlBckY3VdIBswFBVV95cUxObXBhZUFRS25NOUpDck9KbWM1WjdjNXRkT0liUE1ITlpONk1nN0tPbjRWUTBTX3EzQjZMd3VReUdmQnM2dENzcFV5SG5uSFN0YnVTMENZM0F3RDgwS1JpaG9Dd3BYaklzSFdLeXVFUHhUS2t6NWFmaE1ubHhqRlZiU2gtMm1XNmtoeHd5TWZuLVJPaFNYOUJIaS1RLU85TVNJYlRJUHdLbTliVlNsWWo0bHlMYw?oc=5",
-      "source": "DW.com",
-      "tag": "Türkiye",
-      "published": "2026-10-28T12:49+03:00"
-    },
-    {
-      "title": "İspanya'da facia. İki yüksek hızlı tren çarpıştı, çok sayıda ölü var",
-      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOYWh0RXdqLVdlU0MzakRldGUweUN1NHBUbHR5Sjg5d3JHbzFFckZoeE5xUEJGd1E2UGpsX3Q0TlduWktQS0VEN3hlNFNmLVJIa2Zwa0pPZmtCdXZteUN0Zl9xRTdXZXB0a09Ec2ZoWDlPSllaRm95bDltU0ZLbVF3TjhHb1ppZU1kRzZBTGF2MjB6dmNtc0JQdXk5ZFZJR3M4R1lSQ19VZkEtQdIBrwFBVV95cUxOWTFqSEFoVmVpUk55cENiQUNKekVKNjFISFZTdHZ4dVNmRzh5eFpoNnpFelNiUlRDMnljMTNMSXhQUk5HN1M4eEJFREhUQldoQ041ZjRaY0FVclZ2VnowMlhPWjJnTi0xM3dJRWVreUFFVFh1aDJwOU4zX1A2UVpVN3I4NUVNNlJaZ3dRczZhYUZBa1pmZ2k4VU9aYndOa3hwc0Z3andadHYxb0V6U2pr?oc=5",
-      "source": "NTV Haber",
-      "tag": "Türkiye",
-      "published": "2026-10-28T12:28+03:00"
-    },
-    {
-      "title": "Kuvvetli yağış etkili olacak! Meteoroloji saat verdi: Sel, su baskını, yağış anında kuvvetli rüzgar ve hortum... Muğla'yı sağanak vurdu",
-      "link": "https://news.google.com/rss/articles/CBMigAJBVV95cUxQVWlEWHdsWkVRY0dFR01LR216NVo3dHdJSUFJRUJEbzVYTFBLM3NyZnZ3UEVGbVY4dDdXSVRvOEFYX2NIclRsTnJGbjhqUG0xdWF3UUVWY0ljMEx6S0s1M0lHc2M2bG1TbWE4YzNGYUNGajdabmNfVFdoNlp0NWdueG1td3FxOTdyeU1JOFdkbVJ3ekRrQU9OYVUyMnYyazdPdXcyNl9qRnFTRGpWbUUxZ1FmQnpndE4wNWFBWXBjbGkxU2Y2bF9pdWptMUZJUzhHVEVxbXZqTFB1Tl9QTUdJRWd6MXJSSjhCQXM1Z051dUVBeWpvdmVLRkU5dnB1UTdo?oc=5",
+      "title": "İspanya'da tren kazası: Çok sayıda kişi hayatını kaybetti... 3 günlük ulusal yas ilan edildi",
+      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQWmxCZ1lNQTY0Mm1sZ054V2VLVjJVaEwtYWpZeGFoMTNrcTlFdXI2OVozWTd1MEhfc3lsb1cxVkt2UEFmTnZSdEd2eEVzZG9ueGw5dWdWVnNYVUh2M3UzdnB0b2FNdDRFQldZbTdrcDNpQ0F5R3RUbU5td1dpek1UaEJJSHdtbVd1V3hGN0RaT09Gd3RuTEx0SQ?oc=5",
       "source": "Hürriyet",
       "tag": "Türkiye",
-      "published": "2026-10-28T15:09+03:00"
+      "published": "2026-10-28T18:35+03:00"
     },
     {
       "title": "Kendisi ve ailesi hakkında soruşturma başlatılmıştı: Mustafa Sarıgül'den Yeni Parti kararı",
@@ -80,49 +66,63 @@
       "published": "2026-10-28T10:49+03:00"
     },
     {
-      "title": "Emekli maaşı zam oranları netleşiyor.",
-      "link": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxNb1NsVmxBYkNpNE0wTGlOdVc5aHRPYzI3UjcyamZFT1JPTmNkRVZGcHhBX3lreUhVbEE0MnRFMmtZTmlPTDlRaXpVRnE4TC05aUw2MWNMeTNnUnBTWEw4dmpBbE9Ba20zWEVfN1h3ZklWNFA1V01oSW80aksxMlZDQTFkbHJid1pFcVBwUVlsdFo4RVFEa1E2bGxMWkxCajZjeTQ1aG9WbmYtekpoX1QxNHY1b2FJR0VXcWJPQnhHX0ZJa2NMbnFFZjhCNzBtbk12Sy1iR0dubHVqdw?oc=5",
-      "source": "NTV Haber",
+      "title": "Meteoroloji'den 29 kente kuvvetli yağış uyarısı",
+      "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPeWJjSUpQV1lUb1NHSzl1dktjdng4NEw1YVJGR1FjRWc4QU5fVnNjWFd6RHl2SWlYangzei0xQ3l4N2hOZjljVFZraXlfbnBiMjY5NkV3MEhWMVhPbUt3dWxoWTctMEZaOEFLQVhVNWhKWTVDZldzZXVySV8teGxZRkhFMjBTcWJ1Q1pmcXEzdnQta2Y1aDRNYWNkbXY?oc=5",
+      "source": "TRT Haber",
       "tag": "Türkiye",
-      "published": "2026-10-28T10:31+03:00"
+      "published": "2026-10-28T14:28+03:00"
     },
     {
-      "title": "İsrail’de sandık çıkış anketleri: Netanyahu kaybetti ama Eisenkot da meclis çoğunluğuna ulaşamadı",
-      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPMkJBNjcxNXVZdk5XMzFyYVpOekMwaEhDalJpcGVkbEV6OUpBSktKVGF2cUxFZmRtUExLUjRQQUdfVWVtSm1DV3RTUUFHalBCSWlOOXlqUVpGV1RJdW8yLU9BZkQ1dGFzd0NNbmxDMjJUZ19JUXdhelFNNUFXR2Vpb0pTb29QWkRJM1h0ZkdNSFpfVWRqQXRpdi10LXZOeUdLTnJSQkdqbXJJcWpHaXZrdGJLdmhoS3Q3cGxwS0xRUUp5ODlLWlVOSmRwbFdCVnJVOENXUThHNDFzY0E?oc=5",
-      "source": "Hürriyet",
+      "title": "İsrail seçimleri: Netanyahu önde, Arap partileri belirleyici olacak",
+      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOWEZZTlJXZUtOMGJhMFIyVzJiTGdhM2N1QWhkZkhjUGxpVy00TnRlU0VlSzZWQmo5a0ZDeThLSnU4VEFtZE9VMkZtQ3pmNjE2OXpEa25JMDlJa20yMnRFMGtJbzVpWnpYVjZfRG1wc3lJdG5LOElBUHVWV0tCM1RQU0x0VEVwSmQ4NUpneDNBR0FXYTNzYUtmUF9xaU5oYjl5T2hieWlUYmVjUnNsWXlBckY3VdIBswFBVV95cUxObXBhZUFRS25NOUpDck9KbWM1WjdjNXRkT0liUE1ITlpONk1nN0tPbjRWUTBTX3EzQjZMd3VReUdmQnM2dENzcFV5SG5uSFN0YnVTMENZM0F3RDgwS1JpaG9Dd3BYaklzSFdLeXVFUHhUS2t6NWFmaE1ubHhqRlZiU2gtMm1XNmtoeHd5TWZuLVJPaFNYOUJIaS1RLU85TVNJYlRJUHdLbTliVlNsWWo0bHlMYw?oc=5",
+      "source": "DW.com",
+      "tag": "Türkiye",
+      "published": "2026-10-28T12:49+03:00"
+    },
+    {
+      "title": "Türkiye'nin tatil cenneti felaketi yaşıyor: Muğla'da evler, iş yerleri ve tarım arazileri su altında kaldı",
+      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPSnh3dW0yWVRlb0VsWElidVIybWFZTk13VVRwNnJrZHUtUzBCQzJ4a3VVbTg1UkNCU1BtcUhkV2ozMk1vRnRyMkt4dVZ0dm5uVjIxZEM4Tm1rR0ZZN2ZoVGQyRUdkYXZOTkJ3SmxjYnJTMHFTblAxdW84aFFpQkN3RVB1LVFfRDRIWERjd1d4c0hsWGU0VFNKN0JObk9SWmlUbXQwbzFWS2RmeWlIZngzanJDQ3JnZHhxamZLU1BuWm0yMkhPd0FkMDZoVdIB0AFBVV95cUxPbndYV00zNG85XzVPWHF2VE5zcHhmQ2JfM29aTjVaandUa21xRkc2Vl9rSW1TQWlueWFlLWlueGRIWUZiVEVDd1hMWktfTzNVZzJSdGYteVpiZGVMM2dFRnoyUTYwdUFDS1hDR2ZBZFFZSFNaMUkwcnpJc3E1RWVJeWFVeUg1cElEZmUxeGJuZXB0eDk5NXQwSHFIcVB0ZG5ZekR5QkJtbWtlQUdQM1BmUmpmZGYxbEJqUzlWcEZmY3g5YUNmajZmNzFWVVREZ1BL?oc=5",
+      "source": "Sözcü Gazetesi",
+      "tag": "Türkiye",
+      "published": "2026-10-28T15:41+03:00"
+    },
+    {
+      "title": "İsrail seçimleri: Netanyahu önde, Arap partileri belirleyici olacak",
+      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOWEZZTlJXZUtOMGJhMFIyVzJiTGdhM2N1QWhkZkhjUGxpVy00TnRlU0VlSzZWQmo5a0ZDeThLSnU4VEFtZE9VMkZtQ3pmNjE2OXpEa25JMDlJa20yMnRFMGtJbzVpWnpYVjZfRG1wc3lJdG5LOElBUHVWV0tCM1RQU0x0VEVwSmQ4NUpneDNBR0FXYTNzYUtmUF9xaU5oYjl5T2hieWlUYmVjUnNsWXlBckY3VdIBswFBVV95cUxObXBhZUFRS25NOUpDck9KbWM1WjdjNXRkT0liUE1ITlpONk1nN0tPbjRWUTBTX3EzQjZMd3VReUdmQnM2dENzcFV5SG5uSFN0YnVTMENZM0F3RDgwS1JpaG9Dd3BYaklzSFdLeXVFUHhUS2t6NWFmaE1ubHhqRlZiU2gtMm1XNmtoeHd5TWZuLVJPaFNYOUJIaS1RLU85TVNJYlRJUHdLbTliVlNsWWo0bHlMYw?oc=5",
+      "source": "DW.com",
       "tag": "Dünya",
-      "published": "2026-10-28T04:56+03:00"
+      "published": "2026-10-28T12:49+03:00"
     },
     {
-      "title": "İspanya'daki hızlı tren kazasında can kaybı 64'e çıktı",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFA4WmhaM0d5NE0zMlE5UV9YMEhqR21lYkpsX3NrcXRhdEI2c205YXBMNFgxSXdqVXFxd0ZKUmNINnp6QjBRME1OZG94czdtM0tFLUlWWXFwNXpZQjNpOGfSAWNBVV95cUxNblYtNW9qUVcxWXVSNFBIRlZGNjR0V0dUeldHN3pEeDVvUHZFUDBwRElSQ0d4bHBUaFlOZkk5aFJjY3VOWHRrZXpqMzNOaEF3eW02aEZGSmdQQm1iOU1Wc3hlQ1U?oc=5",
+      "title": "Brezilya'da seçimi kaybeden Flavio Bolsonaro ABD'ye gitti",
+      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFByUExlRTN6NjNnTkJaQzVsVmNHN3dIXzdDSm9aRXhFdkhDYnl3M09uMW5fSTdEbDVmcFVoUmt2eDhJVEEwUnJyVG1tQ0JwM0NUdjNhWVpIeWVWaXB5T2fSAWNBVV95cUxOdXFZbHFteGVQVVFIeGNDZkVJVXhnOW5qOWhJYnA2ZzlsODE2VFozcnV1WGRRdUlONkRQRDhINjVIU1hkNlFja1JpZU1JZ214QVl1ejctNFkxVDdkUjZCRTZpZWM?oc=5",
       "source": "BBC",
       "tag": "Dünya",
-      "published": "2026-10-28T16:18+03:00"
+      "published": "2026-10-27T22:11+03:00"
     },
     {
-      "title": "İddia: Brezilya'da seçimi kaybeden Bolsonaro ABD'ye kaçtı",
-      "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOMlRMaTdJZV8zVnJpNTd0R3BFZFNHZlJCNEFlVHlzUHhocGhHRDdoamtBOWZRc0tPT0VZZkpqeVRjQlk5YTJwS0RRR1liZFJqMVZ4dDBEN0FMNUZLRjNJS3dDRGxfU2RKM1pneHNqd0dJUDdmM1JXcGE3VkFETmtiY0lWNVRvRms?oc=5",
+      "title": "İspanya'da iki hızlı tren çarpıştı: En az 10 ölü",
+      "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9IeVhoS0N1cU1pYlpKT2NlS0dtaTdJRFpsU3JpTGdoaTFFaktoV2FJTzFqQkVYQkhhSlU0dmxFR18tcFR6V2VGc1RPSU90R1pFV21MY2FHOEFaQVlNS09PbU0xTmM5Q0hYMGZLaFB6eUxsTnlpSVJZY2F0cDI?oc=5",
       "source": "Diken",
       "tag": "Dünya",
-      "published": "2026-10-27T22:41+03:00"
+      "published": "2026-10-28T12:54+03:00"
     }
   ],
   "markets": {
     "usd": {
-      "v": 49.787,
+      "v": 49.838,
       "src": "api.frankfurter.app",
-      "t": "2026-10-28T16:29+03:00"
+      "t": "2026-10-28T22:05+03:00"
     },
     "eur": {
-      "v": 55.513,
+      "v": 55.4846,
       "src": "api.frankfurter.app",
-      "t": "2026-10-28T16:29+03:00"
+      "t": "2026-10-28T22:05+03:00"
     },
     "bist": {
       "v": 11165.44,
       "src": "Yahoo Finance",
-      "t": "2026-10-28T16:29+03:00"
+      "t": "2026-10-28T22:05+03:00"
     }
   },
   "ok": {
