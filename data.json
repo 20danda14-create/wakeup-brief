@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-29T12:50+03:00",
+  "updated": "2026-10-29T19:53+03:00",
   "ego": [
     {
       "id": 7782,
@@ -52,39 +52,53 @@
   ],
   "news": [
     {
-      "title": "Cumhuriyet 103 yaşında: Tarihi yapmak mı yazmak mı?",
-      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNQ1pHSE5keWFOVTBVZk1ta2ZmYmQ0R0t0WWQ4Nmp3NzQ4dHlVRzJnelZwcTRkMzItMlB6czBtR01HZjhPVDlTOEJNOW4yT0RiajZSZDVDaVU3dVNEZWFSTnppZFMwR1psWjRfZkZ6aml2UUkzTlkwWXNZT01FcFAtTlFtU1VCYWZvN21hOFhfbTQ5WV9oNExKdy1fV1VORy1RN1ZfTEdZRQ?oc=5",
-      "source": "Yeni Şafak",
+      "title": "Kapadokya'da peribacası çöktü: 2 ölü, 5 yaralı",
+      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxObUVkN2t0eGtBcmZfNlhMb3g4cUZwRzRZVF9xNlZMZDJhYmxybWJ5WnpGcm53V0o0S0FMa0xPc3g3ckwxQUpleDJoMlMtTFF5SFZJcmsxZW1mQ01hU215SGlidTh5ckloekc4YVo5X1hZV01GTjhfeXZiX01BUnVZR1EzVUhVN3dBeXJ2dWh4QkU2Vzg3eUtJRQ?oc=5",
+      "source": "TRT Haber",
       "tag": "Türkiye",
-      "published": "2026-10-28T04:00+03:00"
+      "published": "2026-10-29T16:56+03:00"
     },
     {
-      "title": "Kendisi ve ailesi hakkında soruşturma başlatılmıştı: Mustafa Sarıgül'den Yeni Parti kararı",
-      "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPUzVtMnVxYjI0YXNqeDE5V3BRcGR3Nm9fTjhoaXFJWXRqZTB1OTlPQzVwYWZVRnRwWFh6ZHB6dk01anBlSnI3QkdLOEw2bFd1T3Y4WlJmYzE5UXhwU3FFbGw5ZUUtNDlHblJ6M25uWHo4bjFiN1l0MjJpMnF2Ymc1LWpNbTNlWDF3azV6anRRUHloQndmS0ZOcktHREZpSDZGOFBxZHowXzJwU0IwSEgzTHFkTnRheTgwN0paN0ZpcGhjRGdOX1hjVkVjRGE?oc=5",
-      "source": "Hürriyet",
+      "title": "CUMHURİYET 103 YAŞINDA! Cumhurbaşkanı Erdoğan: Türkiye Yüzyılı hedefi milli davamız",
+      "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOUThBNHk1LVhLSTlmeFdGVE9POGZyNmQtc211R2Q4UFFsS3F4NHhHd21Zd3BrWlk1TEIyWGJ3UVlTX3luV3dkQS1PSE0wd2VDMFJCaTZIczRkbmdzUWZrVnpaYl81SGF5aXlyd2RCV2xhT1ViVlY3WGRzYTB5Z2lkTGxhVUQ5M0l1ZzVscWRCdk9JOWNEbGRfMTNHYUdMT3BqNDFJZnJqeU5DcVNta1E?oc=5",
+      "source": "CNN Türk",
       "tag": "Türkiye",
-      "published": "2026-10-28T10:49+03:00"
+      "published": "2026-10-29T16:34+03:00"
     },
     {
-      "title": "Kamu personeli maaş sisteminde değişiklik yolda",
-      "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE80LWJ3ZFplc3hhN2RHN00xbUI1Vmo3VGN2VUFkZ2Q5MzA4T2c2OFVKZlMtcmhUTE1YTXl2R1JIRHJEaXNVSGJSWjRFVWZYdXZ3VFdwS191YVVKRjdnR25OM21lSTM5dWNYd3FBSGEwOEZKa29qRDFZVDZicXBjUQ?oc=5",
-      "source": "Diken",
-      "tag": "Türkiye",
-      "published": "2026-10-29T10:47+03:00"
-    },
-    {
-      "title": "Azerbaycan televizyonunda izleyenleri gözyaşlarına boğan Atatürk klibi",
-      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNY245dUVqTWVJUm9DeGRTaXp6Y1JURjBLZDhqTjQ5R2xSbkQzWVhFc2lGb0lBd0JzR29zZnZZSUdqTE9rdXFrMGROWHlKQ0NORUY2SzZzUDYxVlVGZlZhREpVVEUwYzBiQng0aVg1N3prcXo4QVliVGVsOEhUeXlpSlFDYjNWQjZBNjhXVElva2RoWEJ3MFJCYzk1ZC12MGNtbXdSazVB0gGrAUFVX3lxTE1aYS15ZE5ycl94eXoteTExQ0FsTHhXdzQ1NkhDTl84T1lvTG84NXVaR0lMSFRMU1BlYjdSdFBGV3Q4dnlkbWZUQnJzVnB1VDhtMVpQZXBDQmNpOTZQTTUwaFRzN2VMcmpINzM3M2ZqZEx0MHViYzAzQmFSSlBDS0xoSm5LakhZT293UDlmR1l6WUhrZzNJXzRhQVVaUmdtTzNxRllxd2w5OW9ZNA?oc=5",
+      "title": "'Arap partileri seçimleri çaldı' diyen Netenyahu'y İsrail polisinden beklemediği yanıt",
+      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOSXNSMDJFb1A4eFk0TDdkS0dvRW40QVRSTGNkWFpLX0Y1LTQwNDhTa1FkUm5ncTczNXpyZUVVblQzZmlueUhnRTJraDN0UDAxeF9ZX2pYOFRBTHU3eURmQjZzckRLVlhMVk9SaUp4bFAxNzNzaUF4YVRRMDZqZ1Fvdk03X3VVb3NIQ0Y2elBfcGlIclM0OVNTZQ?oc=5",
       "source": "Sözcü Gazetesi",
       "tag": "Türkiye",
-      "published": "2026-10-29T09:23+03:00"
+      "published": "2026-10-29T11:46+03:00"
     },
     {
-      "title": "Bakan Işıkhan'dan emekli aylığı açıklaması",
-      "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPOWtJYnB1dkt4b3QzQktLSFdrd0tSNldzdWYza3hibGFNVHRXUlJDanAtczlIZlhpWXNBRUxOVWRzUWJKME8yNjh5VEMyQWpIbll5aDBRWFdvX0ZlR1VtTS1TbzVNc1NsbkVTZGpZczExSllVX0xyTE41cnYyNHJvTDk4QkU?oc=5",
-      "source": "birgun.net",
+      "title": "Azerbaycan basını: Aliyev, Türkiye'deki Türk Devletleri Teşkilatı Zirvesi'ne katılmayacak",
+      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNQ0wxVVRydXVCZE1hRGhWNk9zaHBxVmFhanVORFZ2QjZfcUFtbWVPZExUa1BGMnF5TzhITDZkd3pxdlZMdFhyQTlUeFR6TlNLMU8zd0k0QjZuX1FvZkpyUjRnV01IMDZmdTZfeWdkOGZXZE9tZGVJZmNrWWR2eks3ekpCZ2xidHdCWGpYZjAtZzBFR0wtUkQ5MGJfMDNDRnctNmE0TFV5SDBwX1Fzd0lJMzhJVUxUZXlMbTQ1QWl1aXhUSUdqQmNKdHd3aw?oc=5",
+      "source": "Cumhuriyet",
       "tag": "Türkiye",
-      "published": "2026-10-29T10:12+03:00"
+      "published": "2026-10-29T15:55+03:00"
+    },
+    {
+      "title": "Mustafa Sarıgül Hakkında Yeni İddialar: \"Odaya Girdiğimizde 'Dokunun Çocuklar' Derdi\"",
+      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNUmZxUHdqTHBDdkxvRGJ0dzZINm1OLVB0UFlGdjJmSUhvRjkzM3JhWndoSG9MMTdtOTFES2hMY3BrZUhPVVlMUHVqc0daSDZ1VWpXSE9iNzNtbnVCcDY4a2VTMHdJcUh2dEZjLVprSzJyeFBDRkxqbVFRM3BWZkFuMF9XdElSQ25FNnpXa2VISjlRbXZSN1B4ZWtJX2M2V05rbG5VUnRQTlRVQ2JsbHQ2TEJCZw?oc=5",
+      "source": "Onedio",
+      "tag": "Türkiye",
+      "published": "2026-10-29T11:02+03:00"
+    },
+    {
+      "title": "'Arap partileri seçimleri çaldı' diyen Netenyahu'y İsrail polisinden beklemediği yanıt",
+      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOSXNSMDJFb1A4eFk0TDdkS0dvRW40QVRSTGNkWFpLX0Y1LTQwNDhTa1FkUm5ncTczNXpyZUVVblQzZmlueUhnRTJraDN0UDAxeF9ZX2pYOFRBTHU3eURmQjZzckRLVlhMVk9SaUp4bFAxNzNzaUF4YVRRMDZqZ1Fvdk03X3VVb3NIQ0Y2elBfcGlIclM0OVNTZQ?oc=5",
+      "source": "Sözcü Gazetesi",
+      "tag": "Dünya",
+      "published": "2026-10-29T11:46+03:00"
+    },
+    {
+      "title": "KKTC Dışişlerinden Filistin Devlet Başkanı Abbas'ın GKRY'yi ziyaretine ilişkin açıklama",
+      "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQZi02NG1MeFRjaGU1LXB0XzRHNUJHRWVBeUc0M2NuNnZDU3FxNll6TTQ1bGYwaXB5cV9oZ19QZ00zQm8wYmk1em1YVDZPMjNfR19wc1l5MjNZc0IwUm5GVDVQMmM5UVUwNmVES29pMkY4VVF5ZGV6SmlsUzl0TE5pVThjZTBJSWcxX3ctOFE2ODhNRzdVd3ZDLXpieTA0N0FvLUJyOWpLcFIwc1hoNDQzQ3FiVnZpUUpXd3NScHdwZ2JqbFJydnc?oc=5",
+      "source": "Habertürk",
+      "tag": "Dünya",
+      "published": "2026-10-29T14:32+03:00"
     },
     {
       "title": "İspanya'yı sarsan tren kazası nasıl gerçekleşti? Korkunç hata ortaya çıktı",
@@ -92,37 +106,23 @@
       "source": "Hürriyet",
       "tag": "Dünya",
       "published": "2026-10-29T09:59+03:00"
-    },
-    {
-      "title": "SON DAKİKA... İsrail seçim sonuçları: ‘Çift zarflar’ hariç sayımlar tamamlandı, olası senaryolar masada",
-      "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNMFlnZjN4WXFiSTUzWFhNdlg0eFVLZUowWmxNcTBDZjh3MmJwSzFaTXFRS0xTVm1WbmRtWVQ5ZjFjMVp2UHhORUdiNW4wNUR1N3ZnME00bWxfZWlRbzJiTWlFaXlYUnZEbWxPNGR3WHdLRFlURUZLR2xVSW1hMjA2MUkyb2l4OGRhVEZ3dThaQkxpVEk2bUpOLXJWenFFejdhTHdkZFczUTE3S3UxWUFpSDh2enRmZmtLN2FKTXJHOW9WVjF5VW55VWd6cDJXZw?oc=5",
-      "source": "CNN Türk",
-      "tag": "Dünya",
-      "published": "2026-10-28T17:25+03:00"
-    },
-    {
-      "title": "Bolsonaro kendini 'Brezilya'nın lideri' ilan etti",
-      "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9ybFBNSjAwa19pMUhLX0RSNWxqMkduYVZmSXdEdXZ1d1NTcnZYVVRyYjVGa3ZyVFZqTDN4WmNKb0FBaUxYOGtMNHVPVHh2TzBUeXFQaERUeHA4MTFERHA4TW91MUw1M0ZEbUdCWDRhZWVEUHE3X3c2bWt4bU8?oc=5",
-      "source": "Diken",
-      "tag": "Dünya",
-      "published": "2026-10-29T08:52+03:00"
     }
   ],
   "markets": {
     "usd": {
-      "v": 49.838,
+      "v": 49.837,
       "src": "api.frankfurter.app",
-      "t": "2026-10-29T12:50+03:00"
+      "t": "2026-10-29T19:53+03:00"
     },
     "eur": {
-      "v": 55.4846,
+      "v": 55.4691,
       "src": "api.frankfurter.app",
-      "t": "2026-10-29T12:50+03:00"
+      "t": "2026-10-29T19:53+03:00"
     },
     "bist": {
       "v": 11165.44,
       "src": "Yahoo Finance",
-      "t": "2026-10-29T12:50+03:00"
+      "t": "2026-10-29T19:53+03:00"
     }
   },
   "ok": {
