@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-31T03:01+03:00",
+  "updated": "2026-10-31T08:29+03:00",
   "ego": [
     {
       "id": 7782,
@@ -52,11 +52,25 @@
   ],
   "news": [
     {
-      "title": "Avrupa ülkesinde ortalık karıştı! Güvenlik güçler Anayasa Mahkemesi binasını bastı",
-      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5VWGw4VVVpTklLdlpWeHBiME9DczV3akVmUm9BdHZpZm84UWhfZlVzWWNlMDJ3el90VDMwYTRzcFZtRUE2d0NsMUVyWXpHWmR0RUdISGJ5R1FlalF6UEhIMVpKNWhKX1U5ZW1NbURR0gFzQVVfeXFMTk5JYnBTWTNmcUNseHpxeXVzVHdTWFFlSXpTQWNmelJIcmRDS29kaFUtYzdMbWFucVpiOC05Z0FFLVYtaXAzLWlHSW1kQXN6VWZ1a0FKbnB1ejgxOGtIcXhKaGUzY0hTcFdGeFIyeGNsRUZXcw?oc=5",
-      "source": "Sözcü Gazetesi",
+      "title": "Polonya'da darbe girişimi: Cumhurbaşkanı yurtdışındayken Başbakan'ın emriyle polis AYM'yi ablukaya aldı",
+      "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOYmd4aHM3ckFwU2ctazNjYlJfUXlxTVJjS1V2Ql9wbGNFeTR3NVpmNXE5Wnl6YWR4Y21PQnFYMjd2TzlDcjM1OGtVem41Qno3UWJwdy1ibldLYzdFMXVSU0lNWVRoVER4VHhJT3BDdndtYVhxUEFrSEdLeWdRWDBLWXlLdmRRczlRTzMycGZORWh6TUtlRE5QYThTRV83cU43c2VaMlExbUo2X2JjN3otRjN3NkxoY2ZkTkpvaWFvU1JmeTFqX3Z5STRrLVBhRHdXeTdlLQ?oc=5",
+      "source": "birgun.net",
       "tag": "Türkiye",
-      "published": "2026-10-30T22:53+03:00"
+      "published": "2026-10-30T23:38+03:00"
+    },
+    {
+      "title": "Cumhurbaşkanı Erdoğan: Türk dünyasının aile fotoğrafında ayrılığa yer yoktur",
+      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQdTlpTGlBWE9uZGJmRWk2Mk1VM21pcF84dkYwZ3VTWkNrTW03NmN6SWRFcUx5UkJlRG5ua1R5V0RrM3h2REFPcm1OanQzWVVHZUlaejNQR2dMSldyQm9QcDhLeUVOaTYtWVlXcDJQTXZ1WDVFd0JGRWltaW4zMmFOSHNBY3FpVWNEc1ZidERlckZYUjhVLXloNDJ6SUY5SXNUSUp0QURXTFRObGp6bnJIcVF30gG3AUFVX3lxTE5pdWtNakpiN1ZhQXZwUU9uZ0RjMFBidFNhMEt4SDJCVkxkWkF3cnF5ZVNlN1hmd3BPM1hndS1ETjdfOEVXdzBtS0pBYlBMdmt1S1BIZFVPR3d0XzdrS1NtcG9uckVMbTJYSTlCUkdxVEJ5Mk44eVJ6RG41eXRCNUtQVmh1WXZvSHBrMUZyQkdVeVk2MDhacXdHX0xzWWpYeUVEblNEdW1UZnBuLWEzUEtOLUNfb19SMA?oc=5",
+      "source": "NTV Haber",
+      "tag": "Türkiye",
+      "published": "2026-10-30T10:28+03:00"
+    },
+    {
+      "title": "2027 Ocak emekli zammı şekilleniyor: İşte yeni kök maaş tablosu",
+      "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNQnRTYjQtcUF6SVF4T090YlFzamNpY0tnNEpVS3YyTUxGdUlINU9aOGNqYTJWdnBFNmY5czJNZXhEU1I0T19EWThMSXJTWTd0TzQyd1FCSXB5Z09DNWswLVlOX21KY2oyMzVHbDcyR1U5amJhR1RjSmNfemNWZ0pCLTBUYjNEQkF6cGpIdklGeWZnMWtCQ1RrU1h5WWltTGRLdW1OTjI1NEs5UnRX?oc=5",
+      "source": "Cumhuriyet",
+      "tag": "Türkiye",
+      "published": "2026-10-30T12:46+03:00"
     },
     {
       "title": "Sarıgül soruşturması. 2 şüpheli için tutuklama talep edildi, 11 yeni gözaltı kararı",
@@ -66,25 +80,11 @@
       "published": "2026-10-30T09:21+03:00"
     },
     {
-      "title": "Doğalgazda tüketim sınırları güncellendi",
-      "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBoQktGeU9GbHkyQTBlamJTLWlNb2s5NkN6MklnbWZCcVVBdjB0d2NJaGxxT29EeXJRd2lRZWhNVy1xdFphOVRTNlc3YWJPYkFXN2wxUC04czRTUVZpRmtCSWlXbW0wc3ZZbHhzV3U5OWJlZDRk?oc=5",
-      "source": "Diken",
-      "tag": "Türkiye",
-      "published": "2026-10-30T20:58+03:00"
-    },
-    {
       "title": "Bakırköy Belediyesi soruşturmasında 40 tutuklama, 17 adli kontrol talebi",
       "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQYmtxM2JtT3M2X2dZM1g2U1JBM2dNRDZrQTRlem5XWDFsWWg0TWZWLWx2NkVZMWJhOWlpc01sdEZXMHk3SXlSbW14cnBQWmVwM3JWdTkyOERfQXVoVmpvOWp5NHNBeVBuRV9zNDI0cWpZUXVxSlRWOHpZaGEtY0VjclVDRjRUdlhtR2tSaU5GYWlIbkliT3ZSRElVY1h1X0hjN0RVZ3RKX2Z4dw?oc=5",
       "source": "Cumhuriyet",
       "tag": "Türkiye",
       "published": "2026-10-30T19:53+03:00"
-    },
-    {
-      "title": "Aliyev Ankara'ya neden gelmedi: Azerbaycan basınından AKP'ye ağır suçlama",
-      "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOVGtNelVSY29NZndEVTF0YjNQWEhvU3FyMmxLNHdOSlRTWXRjczZzN3VRN01PQ2QxN3hwX3FLR1kzVHZQbTBySUxYX185T1o3Uk84WjZudnNFYUJ5YzRBeEFsVTNkQm5vX1dHZUFqUEtEVU01M1RCWlloNlpHSlhYRWpUSnlzYkFuNVVtVURVT3N0VVA3dVEtazU1VzUzb09sM1dPN1h2aDY4TTR0?oc=5",
-      "source": "birgun.net",
-      "tag": "Türkiye",
-      "published": "2026-10-30T11:10+03:00"
     },
     {
       "title": "Trump: İran'la savaş yakında sona erecek",
@@ -94,16 +94,16 @@
       "published": "2026-10-30T19:46+03:00"
     },
     {
-      "title": "Washington'da hayal kırıklığı! Netanyahu ABD'yi bıktırdı",
-      "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQQi0tYkdwbWZHd1p1cFBxejBrSVgwSjFtMzdCeVZMcWp4NkpVR2JQVTZVWUZodk5HZm9MdkNlbmFhTW16U2pFMnViVUdPdTdLSFZzN1NVekpoVmZMNFIyeVd1NGZOVHF6bkN4SDVkRnRSM05NSHkyQ3dUeF9JQ0lEaFpTTHNLVUZmT2ttZkh5MU9KdDlaUG53RXdhMG4?oc=5",
-      "source": "Hürriyet",
+      "title": "Polonya'da Anayasa Mahkemesi'ne polis müdahalesi: Yargı krizi derinleşirken Cumhurbaşkanı Nawrocki ülkeye döndü",
+      "link": "https://news.google.com/rss/articles/CBMikAJBVV95cUxPQjF3UWQwYk1pLTlReDNvem1nLVd6c1Q5RjNhbjV0cXdtZnZxWnpwUnM4UER5dTdLR2IxX0R0UlVHXzVHQXdDWlkzMmFOSkdXMld4eVVxRlpEWHdnR2hWOEZqZnFpa19ybDlfX05FQWdiUUd1czQ1dDNDQVVLTEVTcTAwbmtCUU1hOG9nTnVqb3pTV0J4WDlrOVdYWER2ZkVET01lWl9vM01BbTR2c2hmc0VyQms1VGk2RXp4QkxocWwtczJCQXBoM0ZacVVUVkUyZ01OTktWaHJGSFVBNGNBVXBxWm5tRlJLWWxwT2NhS3VrRUdTVlloOWl2bHdKdFd4R0QzNnBwcWQ3YVFaZVJ0bQ?oc=5",
+      "source": "T24",
       "tag": "Dünya",
-      "published": "2026-10-30T16:28+03:00"
+      "published": "2026-10-30T23:02+03:00"
     },
     {
       "title": "Fransa’da belediye binası Paris Komünü’nün alevleriyle yandı - Kavel Alpaslan",
       "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNbXliUXlIQ0YwSGc5aHpqeXo2ZjVtdWh2NDRpWUNUOExpNllNOUVsZC1IMk9vaHhZb0ZZeUFQczRiRENiMmZ6b25hRmpYTnRNOG1xb2lQWlpRVmtrVlpGRGpzcGNHZEpucENHUk8xYU1KRVlYNVlSbENDSGUyVmtmSGRQZl8tU18xbTBSRE1BZ0FfejZSa293NmRBclFFdw?oc=5",
-      "source": "Evrensel.net",
+      "source": "Evrensel",
       "tag": "Dünya",
       "published": "2026-10-30T00:10+03:00"
     }
@@ -112,17 +112,17 @@
     "usd": {
       "v": 49.948,
       "src": "api.frankfurter.app",
-      "t": "2026-10-31T03:01+03:00"
+      "t": "2026-10-31T08:28+03:00"
     },
     "eur": {
       "v": 55.8015,
       "src": "api.frankfurter.app",
-      "t": "2026-10-31T03:01+03:00"
+      "t": "2026-10-31T08:28+03:00"
     },
     "bist": {
       "v": 10759.56,
       "src": "Yahoo Finance",
-      "t": "2026-10-31T03:01+03:00"
+      "t": "2026-10-31T08:28+03:00"
     }
   },
   "ok": {
