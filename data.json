@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30T23:07+03:00",
+  "updated": "2026-10-31T03:01+03:00",
   "ego": [
     {
       "id": 7782,
@@ -52,6 +52,13 @@
   ],
   "news": [
     {
+      "title": "Avrupa ülkesinde ortalık karıştı! Güvenlik güçler Anayasa Mahkemesi binasını bastı",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5VWGw4VVVpTklLdlpWeHBiME9DczV3akVmUm9BdHZpZm84UWhfZlVzWWNlMDJ3el90VDMwYTRzcFZtRUE2d0NsMUVyWXpHWmR0RUdISGJ5R1FlalF6UEhIMVpKNWhKX1U5ZW1NbURR0gFzQVVfeXFMTk5JYnBTWTNmcUNseHpxeXVzVHdTWFFlSXpTQWNmelJIcmRDS29kaFUtYzdMbWFucVpiOC05Z0FFLVYtaXAzLWlHSW1kQXN6VWZ1a0FKbnB1ejgxOGtIcXhKaGUzY0hTcFdGeFIyeGNsRUZXcw?oc=5",
+      "source": "Sözcü Gazetesi",
+      "tag": "Türkiye",
+      "published": "2026-10-30T22:53+03:00"
+    },
+    {
       "title": "Sarıgül soruşturması. 2 şüpheli için tutuklama talep edildi, 11 yeni gözaltı kararı",
       "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOZXVjS2pZVEtaQ09HS0UxNEwyZjRwS2xFaVFuTzhaeWNnR3RlUHNzeXNSUFRPc296RVZLbU1Fd3A2XzlnTEdXeThaYk1EUHBEdE4xS2tCRFZ6VEFCYVNTNzZlT3BfUWdZQktfSENUYmFDMDZEREM5LWctUUNMemVscEx3WVZaOVNpX0syOEprT0N1QVJsUFZMdUp5eGdGUkViemc2YmxwYWltd9IBrwFBVV95cUxQeVB0UTN0dUp2OFFQQTB5V3M0T2lOMnpHRUxBOW5LUlUzelJ0eTdjd3NxZkpZLWNjb2RlalV2NFg0MDl3U193emxSbHlsc2d6T29PQVBlZkJsODhSZTkzNWlnV0VVZ3pyN1JLUDBqbHBBVHkwR1ZESzRlSy1uZUotaTVfQk8tSVpzZUlKVFFrekJqbnZQQ3BvcHAzZUtXcDNVWk5SMmUzRTJsZkwxN1hZ?oc=5",
       "source": "NTV Haber",
@@ -59,11 +66,18 @@
       "published": "2026-10-30T09:21+03:00"
     },
     {
-      "title": "BOTAŞ, 81 ilde Kasım ve Aralık aylarının tüketim limitlerini güncelledi",
-      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPS0tsc3ZEenlXVm9xR1I3UmM0RWNYdmVSQjNoVUlhREJadmx6UnRYZVdvdlllNmdfU3lmdDZkb2pLMzg2YndoVUs2bzhrWUJtM1VCTU9qa0lqcFJoalFBRFpyakVnb2pZZVd5cFpCYWwyV2YxV20yTlAwcjQtMm05dTAtV1FoUkcwWkVUWDdmRWx2WkhLS3hMSlZZWEd6VG5aeGVXNUtPRGVFd3llWE5iS1dn?oc=5",
-      "source": "Habertürk",
+      "title": "Doğalgazda tüketim sınırları güncellendi",
+      "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBoQktGeU9GbHkyQTBlamJTLWlNb2s5NkN6MklnbWZCcVVBdjB0d2NJaGxxT29EeXJRd2lRZWhNVy1xdFphOVRTNlc3YWJPYkFXN2wxUC04czRTUVZpRmtCSWlXbW0wc3ZZbHhzV3U5OWJlZDRk?oc=5",
+      "source": "Diken",
       "tag": "Türkiye",
-      "published": "2026-10-30T21:04+03:00"
+      "published": "2026-10-30T20:58+03:00"
+    },
+    {
+      "title": "Bakırköy Belediyesi soruşturmasında 40 tutuklama, 17 adli kontrol talebi",
+      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQYmtxM2JtT3M2X2dZM1g2U1JBM2dNRDZrQTRlem5XWDFsWWg0TWZWLWx2NkVZMWJhOWlpc01sdEZXMHk3SXlSbW14cnBQWmVwM3JWdTkyOERfQXVoVmpvOWp5NHNBeVBuRV9zNDI0cWpZUXVxSlRWOHpZaGEtY0VjclVDRjRUdlhtR2tSaU5GYWlIbkliT3ZSRElVY1h1X0hjN0RVZ3RKX2Z4dw?oc=5",
+      "source": "Cumhuriyet",
+      "tag": "Türkiye",
+      "published": "2026-10-30T19:53+03:00"
     },
     {
       "title": "Aliyev Ankara'ya neden gelmedi: Azerbaycan basınından AKP'ye ağır suçlama",
@@ -71,20 +85,6 @@
       "source": "birgun.net",
       "tag": "Türkiye",
       "published": "2026-10-30T11:10+03:00"
-    },
-    {
-      "title": "Bakırköy Belediyesi soruşturmasında 40 tutuklama, 17 adli kontrol talebi",
-      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQYmtxM2JtT3M2X2dZM1g2U1JBM2dNRDZrQTRlem5XWDFsWWg0TWZWLWx2NkVZMWJhOWlpc01sdEZXMHk3SXlSbW14cnBQWmVwM3JWdTkyOERfQXVoVmpvOWp5NHNBeVBuRV9zNDI0cWpZUXVxSlRWOHpZaGEtY0VjclVDRjRUdlhtR2tSaU5GYWlIbkliT3ZSRElVY1h1X0hjN0RVZ3RKX2Z4dw?oc=5",
-      "source": "Cumhuriyet",
-      "tag": "Türkiye",
-      "published": "2026-10-30T21:09+03:00"
-    },
-    {
-      "title": "LGS KAPSAMINDAKİ MERKEZÎ SINAVIN TARİHİ BELLİ OLDU",
-      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPSFJwd0Vkdm9ldXRaMzdSUzA0S1FKZEc5ZktmUUtSZHdsSjZWRVR6RWVJQzFRVGhydUNaMHEzN1lQVzNYNmMtM0N1VU5qSmRQbVZMRHc5dE1lRDYtS19nWGw3MGc2SE5GLVJnbXRlTmFkYnVhd3NYeDlrR2tzanM1Tm9OcnZLS2o4NUlBSFFDOVIzdw?oc=5",
-      "source": "MEB",
-      "tag": "Türkiye",
-      "published": "2026-10-30T14:05+03:00"
     },
     {
       "title": "Trump: İran'la savaş yakında sona erecek",
@@ -101,28 +101,28 @@
       "published": "2026-10-30T16:28+03:00"
     },
     {
-      "title": "İran basını: Keşm Adası yakınlarında 'düşman' savaş uçağı engellendi | Dış Haberler",
-      "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNTko1bTlFQU1XVkVPRmhXT05qYk14SU9XREplbklwd29HSDRXanpDMUptWTlFejRfdGhfbldneVVWNVZoRS1Mb3pyWGY2WVhIU1l1TVBXNFM5WldzVENxX2lyeHJWZ2p5SmJvajlfQlpRUHExUVpPbERXSUo2ZmF3NEZNaXV0bDBqaTZBcVZZcUotN0N2ek5OVHJiRF9NS1dyMkJaRldEWGQ?oc=5",
-      "source": "Habertürk",
+      "title": "Fransa’da belediye binası Paris Komünü’nün alevleriyle yandı - Kavel Alpaslan",
+      "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNbXliUXlIQ0YwSGc5aHpqeXo2ZjVtdWh2NDRpWUNUOExpNllNOUVsZC1IMk9vaHhZb0ZZeUFQczRiRENiMmZ6b25hRmpYTnRNOG1xb2lQWlpRVmtrVlpGRGpzcGNHZEpucENHUk8xYU1KRVlYNVlSbENDSGUyVmtmSGRQZl8tU18xbTBSRE1BZ0FfejZSa293NmRBclFFdw?oc=5",
+      "source": "Evrensel.net",
       "tag": "Dünya",
-      "published": "2026-10-30T06:57+03:00"
+      "published": "2026-10-30T00:10+03:00"
     }
   ],
   "markets": {
     "usd": {
       "v": 49.948,
       "src": "api.frankfurter.app",
-      "t": "2026-10-30T23:07+03:00"
+      "t": "2026-10-31T03:01+03:00"
     },
     "eur": {
       "v": 55.8015,
       "src": "api.frankfurter.app",
-      "t": "2026-10-30T23:07+03:00"
+      "t": "2026-10-31T03:01+03:00"
     },
     "bist": {
       "v": 10759.56,
       "src": "Yahoo Finance",
-      "t": "2026-10-30T23:07+03:00"
+      "t": "2026-10-31T03:01+03:00"
     }
   },
   "ok": {
