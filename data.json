@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-02T01:23+03:00",
+  "updated": "2026-11-02T04:47+03:00",
   "ego": [
     {
       "id": 7782,
@@ -52,23 +52,16 @@
   ],
   "news": [
     {
-      "title": "Başkan Erdoğan’dan 1-4 Kasım’da Seul’e ziyaret: Gündem stratejik ortaklık",
-      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQOElWRlVfMW90enY0TU1pclkwQm5xVHpicDhjTFZoX0tabHB2eTI5dWEyNFk1ckJoRGtFVDlLMXJ3UjhHMTAxNG1sdVlZRDdCUjVzWThLZWlSWnRRNk5CMU8zZ3lGUFozVjNOcy1uM0ticFRzSW1tNktKQ2o2amNSeDJvODZfNEJmNC1VdHdmSFg0YTg?oc=5",
-      "source": "A Haber",
+      "title": "Bahçeli'den '100 il 1000 ilçe projesi'",
+      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9JbGdIMVdGYmNpMmNJbmc3el9TWWpjOWhqMXpzQkwyVDF1WERNb0lla3NGaDA4REZ3Y09BWjRfNHhXUzBHcDQwbVNlNXl3RjNOSHg3QURiWTJmSVU1N1HSAWNBVV95cUxNMm1YSE1FQTRDVFdGSWZ1Q3QxTUFVQW9YWm9OUkNRdjA5akpSTWItUldiRndPZWlPQkkyOFBnUXpVZjVJTlhNLWRObDRYd2x3YUVHRFh6Vzk2R1BPVkxYb0FSUlE?oc=5",
+      "source": "BBC",
       "tag": "Türkiye",
-      "published": "2026-11-01T14:01+03:00"
+      "published": "2026-11-01T17:46+03:00"
     },
     {
       "title": "Borsa İstanbul Genel Müdürlüğü'ne vekaleten Atila Türeli getirildi",
       "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPVXNxb1htaC1ScFZwNTNNNzI3b0s4VjhRb0ctNDZQazZEbFpPand1Snh0d0hiUHQxc21VREVIUHYtUEpRZEhDNUpfc0ZwODVqU1Y2UmZ4ZmNtRnZiUW1MeVNBNndSaWlySnYxWk53MWlnMzE1czdLWkJZMjJqVDgxaExJblF6dXM0MElMVFVB?oc=5",
       "source": "Bloomberght",
-      "tag": "Türkiye",
-      "published": "2026-11-01T17:46+03:00"
-    },
-    {
-      "title": "Bahçeli'den '100 il 1000 ilçe projesi'",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9JbGdIMVdGYmNpMmNJbmc3el9TWWpjOWhqMXpzQkwyVDF1WERNb0lla3NGaDA4REZ3Y09BWjRfNHhXUzBHcDQwbVNlNXl3RjNOSHg3QURiWTJmSVU1N1HSAWNBVV95cUxNMm1YSE1FQTRDVFdGSWZ1Q3QxTUFVQW9YWm9OUkNRdjA5akpSTWItUldiRndPZWlPQkkyOFBnUXpVZjVJTlhNLWRObDRYd2x3YUVHRFh6Vzk2R1BPVkxYb0FSUlE?oc=5",
-      "source": "BBC",
       "tag": "Türkiye",
       "published": "2026-11-01T17:46+03:00"
     },
@@ -87,6 +80,13 @@
       "published": "2026-11-01T14:27+03:00"
     },
     {
+      "title": "Başkan Erdoğan’dan 1-4 Kasım’da Seul’e ziyaret: Gündem stratejik ortaklık",
+      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQOElWRlVfMW90enY0TU1pclkwQm5xVHpicDhjTFZoX0tabHB2eTI5dWEyNFk1ckJoRGtFVDlLMXJ3UjhHMTAxNG1sdVlZRDdCUjVzWThLZWlSWnRRNk5CMU8zZ3lGUFozVjNOcy1uM0ticFRzSW1tNktKQ2o2amNSeDJvODZfNEJmNC1VdHdmSFg0YTg?oc=5",
+      "source": "A Haber",
+      "tag": "Türkiye",
+      "published": "2026-11-01T14:01+03:00"
+    },
+    {
       "title": "Almanya'da Z kuşağı protestoları: On binler sokaklara çıktı, bazı kentlerde şiddet olayları yaşandı",
       "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPVnJ5dzhRNHBVcDUzM0Z4ZUtSOUt6eGJqQ2ZkUE92Z1FRSHlIZjNzQ1ZjVUtXelV6OGlkNU0ybXBENk04M240Z3dpakYwSWRjd0kwTGlRUlhJVGw3ckhqZjZvSS1MRXRRRDRvWmhXdGJ4ODJabGNLekdPay1ULTZfNGVTN3lBOHpqYnNFc2ctQ1BXeXBFNmloenQyQWQ3dFF1SXVXMUljcFc5VWtPRFZpNWRtcGtjaTZBUHZoQ29zX3JHekJWYWszVtIByAFBVV95cUxObUM3eFBIdm9GRFR5UDY3Q25aQmtjZ3lMT2xOak9xd3kyVTFob3pVbldUUW8tMVd1TTVvaVktcDRBODhrRWdNTFZGQ1pXczVSckMxQU5LU3Z3bFFoamI3eFI0SDRnWU9PRlROczI4c2FpeUVpbGVvVkVyaTVVbDhVQzZzTUxGZlFwb1N1RGdWbWMtNi1CcjdWOFRWci1SazZPbVF4YUJtX3g5VzdtS1d2WlJoRGtTaFhjSVlzUndxdmwtNVY3QTl6Mw?oc=5",
       "source": "DW.com",
@@ -94,35 +94,35 @@
       "published": "2026-11-01T12:13+03:00"
     },
     {
-      "title": "Trump'tan İran ile müzakerelere ilişkin dikkat çeken açıklama",
-      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOMU1ON25lVE44QjkxTGR0TzFpZzFfOFR6Sml3Y25HMTlkX0R3TDFUakFUZ2U2SnNQUlpjTXJ4Q1Bxa2JLa3ZOQjdhWjA3NURheFNBd3g4Z3NJLVZ4V2dwcXdNN0R3YURCVjN6MVU0bUNUYkZ5US1xaGl6dE5ROEt2U254UXNmdmhSdU40QWZCWExXTjVpdExJcjFTWlA4RWxOUDMxNjZR?oc=5",
-      "source": "Hürriyet",
+      "title": "ABD'deki Kongre ara seçimleri yaklaşırken anketlerdeki tablo netleşiyor",
+      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNVWt3TDdBMUdPWlZ2QTRvVWlVYmxmOEJhUmgydElLQ3puV01saVR5ODBZYWhuMl9iaGY4alJDQU13cTRobnpJYnIxdFF1djl2emxlSDgyakVZZnNsMlR6bWpLY1VramhHcWIyakJJQVlNQTYwMG1JTldaeTRPZ1lPUUFBcjhuSlY5cDhjcW1aWm9JUUVXQm1veVc1bmFVRlRXUzFtaDhaWndDT2M?oc=5",
+      "source": "Bloomberght",
       "tag": "Dünya",
-      "published": "2026-11-01T10:58+03:00"
+      "published": "2026-11-01T17:05+03:00"
     },
     {
-      "title": "ABD'de 'cadılar bayramı' kutlamalarında silahlı saldırılar: En az 6 kişi hayatını kaybetti",
-      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQYzRRU2NQbWpKMEQwV0F2MXFxZFZrNC1BMTJwMGJIbEktQjNHUGZkeHFqNzZjaE1CQURJWThiSW9CSjVKaktLaUMtX25VSTJneVQ4dmZORUxXRmhlOU8wX2JwOGczMEw0bHpnWl9VQ2w4Rk1CVFhYV1k5QzU1Tk0zb010U1JRaTh5OFdmVzVLMTN4bk8xdDE5NVZ4N0RBZ3VydmRDZ095YzRWdUpTRDlIRW84MlgwZkdlbGg5dGdTQVhQRlRic3B1c3o4Yw?oc=5",
-      "source": "Cumhuriyet",
+      "title": "ABD'de özel jet şehrin ortasına düştü",
+      "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOQzBHT2lrYTNhSng2clZYRUNtRG5sUXpZcjNKTUhBX3pTU0JEUkFrZllFdnAxWGxoWnY1bmZKcER5RFhFTXExS2VWWm5BWjJkbVFwRG93VHEzZFEzOHlNRzNEdU9JRElPbjVTaThWbTFMdVFPUnIxckRvZGFheVBVS1BBN2d5UQ?oc=5",
+      "source": "Hürriyet",
       "tag": "Dünya",
-      "published": "2026-11-01T21:21+03:00"
+      "published": "2026-11-01T23:57+03:00"
     }
   ],
   "markets": {
     "usd": {
       "v": 49.948,
       "src": "api.frankfurter.app",
-      "t": "2026-11-02T01:23+03:00"
+      "t": "2026-11-02T04:47+03:00"
     },
     "eur": {
       "v": 55.8015,
       "src": "api.frankfurter.app",
-      "t": "2026-11-02T01:23+03:00"
+      "t": "2026-11-02T04:47+03:00"
     },
     "bist": {
       "v": 10759.56,
       "src": "Yahoo Finance",
-      "t": "2026-11-02T01:23+03:00"
+      "t": "2026-11-02T04:47+03:00"
     }
   },
   "ok": {
