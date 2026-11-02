@@ -15,7 +15,7 @@ concurrency:
 jobs:
   run-scraper:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10      # GDELT: 7-14 istek, aralarında 5,5 sn bekleme
     steps:
       - name: Kodları indir
         uses: actions/checkout@v5
