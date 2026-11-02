@@ -7,16 +7,18 @@
 Bir kaynak başarısız olursa o kaynağın ÖNCEKİ verisi korunur (sayfa boşalmaz).
 Tüm kaynaklar başarısızsa çıkış kodu 1 olur (workflow kırmızı olur, haberdar olursun).
 """
+import html as htmllib
 import json
 import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
-from urllib.parse import urljoin
+from urllib.parse import urlencode, urljoin
 from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
@@ -30,8 +32,25 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 EGO_URL = "https://www.ego.gov.tr/duyurular"
 NEWS_FEEDS = [
     ("Türkiye", "https://news.google.com/rss?hl=tr&gl=TR&ceid=TR:tr", 5),
-    ("Dünya", "https://news.google.com/rss/headlines/section/topic/WORLD?hl=tr&gl=TR&ceid=TR:tr", 3),
 ]
+
+# --- GDELT: günün dünyayı etkileyen başlıkları -------------------------------
+GDELT_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
+GDELT_LANG = "english"   # GDELT'te Türkçe kaynak için "turkish" yazılabilir (anahtar kelimeler İngilizce kalır)
+WORLD_COUNT = 7
+# Her konudan en önemli (HybridRel) haber seçilir => 7 farklı alan. Anahtar kelimeler >= 4 harf.
+WORLD_TOPICS = [
+    ("Çatışma", '(ceasefire OR missile OR airstrike OR invasion OR "armed conflict" OR offensive)'),
+    ("Ekonomi", '("central bank" OR inflation OR "interest rates" OR recession OR "oil prices" OR tariffs)'),
+    ("Diplomasi", '(summit OR sanctions OR election OR "United Nations" OR treaty OR "prime minister")'),
+    ("İklim & Afet", '("climate change" OR earthquake OR hurricane OR flood OR wildfire OR typhoon)'),
+    ("Sağlık", '(pandemic OR outbreak OR "World Health Organization" OR vaccine OR epidemic)'),
+    ("Teknoloji", '("artificial intelligence" OR cyberattack OR semiconductor OR "data breach")'),
+    ("İnsani & Enerji", '(refugees OR famine OR humanitarian OR "natural gas" OR "energy crisis")'),
+]
+GDELT_GAP = 5.5          # GDELT: en fazla 5 sn'de 1 istek
+GDELT_MAX_PER_DOMAIN = 2
+TITLE_JUNK = re.compile(r"^(just a moment|access denied|attention required|page not found|403|404|error|untitled)", re.I)
 
 DATE_RE = re.compile(r"\s*(\d{2})\.(\d{2})\.(\d{4})\s*$")
 ID_RE = re.compile(r"/duyuru/(\d+)(?:/|$)")
@@ -197,6 +216,116 @@ def fetch_markets(prev):
     return out, fresh > 0
 
 
+def gdelt_search(query, timespan, retries=3):
+    """GDELT DOC 2.0 ArtList -> makale listesi. Hata/oran sınırı için yeniden dener."""
+    params = {
+        "query": f"{query} sourcelang:{GDELT_LANG}",
+        "mode": "artlist", "format": "json", "maxrecords": "20",
+        "sort": "hybridrel", "timespan": timespan,
+    }
+    url = GDELT_URL + "?" + urlencode(params)
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=25) as r:
+                body = r.read().decode("utf-8", errors="replace")
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < retries - 1:
+                time.sleep(7)
+                continue
+            raise
+        if not body.strip():
+            return []                      # eşleşme yok
+        try:
+            return json.loads(body).get("articles", []) or []
+        except ValueError:
+            if "limit requests" in body.lower() and attempt < retries - 1:
+                time.sleep(7)
+                continue
+            raise RuntimeError("GDELT JSON dönmedi: " + body[:120].strip())
+    return []
+
+
+def clean_title(t):
+    return " ".join(htmllib.unescape(t or "").split())
+
+
+def title_key(t):
+    return re.sub(r"[^a-z0-9]+", " ", t.lower()).strip()[:60]
+
+
+def parse_seen(s):
+    """GDELT seendate '20261102T123000Z' -> yerel ISO."""
+    try:
+        return datetime.strptime(s, "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc).astimezone(TZ).isoformat(timespec="minutes")
+    except Exception:  # noqa: BLE001
+        return ""
+
+
+def usable(a):
+    t = clean_title(a.get("title"))
+    return len(t) >= 25 and not TITLE_JUNK.match(t) and str(a.get("url", "")).startswith("http")
+
+
+def select_world(pools, count=WORLD_COUNT):
+    """pools: [(konu, [makale...])]. Konu başına sırayla birer tane (round-robin), tekrar ve aşırı alan adı yok."""
+    seen_t, seen_u, per_dom, out = set(), set(), {}, []
+    depth = 0
+    while len(out) < count and any(len(arts) > depth for _, arts in pools):
+        for topic, arts in pools:
+            if len(out) >= count:
+                break
+            # bu turda bu konunun `depth`'inci uygun makalesi
+            cands = [a for a in arts if usable(a)]
+            if len(cands) <= depth:
+                continue
+            for a in cands[depth:]:
+                title, url, dom = clean_title(a.get("title")), a["url"], (a.get("domain") or "").lower()
+                k = title_key(title)
+                if k in seen_t or url in seen_u or per_dom.get(dom, 0) >= GDELT_MAX_PER_DOMAIN:
+                    continue
+                seen_t.add(k); seen_u.add(url); per_dom[dom] = per_dom.get(dom, 0) + 1
+                out.append({"title": title, "link": url, "source": dom, "topic": topic, "seen": parse_seen(a.get("seendate", ""))})
+                break
+        depth += 1
+    return out
+
+
+def world_window_minutes(now=None):
+    """Bugünün başlangıcından (Istanbul) bu yana dakika; erken saatlerde boş kalmasın diye en az 6 saat."""
+    now = now or datetime.now(TZ)
+    since = int((now - now.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds() // 60)
+    return max(since, 360)
+
+
+def fetch_world():
+    """Bugünün 7 dünya başlığı. Dönüş: {'date','items'} ya da None (hiç başlık yoksa)."""
+    minutes = world_window_minutes()
+    pools = []
+    for i, (topic, q) in enumerate(WORLD_TOPICS):
+        if i:
+            time.sleep(GDELT_GAP)
+        try:
+            pools.append((topic, gdelt_search(q, f"{minutes}min")))
+        except Exception as e:  # noqa: BLE001
+            print(f"GDELT hatası ({topic}): {e}", file=sys.stderr)
+            pools.append((topic, []))
+    items = select_world(pools)
+    if len(items) < WORLD_COUNT:  # bugün yetmedi: boş kalan konuları son 24 saatle tamamla
+        for idx, (topic, arts) in enumerate(pools):
+            if any(usable(a) for a in arts):
+                continue
+            time.sleep(GDELT_GAP)
+            try:
+                pools[idx] = (topic, gdelt_search(WORLD_TOPICS[idx][1], "1440min"))
+            except Exception as e:  # noqa: BLE001
+                print(f"GDELT 24s hatası ({topic}): {e}", file=sys.stderr)
+        items = select_world(pools)
+    if not items:
+        return None
+    return {"date": datetime.now(TZ).strftime("%Y-%m-%d"), "items": items}
+
+
 def load_previous():
     try:
         with open(OUT, "r", encoding="utf-8") as f:
@@ -208,7 +337,7 @@ def load_previous():
 
 def main():
     prev = load_previous()
-    ok = {"ego": False, "news": False, "markets": False}
+    ok = {"ego": False, "news": False, "markets": False, "world": False}
 
     ego = prev.get("ego", [])
     try:
@@ -234,6 +363,16 @@ def main():
 
     markets, ok["markets"] = fetch_markets(prev.get("markets"))
 
+    world = prev.get("world") or {"date": "", "items": []}
+    try:
+        w = fetch_world()
+        if w:
+            world, ok["world"] = w, True
+        else:
+            print("GDELT: başlık bulunamadı; önceki dünya başlıkları korundu.", file=sys.stderr)
+    except Exception as e:  # noqa: BLE001
+        print(f"GDELT hatası: {e}", file=sys.stderr)
+
     if not any(ok.values()):
         print("Hiçbir kaynak alınamadı; mevcut data.json korundu.", file=sys.stderr)
         if not os.path.exists(OUT):
@@ -246,6 +385,7 @@ def main():
         "ego": ego,
         "news": news,
         "markets": markets,
+        "world": world,
         "ok": ok,
     }
     # Gereksiz commit'i önle: içerik (updated hariç) değişmediyse dosyaya dokunma.
@@ -255,7 +395,7 @@ def main():
         return
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"data.json yazıldı: {len(ego)} EGO duyurusu, {len(news)} haber, piyasa={list(markets)}, ok={ok}")
+    print(f"data.json yazıldı: {len(ego)} EGO duyurusu, {len(news)} haber, piyasa={list(markets)}, dünya={len(world.get('items', []))}, ok={ok}")
 
 
 if __name__ == "__main__":
