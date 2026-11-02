@@ -142,8 +142,11 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   </div>
 
   <div class="card">
-    <div class="card-title"><span>05</span> Türkiye &amp; Dünya Gündemi (Google Haberler)</div>
+    <div class="card-title"><span>05</span> Türkiye &amp; Dünya Gündemi</div>
+    <div class="sub-title">🇹🇷 Türkiye · Google Haberler</div>
     <div id="newsList"><div class="empty">Haber akışı güncelleniyor…</div></div>
+    <div class="sub-title">🌍 Dünyayı Etkileyen 7 Başlık · GDELT</div>
+    <div id="worldList"><div class="empty">Yükleniyor…</div></div>
   </div>
 
   <div class="card">
@@ -430,17 +433,37 @@ function renderLocal() {
   const parts = [];
   (S.localRows || []).forEach(r => parts.push(
     `<div class="brief-item"><span class="bullet">📍</span><span>${esc(r.baslik)}${r.baslik && r.detay ? ': ' : ''}${esc(r.detay)}</span></div>`));
-  if (S.ego.length) {
-    parts.push('<div class="sub-title">🚌 EGO Son Duyurular</div>');
-    S.ego.slice(0, 5).forEach(e => {
-      const age = daysAgo(e.date), isNew = age <= 3;
-      const dd = e.date ? e.date.split('-').reverse().slice(0, 2).join('.') : '';
-      parts.push(`<div class="brief-item"><span class="bullet">▪</span><div class="news-content">
+  if (S.dataDone) {   // data.json denemesi bitmeden "duyuru yok" deme
+    parts.push('<div class="sub-title">🚌 EGO Duyuruları · Bugün</div>');
+    if (S.failed.has('data')) {
+      parts.push('<div class="empty">EGO duyuruları alınamadı.</div>');
+    } else {
+      const today = todayISO();
+      const list = S.ego.filter(e => e.date === today);   // yalnızca bugünün tarihini taşıyanlar
+      if (!list.length) parts.push('<div class="empty">Yeni Duyuru Yok.</div>');
+      list.slice(0, 5).forEach(e => parts.push(`<div class="brief-item"><span class="bullet">▪</span><div class="news-content">
         <a href="${esc(safeUrl(e.link))}" target="_blank" rel="noopener" class="news-title">${esc(e.title)}</a>
-        <div class="src">${dd ? `<span>${esc(dd)}</span>` : ''}${isNew ? '<span class="badge-new">YENİ</span>' : ''}</div></div></div>`);
-    });
+        <div class="src"><span class="badge-new">BUGÜN</span></div></div></div>`));
+    }
   }
   $('localCustomList').innerHTML = parts.join('');
+}
+
+/* ====================== Dünya başlıkları (GDELT, data.json) ====================== */
+function renderWorld() {
+  const box = $('worldList');
+  if (!S.dataDone) return;
+  const w = S.world;
+  if (S.failed.has('data')) { box.innerHTML = '<div class="empty">Dünya başlıkları alınamadı.</div>'; return; }
+  if (!w || w.date !== todayISO() || !Array.isArray(w.items) || !w.items.length) {
+    box.innerHTML = '<div class="empty">Bugünün dünya başlıkları henüz alınamadı.</div>';
+    return;
+  }
+  box.innerHTML = w.items.slice(0, 7).map((n, i) => `
+    <div class="brief-item"><span class="bullet">${i + 1}</span><div class="news-content">
+      <a href="${esc(safeUrl(n.link))}" target="_blank" rel="noopener" class="news-title" lang="en">${esc(n.title)}</a>
+      <div class="src">${n.topic ? `<span class="src-tag">${esc(n.topic)}</span>` : ''}${n.source ? `<span>${esc(n.source)}</span>` : ''}${n.seen ? `<span>${esc(agoText(n.seen))}</span>` : ''}</div>
+    </div></div>`).join('');
 }
 
 /* ====================== Haber + EGO (data.json), yedek: rss2json ====================== */
@@ -453,11 +476,14 @@ async function fetchServerData() {
     S.ego = Array.isArray(d.ego) ? d.ego : [];
     S.srvMarkets = d.markets && typeof d.markets === 'object' ? d.markets : null;
     if (Array.isArray(d.news) && d.news.length) news = d.news;
+    S.world = d.world && typeof d.world === 'object' ? d.world : null;
     S.failed.delete('data');
   } catch (e) {
     S.failed.add('data');
   }
+  S.dataDone = true;
   renderLocal();
+  renderWorld();
   renderMarkets();
 
   if (!news) news = await fetchNewsFallback();
@@ -495,7 +521,7 @@ function renderChecklist() {
   if (w && w.feel <= 8) items.push('Sıcak tut: atkı, eldiven');
   if (w && w.feel >= 27) items.push('Su ve güneş koruması al');
   if (S.alertCount) items.push(`${S.alertCount} acil uyarıyı oku (Bölüm 01)`);
-  if (S.ego.some(e => daysAgo(e.date) <= 3)) items.push('Yeni EGO duyurusu var: hat/güzergâhını kontrol et');
+  if (S.ego.some(e => e.date === todayISO())) items.push('Bugün yeni EGO duyurusu var: hat/güzergâhını kontrol et');
   (S.checkRows || []).forEach(r => items.push(r.baslik + (r.detay ? ': ' + r.detay : '')));
 
   const key = 'wub:check:' + todayISO();
@@ -518,7 +544,7 @@ $('checklistList').addEventListener('keydown', e => {
 
 /* ====================== Yenileme ====================== */
 let busy = false, lastRefresh = 0;
-const NAMES = {weather: 'hava', sheet: 'tablo', data: 'EGO', news: 'haber'};
+const NAMES = {weather: 'hava', sheet: 'tablo', data: 'EGO/dünya başlıkları', news: 'haber'};
 async function refreshAllData() {
   if (busy) return;
   busy = true;
