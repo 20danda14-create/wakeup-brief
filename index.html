@@ -455,11 +455,17 @@ function renderWorld() {
   if (!S.dataDone) return;
   const w = S.world;
   if (S.failed.has('data')) { box.innerHTML = '<div class="empty">Dünya başlıkları alınamadı.</div>'; return; }
-  if (!w || w.date !== todayISO() || !Array.isArray(w.items) || !w.items.length) {
-    box.innerHTML = '<div class="empty">Bugünün dünya başlıkları henüz alınamadı.</div>';
+  if (!w || !Array.isArray(w.items) || !w.items.length) {
+    box.innerHTML = '<div class="empty">Dünya başlıkları henüz alınamadı.</div>';
     return;
   }
-  box.innerHTML = w.items.slice(0, 7).map((n, i) => `
+  // Bugüne ait değilse boş bırakma: son bilinen başlıkları açık bir uyarıyla göster
+  let note = '';
+  if (w.date !== todayISO()) {
+    const when = dataMeta ? new Date(dataMeta).toLocaleString('tr-TR', {day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: TZ}) : w.date;
+    note = `<div class="empty" style="margin-bottom:6px;color:var(--warning)">⚠︎ Bugünün başlıkları henüz güncellenmedi. Son veri: ${esc(when)}</div>`;
+  }
+  box.innerHTML = note + w.items.slice(0, 7).map((n, i) => `
     <div class="brief-item"><span class="bullet">${i + 1}</span><div class="news-content">
       <a href="${esc(safeUrl(n.link))}" target="_blank" rel="noopener" class="news-title" lang="en">${esc(n.title)}</a>
       <div class="src">${n.topic ? `<span class="src-tag">${esc(n.topic)}</span>` : ''}${n.source ? `<span>${esc(n.source)}</span>` : ''}${n.seen ? `<span>${esc(agoText(n.seen))}</span>` : ''}</div>
@@ -557,6 +563,8 @@ async function refreshAllData() {
     const bad = [...S.failed].map(k => NAMES[k] || k);
     $('footerNote').innerHTML = `Son güncelleme ${esc(fmtTime(lastRefresh))}` +
       (bad.length ? ` · <span style="color:var(--warning)">alınamayan: ${esc(bad.join(', '))}</span>` : '') +
+      (dataMeta && Date.now() - new Date(dataMeta).getTime() > 3 * 3600e3
+        ? ` · <span style="color:var(--warning)">sunucu verisi ${esc(agoText(dataMeta))} güncellendi</span>` : '') +
       '<br>Doğrulanamayan bilgi uydurulmaz.';
     busy = false;
     setTimeout(() => btn.classList.remove('spinning'), 400);
