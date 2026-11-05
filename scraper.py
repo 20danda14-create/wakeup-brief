@@ -48,6 +48,13 @@ WORLD_TOPICS = [
     ("Teknoloji", '("artificial intelligence" OR cyberattack OR semiconductor OR "data breach")'),
     ("İnsani & Enerji", '(refugees OR famine OR humanitarian OR "natural gas" OR "energy crisis")'),
 ]
+# Yerel/düşük kaliteli siteler yerine büyük uluslararası yayıncılar (GDELT domainis: filtresi)
+WORLD_DOMAINS = [
+    "reuters.com", "apnews.com", "bbc.com", "bbc.co.uk", "aljazeera.com", "theguardian.com",
+    "france24.com", "dw.com", "cnn.com", "nytimes.com", "washingtonpost.com", "bloomberg.com",
+    "ft.com", "cnbc.com", "euronews.com", "npr.org", "news.sky.com",
+]
+GDELT_DEADLINE_S = 300   # tüm GDELT işi için üst süre (workflow zaman aşımından önce bırak)
 GDELT_GAP = 5.5          # GDELT: en fazla 5 sn'de 1 istek
 GDELT_MAX_PER_DOMAIN = 2
 TITLE_JUNK = re.compile(r"^(just a moment|access denied|attention required|page not found|403|404|error|untitled)", re.I)
@@ -216,30 +223,39 @@ def fetch_markets(prev):
     return out, fresh > 0
 
 
-def gdelt_search(query, timespan, retries=3):
-    """GDELT DOC 2.0 ArtList -> makale listesi. Hata/oran sınırı için yeniden dener."""
+def gdelt_search(query, timespan, whitelist=True, retries=3, empty_retries=1):
+    """GDELT DOC 2.0 ArtList -> makale listesi.
+    429/oran sınırı ve GEÇİCİ BOŞ yanıt (GDELT yük altında sık yapar) için yeniden dener."""
+    q = query
+    if whitelist:
+        q += " (" + " OR ".join(f"domainis:{d}" for d in WORLD_DOMAINS) + ")"
     params = {
-        "query": f"{query} sourcelang:{GDELT_LANG}",
-        "mode": "artlist", "format": "json", "maxrecords": "20",
+        "query": f"{q} sourcelang:{GDELT_LANG}",
+        "mode": "artlist", "format": "json", "maxrecords": "30",
         "sort": "hybridrel", "timespan": timespan,
     }
     url = GDELT_URL + "?" + urlencode(params)
-    for attempt in range(retries):
+    empties = 0
+    for attempt in range(retries + empty_retries):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": UA})
             with urllib.request.urlopen(req, timeout=25) as r:
                 body = r.read().decode("utf-8", errors="replace")
         except urllib.error.HTTPError as e:
-            if e.code == 429 and attempt < retries - 1:
+            if e.code == 429 and attempt < retries + empty_retries - 1:
                 time.sleep(7)
                 continue
             raise
         if not body.strip():
-            return []                      # eşleşme yok
+            if empties < empty_retries:
+                empties += 1
+                time.sleep(GDELT_GAP + 1)
+                continue
+            return []
         try:
             return json.loads(body).get("articles", []) or []
         except ValueError:
-            if "limit requests" in body.lower() and attempt < retries - 1:
+            if "limit requests" in body.lower() and attempt < retries + empty_retries - 1:
                 time.sleep(7)
                 continue
             raise RuntimeError("GDELT JSON dönmedi: " + body[:120].strip())
@@ -247,7 +263,8 @@ def gdelt_search(query, timespan, retries=3):
 
 
 def clean_title(t):
-    return " ".join(htmllib.unescape(t or "").split())
+    t = " ".join(htmllib.unescape(t or "").split())
+    return re.sub(r"\s+([,.;:!?%])", r"\1", t)
 
 
 def title_key(t):
@@ -298,32 +315,36 @@ def world_window_minutes(now=None):
     return max(since, 360)
 
 
-def fetch_world():
-    """Bugünün 7 dünya başlığı. Dönüş: {'date','items'} ya da None (hiç başlık yoksa)."""
-    minutes = world_window_minutes()
-    pools = []
-    for i, (topic, q) in enumerate(WORLD_TOPICS):
-        if i:
-            time.sleep(GDELT_GAP)
+def topic_articles(topic, q, minutes, deadline):
+    """Konu için sırayla: (güvenilir kaynak, bugün) -> (güvenilir, son 24 sa) -> (herkes, son 24 sa)."""
+    for wl, span in ((True, f"{minutes}min"), (True, "1440min"), (False, "1440min")):
+        if time.monotonic() > deadline:
+            print(f"GDELT ({topic}): süre sınırı doldu", file=sys.stderr)
+            break
+        time.sleep(GDELT_GAP)
         try:
-            pools.append((topic, gdelt_search(q, f"{minutes}min")))
+            arts = gdelt_search(q, span, whitelist=wl)
         except Exception as e:  # noqa: BLE001
-            print(f"GDELT hatası ({topic}): {e}", file=sys.stderr)
-            pools.append((topic, []))
+            print(f"GDELT hatası ({topic}, {'liste' if wl else 'açık'}, {span}): {e}", file=sys.stderr)
+            continue
+        n = sum(1 for a in arts if usable(a))
+        print(f"GDELT {topic}: {n} uygun makale ({'liste' if wl else 'açık'}, {span})")
+        if n:
+            return arts
+    return []
+
+
+def fetch_world():
+    """Bugünün 7 dünya başlığı. Dönüş: {'date','items','hits'} ya da None (hiç başlık yoksa)."""
+    minutes = world_window_minutes()
+    deadline = time.monotonic() + GDELT_DEADLINE_S
+    pools = [(topic, topic_articles(topic, q, minutes, deadline)) for topic, q in WORLD_TOPICS]
+    hits = sum(1 for _, arts in pools if arts)
     items = select_world(pools)
-    if len(items) < WORLD_COUNT:  # bugün yetmedi: boş kalan konuları son 24 saatle tamamla
-        for idx, (topic, arts) in enumerate(pools):
-            if any(usable(a) for a in arts):
-                continue
-            time.sleep(GDELT_GAP)
-            try:
-                pools[idx] = (topic, gdelt_search(WORLD_TOPICS[idx][1], "1440min"))
-            except Exception as e:  # noqa: BLE001
-                print(f"GDELT 24s hatası ({topic}): {e}", file=sys.stderr)
-        items = select_world(pools)
+    print(f"GDELT özet: {hits}/{len(WORLD_TOPICS)} konu sonuç verdi, {len(items)} başlık seçildi")
     if not items:
         return None
-    return {"date": datetime.now(TZ).strftime("%Y-%m-%d"), "items": items}
+    return {"date": datetime.now(TZ).strftime("%Y-%m-%d"), "items": items, "hits": hits}
 
 
 def load_previous():
