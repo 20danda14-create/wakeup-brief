@@ -66,6 +66,39 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .official-card .title{font-size:13px;font-weight:700}
 .official-card .sub{font-size:11px;color:var(--muted)}
 .footer-note{text-align:center;font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5}
+
+/* --- tablo düzenleyici --- */
+.chip{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:999px;padding:6px 12px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;margin-left:auto;text-transform:none;letter-spacing:0}
+.chip:active{border-color:var(--accent)}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet[hidden]{display:none}
+.sheet-panel{background:var(--card);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-width:600px;max-height:92vh;overflow:auto;padding:16px 16px calc(24px + env(safe-area-inset-bottom));overscroll-behavior:contain}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px}
+.sheet-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:800}
+.x{background:var(--surface);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:10px;font-size:15px;cursor:pointer;flex-shrink:0}
+.lbl{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px;min-width:0}
+.inp{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:11px 12px;font:inherit;font-size:16px;min-width:0}
+.inp:focus{outline:2px solid var(--accent);outline-offset:0}
+textarea.inp{resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:11px 14px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;min-height:44px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#0d0d12}
+.btn.danger{color:var(--danger);border-color:rgba(255,77,109,.4)}
+.sheet-panel.busy .btn,.sheet-panel.busy .ed-act button{opacity:.5;pointer-events:none}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.hint{font-size:12px;color:var(--muted);line-height:1.45;margin:2px 0 10px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0}
+.fchip{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:999px;padding:6px 12px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.fchip.on{color:#0d0d12;background:var(--accent);border-color:var(--accent)}
+.ed-item{display:flex;gap:8px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.ed-item.off .ed-main{opacity:.5}
+.ed-main{flex:1;min-width:0}
+.ed-t{font-size:14px;font-weight:600;line-height:1.4;overflow-wrap:anywhere}
+.ed-s{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;overflow-wrap:anywhere}
+.ed-act{display:flex;gap:4px;flex-shrink:0}
+.ed-act button{background:var(--surface);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:9px;font-size:14px;cursor:pointer}
+.toast{position:sticky;bottom:0;margin-top:10px;padding:10px 12px;border-radius:10px;font-size:13px;display:none;background:var(--surface);border:1px solid var(--border)}
+.toast.show{display:block}.toast.ok{border-color:var(--success);color:var(--success)}.toast.err{border-color:var(--danger);color:var(--danger)}
 </style>
 </head>
 <body>
@@ -109,7 +142,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   </div>
 
   <div class="card">
-    <div class="card-title"><span>03</span> Bugünün Planı</div>
+    <div class="card-title"><span>03</span> Bugünün Planı <button type="button" class="chip" id="editBtn" aria-haspopup="dialog">✎ Düzenle</button></div>
     <div id="agendaList"><div class="empty">Yükleniyor…</div></div>
   </div>
 
@@ -176,6 +209,13 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   </div>
 
   <div class="footer-note" id="footerNote">Doğrulanamayan bilgi uydurulmaz.</div>
+</div>
+<div id="editor" class="sheet" hidden>
+  <div class="sheet-panel" id="edPanel" role="dialog" aria-modal="true" aria-labelledby="edTitle">
+    <div class="sheet-head"><div id="edTitle" class="sheet-title">Tabloyu Düzenle</div><button type="button" id="edClose" class="x" aria-label="Kapat">✕</button></div>
+    <div id="edBody"></div>
+    <div id="edToast" class="toast" role="status" aria-live="polite"></div>
+  </div>
 </div>
 <noscript><p style="text-align:center;color:#78789e;margin-top:20px">Bu sayfa JavaScript gerektirir.</p></noscript>
 
@@ -316,11 +356,11 @@ async function fetchWeather() {
 
 /* ====================== Google Sheet (Apps Script) ====================== */
 function extractSheet(d) {
-  if (Array.isArray(d)) return {rows: d, markets: {}};
+  if (Array.isArray(d)) return {rows: d, markets: {}, meta: {}};
   if (d && (d.error || d.ok === false)) throw new Error(d.error || 'Apps Script hatası');
   const rows = d.rows || d.data || d.items || [];
   const markets = d.markets || d.piyasa || {usd: d.usd, eur: d.eur, bist: d.bist};
-  return {rows: Array.isArray(rows) ? rows : [], markets: markets || {}};
+  return {rows: Array.isArray(rows) ? rows : [], markets: markets || {}, meta: {fields: d.fields, categories: d.categories}};
 }
 
 async function fetchSheetAndMarkets() {
@@ -546,6 +586,207 @@ $('checklistList').addEventListener('click', e => { const el = e.target.closest(
 $('checklistList').addEventListener('keydown', e => {
   if (e.key !== ' ' && e.key !== 'Enter') return;
   const el = e.target.closest('.check-item'); if (el) { e.preventDefault(); toggleCheck(el); }
+});
+
+/* ====================== Tablo düzenleyici (PIN korumalı) ====================== */
+const ED = {rows: [], fields: null, cats: [], filter: 'tum', view: 'login', editing: null, busy: false};
+const PIN_KEY = 'wub:pin';
+const DEFAULT_CATS = ['Plan', 'Uyarı', 'Yerel', 'Kontrol'];
+const getPin = () => { try { return localStorage.getItem(PIN_KEY) || ''; } catch { return ''; } };
+const setPin = v => { try { v ? localStorage.setItem(PIN_KEY, v) : localStorage.removeItem(PIN_KEY); } catch {} };
+const has = k => !ED.fields || ED.fields.includes(k);
+const fmtD = iso => iso ? iso.split('-').reverse().join('.') : '';
+
+function toast(msg, kind) {
+  const t = $('edToast'); t.textContent = msg; t.className = 'toast show' + (kind ? ' ' + kind : '');
+  clearTimeout(toast.t); toast.t = setTimeout(() => { t.className = 'toast'; }, 4000);
+}
+
+/* Apps Script'e yazma isteği. text/plain => CORS ön-kontrolü (preflight) gerekmez. */
+async function api(payload) {
+  const ac = new AbortController(), t = setTimeout(() => ac.abort(), 30000);
+  try {
+    const r = await fetch(SHEET_API_URL, {method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({...payload, pin: getPin()}), signal: ac.signal, redirect: 'follow'});
+    let j; try { j = await r.json(); } catch { throw new Error('Sunucu yanıtı okunamadı. Apps Script yeni sürüm olarak dağıtıldı mı?'); }
+    if (!j || j.ok !== true) { const e = new Error((j && j.error) || 'İşlem başarısız'); e.code = j && j.code; throw e; }
+    return j;
+  } catch (e) {
+    if (e.name === 'AbortError') throw new Error('Zaman aşımı. Bağlantını kontrol et.');
+    if (e.name === 'TypeError') throw new Error('Sunucuya ulaşılamadı. Bağlantını ve Apps Script dağıtımını kontrol et.');
+    throw e;
+  } finally { clearTimeout(t); }
+}
+
+function viewRow(r) {
+  const o = normRow(r);
+  return {
+    row: Number(r._row),
+    kategori: pick(o, 'kategori', 'category', 'tur'), baslik: pick(o, 'baslik', 'title'), detay: pick(o, 'detay', 'aciklama', 'detail'),
+    durum: ACTIVE.has(norm(pick(o, 'durum', 'status'))) ? 'Aktif' : 'Pasif',
+    tarih: toISODate(pick(o, 'tarih', 'baslangic', 'date')), bitis: toISODate(pick(o, 'bitis', 'bitis tarihi', 'end')),
+    saat: (pick(o, 'saat', 'time').match(/^\d{1,2}:\d{2}/) || [''])[0]
+  };
+}
+function activeToday(r) {
+  if (r.durum !== 'Aktif') return false;
+  const t = todayISO();
+  return !r.tarih || (t >= r.tarih && t <= (r.bitis || r.tarih));
+}
+
+async function edLoad() {
+  const d = await fetchJSON(SHEET_API_URL + '?action=get&_t=' + Date.now(), {timeout: 15000, retries: 1});
+  const {rows, meta} = extractSheet(d);
+  if (rows.length && !rows.some(r => r && r._row)) throw new Error('Apps Script eski sürümde (satır numarası yok). Güncel Code.gs\'i yükleyip yeni sürüm dağıt.');
+  ED.rows = rows.map(viewRow).filter(r => r.row > 0);
+  ED.fields = Array.isArray(meta.fields) ? meta.fields : null;
+  ED.cats = [...new Set([...DEFAULT_CATS, ...(Array.isArray(meta.categories) ? meta.categories : []), ...ED.rows.map(r => r.kategori).filter(Boolean)])];
+}
+
+/* İşlem sarmalayıcı: meşgul durumu, hata mesajı, PIN hatasında girişe dön */
+async function run(fn) {
+  if (ED.busy) return;
+  ED.busy = true; $('edPanel').classList.add('busy');
+  try { await fn(); }
+  catch (e) {
+    if (e.code === 'auth' || e.code === 'locked' || e.code === 'setup') { if (e.code === 'auth') setPin(''); ED.view = 'login'; render(); }
+    toast(e.message || 'Hata', 'err');
+  } finally { ED.busy = false; $('edPanel').classList.remove('busy'); }
+}
+function afterWrite() { fetchSheetAndMarkets(); }   // ana sayfa arka planda tazelensin
+
+/* ---------- görünümler ---------- */
+function render() {
+  const body = $('edBody');
+  if (ED.view === 'login') {
+    $('edTitle').textContent = 'Giriş';
+    body.innerHTML = `<form id="edLogin" autocomplete="off">
+      <p class="hint">Tabloyu düzenlemek için PIN gir. PIN yalnızca bu cihazda saklanır.</p>
+      <label class="lbl">PIN<input class="inp" id="ed-pin" type="password" autocomplete="current-password" required></label>
+      <div class="btn-row"><button class="btn primary" type="submit">Giriş</button></div></form>`;
+    setTimeout(() => $('ed-pin') && $('ed-pin').focus(), 50);
+  } else if (ED.view === 'form') renderForm();
+  else renderList();
+}
+
+function renderList() {
+  $('edTitle').textContent = 'Tabloyu Düzenle';
+  const FILTERS = [['tum', 'Tümü'], ['plan', 'Plan'], ['uyari', 'Uyarı'], ['yerel', 'Yerel'], ['kontrol', 'Kontrol'], ['pasif', 'Pasif']];
+  const match = r => ED.filter === 'tum' ? true : ED.filter === 'pasif' ? r.durum === 'Pasif' : norm(r.kategori).includes(ED.filter);
+  const count = f => ED.rows.filter(r => f === 'tum' ? true : f === 'pasif' ? r.durum === 'Pasif' : norm(r.kategori).includes(f)).length;
+  const list = ED.rows.filter(match).reverse();   // en yeni kayıt üstte
+  const items = list.map(r => {
+    const when = [r.saat, r.tarih ? (fmtD(r.tarih) + (r.bitis && r.bitis !== r.tarih ? ' → ' + fmtD(r.bitis) : '')) : 'her gün'].filter(Boolean).join(' · ');
+    return `<div class="ed-item${r.durum === 'Pasif' ? ' off' : ''}" data-row="${r.row}">
+      <div class="ed-main"><div class="ed-t">${r.kategori ? `<span class="src-tag">${esc(r.kategori)}</span> ` : ''}${esc(r.baslik || '(başlıksız)')}${activeToday(r) ? ' <span class="badge-new">BUGÜN</span>' : ''}</div>
+      <div class="ed-s">${esc([r.detay, when].filter(Boolean).join(' · '))}</div></div>
+      <div class="ed-act">
+        <button type="button" data-act="edit" aria-label="Düzenle: ${esc(r.baslik)}">✎</button>
+        <button type="button" data-act="toggle" aria-label="${r.durum === 'Pasif' ? 'Aktif yap' : 'Pasif yap'}: ${esc(r.baslik)}">${r.durum === 'Pasif' ? '▶' : '⏸'}</button>
+        <button type="button" data-act="del" aria-label="Sil: ${esc(r.baslik)}">🗑</button>
+      </div></div>`;
+  }).join('');
+  $('edBody').innerHTML = `
+    <div class="btn-row"><button type="button" class="btn primary" data-act="new">＋ Yeni kayıt</button>
+      <button type="button" class="btn" data-act="reload" aria-label="Listeyi yenile">⟳</button>
+      <button type="button" class="btn" data-act="logout">Çıkış</button></div>
+    <div class="chips" role="group" aria-label="Filtre">${FILTERS.map(([k, n]) => `<button type="button" class="fchip${ED.filter === k ? ' on' : ''}" data-filter="${k}">${n} ${count(k)}</button>`).join('')}</div>
+    <div>${items || '<div class="empty">Bu filtrede kayıt yok.</div>'}</div>`;
+}
+
+function renderForm() {
+  const e = ED.editing;
+  const r = e || {kategori: 'Plan', baslik: '', detay: '', durum: 'Aktif', tarih: todayISO(), bitis: '', saat: ''};
+  $('edTitle').textContent = e ? 'Kaydı düzenle' : 'Yeni kayıt';
+  $('edBody').innerHTML = `<form id="edForm" autocomplete="off" novalidate>
+    <label class="lbl">Kategori<input class="inp" id="ef-kategori" list="edCats" maxlength="40" value="${esc(r.kategori)}">
+      <datalist id="edCats">${ED.cats.map(c => `<option value="${esc(c)}">`).join('')}</datalist></label>
+    <label class="lbl">Başlık *<input class="inp" id="ef-baslik" maxlength="300" required value="${esc(r.baslik)}"></label>
+    ${has('detay') ? `<label class="lbl">Detay<textarea class="inp" id="ef-detay" rows="2" maxlength="600">${esc(r.detay)}</textarea></label>` : ''}
+    <div class="row2">
+      ${has('saat') ? `<label class="lbl">Saat<input class="inp" id="ef-saat" type="time" value="${esc(r.saat)}"></label>` : '<span></span>'}
+      ${has('durum') ? `<label class="lbl">Durum<select class="inp" id="ef-durum"><option${r.durum === 'Aktif' ? ' selected' : ''}>Aktif</option><option${r.durum === 'Pasif' ? ' selected' : ''}>Pasif</option></select></label>` : '<span></span>'}
+    </div>
+    ${has('tarih') ? `<div class="row2">
+      <label class="lbl">Tarih<input class="inp" id="ef-tarih" type="date" value="${esc(r.tarih)}"></label>
+      ${has('bitis') ? `<label class="lbl">Bitiş<input class="inp" id="ef-bitis" type="date" value="${esc(r.bitis)}"></label>` : '<span></span>'}
+    </div><p class="hint">Tarih boşsa her gün gösterilir. Bitiş boşsa yalnızca o tarihte gösterilir.</p>` : ''}
+    <div class="btn-row"><button type="submit" class="btn primary">Kaydet</button>
+      <button type="button" class="btn" data-act="cancel">İptal</button>
+      ${e ? '<button type="button" class="btn danger" data-act="del-editing">Sil</button>' : ''}</div></form>`;
+  if (!e) setTimeout(() => $('ef-baslik') && $('ef-baslik').focus(), 50);
+}
+
+/* ---------- işlemler ---------- */
+async function saveForm() {
+  const g = id => $(id) ? $(id).value.trim() : undefined;
+  const data = {kategori: g('ef-kategori'), baslik: g('ef-baslik'), detay: g('ef-detay'), durum: g('ef-durum'), tarih: g('ef-tarih'), bitis: g('ef-bitis'), saat: g('ef-saat')};
+  Object.keys(data).forEach(k => { if (data[k] === undefined) delete data[k]; });
+  if (!data.baslik) { toast('Başlık gerekli', 'err'); $('ef-baslik').focus(); return; }
+  if (data.tarih && data.bitis && data.bitis < data.tarih) { toast('Bitiş tarihi başlangıçtan önce olamaz', 'err'); return; }
+  await run(async () => {
+    if (ED.editing) await api({action: 'update', row: ED.editing.row, expect: {kategori: ED.editing.kategori, baslik: ED.editing.baslik}, data});
+    else await api({action: 'add', data});
+    await edLoad(); afterWrite();
+    ED.view = 'list'; ED.editing = null; render(); toast('✓ Kaydedildi', 'ok');
+  });
+}
+async function toggleRow(r) {
+  await run(async () => {
+    await api({action: 'update', row: r.row, expect: {kategori: r.kategori, baslik: r.baslik}, data: {durum: r.durum === 'Pasif' ? 'Aktif' : 'Pasif'}});
+    await edLoad(); afterWrite(); render(); toast(r.durum === 'Pasif' ? '✓ Aktif yapıldı' : '✓ Pasif yapıldı', 'ok');
+  });
+}
+async function deleteRow(r) {
+  if (!confirm(`"${r.baslik}" kalıcı olarak silinsin mi?`)) return;
+  await run(async () => {
+    await api({action: 'delete', row: r.row, expect: {kategori: r.kategori, baslik: r.baslik}});
+    await edLoad(); afterWrite(); ED.view = 'list'; ED.editing = null; render(); toast('✓ Silindi', 'ok');
+  });
+}
+
+async function openEditor() {
+  $('editor').hidden = false; document.body.style.overflow = 'hidden';
+  ED.editing = null;
+  if (!getPin()) { ED.view = 'login'; render(); return; }
+  ED.view = 'list'; $('edBody').innerHTML = '<div class="empty">Yükleniyor…</div>';
+  await run(async () => { await Promise.all([api({action: 'auth'}), edLoad()]); render(); });
+}
+function closeEditor() { $('editor').hidden = true; document.body.style.overflow = ''; $('editBtn').focus(); }
+
+$('editBtn').addEventListener('click', openEditor);
+$('edClose').addEventListener('click', closeEditor);
+$('editor').addEventListener('click', e => { if (e.target === $('editor')) closeEditor(); });
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape' || $('editor').hidden) return;
+  if (ED.view === 'form') { ED.view = 'list'; ED.editing = null; render(); } else closeEditor();
+});
+$('edBody').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (e.target.id === 'edLogin') {
+    const pin = $('ed-pin').value;
+    if (!pin) return;
+    setPin(pin);
+    await run(async () => { await Promise.all([api({action: 'auth'}), edLoad()]); ED.view = 'list'; render(); toast('✓ Giriş yapıldı', 'ok'); });
+  } else if (e.target.id === 'edForm') await saveForm();
+});
+$('edBody').addEventListener('click', async e => {
+  const f = e.target.closest('[data-filter]');
+  if (f) { ED.filter = f.dataset.filter; renderList(); return; }
+  const b = e.target.closest('[data-act]');
+  if (!b) return;
+  const row = Number(b.closest('.ed-item')?.dataset.row);
+  const r = ED.rows.find(x => x.row === row);
+  switch (b.dataset.act) {
+    case 'new': ED.editing = null; ED.view = 'form'; render(); break;
+    case 'edit': if (r) { ED.editing = r; ED.view = 'form'; render(); } break;
+    case 'toggle': if (r) await toggleRow(r); break;
+    case 'del': if (r) await deleteRow(r); break;
+    case 'del-editing': if (ED.editing) await deleteRow(ED.editing); break;
+    case 'cancel': ED.view = 'list'; ED.editing = null; render(); break;
+    case 'reload': await run(async () => { await edLoad(); render(); toast('Liste yenilendi', 'ok'); }); break;
+    case 'logout': setPin(''); ED.view = 'login'; render(); break;
+  }
 });
 
 /* ====================== Yenileme ====================== */
