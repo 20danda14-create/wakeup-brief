@@ -2,7 +2,9 @@ name: Veri Güncelleme (EGO + Haber)
 
 on:
   schedule:
-    - cron: '7,37 * * * *'   # her 30 dk (saat başından kaçınmak için :07 / :37)
+    # GitHub zamanlayıcısı best-effort: çoğu tetik gecikir/atlanır. Şansı artırmak için sık ve
+    # saat başından uzak dakikalarda dört tetik; concurrency aynı anda tek çalışma sağlar.
+    - cron: '4,19,34,49 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -10,7 +12,7 @@ permissions:
 
 concurrency:
   group: wakeup-data
-  cancel-in-progress: false
+  cancel-in-progress: false   # çalışan bitsin; bekleyen en fazla 1 tetik sırada kalır
 
 jobs:
   run-scraper:
