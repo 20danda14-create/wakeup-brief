@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-06T04:05+03:00",
+  "updated": "2026-11-06T10:57+03:00",
   "ego": [
     {
       "id": 7782,
@@ -52,11 +52,25 @@
   ],
   "news": [
     {
-      "title": "Afyonkarahisar'da 8 kişiyi öldürüp, 1 kişiyi yaraladıktan sonra Eskişehir'de yakalanan zanlı sevk edildi",
-      "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOZ3c3d0NmSGs0WmdVTDJKbkVYQzNFLTlUNUcwT2lfcG9NWDRNbGdVQldSb0ljQ043SHJEWi1tallKVDRJZmVnZTFVc1RlWnRLem5iQTlqeXJhd2VScVNhZ0NMeGszblpvcnV2cE4zZll3eGVYV2tCbzlITEt5TkgwRzFQWlE3ejFqZ3F5WjltS2M0UUdLbEFRZFpnY2diOUhQQ3NVU1plVjhqRWJSN2xqREtMcVJoWHhWRjBFM3NWUDRZVEtnek5RQWpvS3VqTXVxelVYdmF1aEM?oc=5",
-      "source": "Anadolu Ajansı",
+      "title": "Fatma Betül Sayan Kaya tutuklandı",
+      "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBsRzBKVWxucHBVM2NLMVV5bElCM3RBaWlpeUFGZFZVVmxEdFpJc0o3MTRuREVUY0N5UWVCLVVHWDRPRkZ3bjNnRU5IdHR1ZTYzR1JZelduZzVHdy1UUkVNalZpSnpabVIya3RxOEJqVG5hZHUtMnN3VA?oc=5",
+      "source": "Bloomberght",
       "tag": "Türkiye",
-      "published": "2026-11-06T01:00+03:00"
+      "published": "2026-11-06T02:04+03:00"
+    },
+    {
+      "title": "Afyonkarahisar'da 8 kişiyi öldüren zanlı Eskişehir yolunda yakalandı: Katliamın ve kaçışın detayları ortaya çıktı",
+      "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPQkt1bS10WllUeGp6R3REaDR1b0U1MGRPN3RvcFpJY0g5Yl9oNlhnLTMxMERNbjNfdTlFaURkSldqV1VSN3hBOVN4T1BxcHFoSHNHcHVzZEVrNExsNTNsdmFrQ3ZlR1ZVc3hteU9ZMVFVOF9TazBYVHdkbjdOT1BlbjNuRGVpVGlyWi0wVkNrS3BuSTRUc2tyaGVSQW5iYmhSNlMzTjl0ZXNPaWxsQmhjTFIxV19uNl9aeG5qMk5HaFRGTmhJa3ZTTXBQakF6X3V3VTVXbGNRMA?oc=5",
+      "source": "Hürriyet",
+      "tag": "Türkiye",
+      "published": "2026-11-06T09:45+03:00"
+    },
+    {
+      "title": "Sarıgül soruşturması: Şişli Meslek Yüksekokulu'na kayyum atandı, 11 kişi için gözaltı kararı verildi",
+      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQZmNkdkpsOWdtcmZXdW93NEI0bUdxZ2d0Vk5vMlZ6bEt4YlZTNjBXRUVBMDhSdWJUMjVDY0c4YlI3ajNjRDJrb1E3NlVNTUMxUkd5WHBjY2J2TDJIZWNKOF93bkc1X0daUTRsZV9fenZpSmJoWU1UbENaQU1zX0ZsMW8tY2JBR2pQMHR0WlZuSFVENFJyckhiRld1OXU1VlJmSFpzZUI0ZmlDaWQtZFYxYWlBVlpnb0xTNExZYkVMeFhSOUx4aTh6eDBmSVNKUmJwNEg4ZmVLLVBGMEXSAeABQVVfeXFMTTc3SEtONlFFSlFwb3RSdmN4TVdIVmpkMlBUeTUtZjJSWjdVUGpCSTFvZUF2U28tS2NOeW1vNG9xU1h5MnFYUUlzcUdPZUlaV09sZ1V0R2VFY0otWWgyVFVWODEweThDbnJQWTBUWUhkM0VQR0FGUklSMVlibl9icEJfazhlV2poUE5LYzZMek5tNlhDMmd2djR6bTk1OGhwamQxNm9WaXJZc21QMnc2eTFuNnhoM0hzdDF5Vk5lV29BT25zaFRhb1huWXE2R1IyZ3Z3ZHZpQWRfakxjeUY0cy0?oc=5",
+      "source": "NTV Haber",
+      "tag": "Türkiye",
+      "published": "2026-11-06T08:59+03:00"
     },
     {
       "title": "Bakan Şimşek'ten emekli maaşları ve fon soruşturmasına ilişkin açıklamalar",
@@ -66,42 +80,28 @@
       "published": "2026-11-05T22:10+03:00"
     },
     {
-      "title": "Son Dakika... 'Mekke Anlaşması' TBMM'de kabul edildi",
-      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPUGxwazBMRnpjSS1nUUU3UDljbFRoeTVsaXVVZjl3WkhXMnZubVk2b0JHdlVUVmNtY0hVQnZFeXpubWMwVEZRRlBWQTNhN0cxT0Q1bC11SjlFT0piVWdINnF5Z0R2YXVURVozcGEtYmpQdnJ3dk1vV2VCWnp0RXRMSzg0TThQWmc2VkgxelE5cXhKRzE3bUZFRQ?oc=5",
-      "source": "Cumhuriyet",
+      "title": "Mekke Anlaşması AKP, MHP ve butlan CHP'sinin oylarıyla kabul edildi",
+      "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQS2FuZ3gtRDczM1ZuUnBRZkFXTWhzaVBYckdZamVTQTNFRTdYNFdfbVpKOEw3dHhVN3pZNU9ia3AzQnl5ZWc3NUpuUHBOczlveUwzaUM1aWFsX0MzSkhSY1poYmFrcFlvXzZJVVZRZlEtR002ZkRBb3hYbzhxMTVXVDE2OVA0UlhXMERtczFISldiVXQ0aV81bi1WTGx3MkpqWVNRNg?oc=5",
+      "source": "birgun.net",
       "tag": "Türkiye",
-      "published": "2026-11-06T00:04+03:00"
-    },
-    {
-      "title": "Fon soruşturmasında Fatma Betül Sayan Kaya ve 2 şüpheli adliyede",
-      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPZnp0STBwNWR4eTllc0JlbVVCT29SU0I0UTBVeVdLZnZjRkVKSHRMYl80NnZ2SkJCNWxRVkptbnU5THUzRy1iNXRRVTd4dlZRQlRVU01mSGd1WjRBZERfdXNzS3AyZzN4RkR4c2JObjVsTGh6OTdEczNKcjdfYTc1VmR4U3VVSFAzeXZtWEItYmFWc2txbG16WUM0OUROeU15RkhaY2RQbHFWU3dqMmYtdXJXTE0?oc=5",
-      "source": "TRT Haber",
-      "tag": "Türkiye",
-      "published": "2026-11-05T16:28+03:00"
-    },
-    {
-      "title": "İsrail'de hesaplar karıştı! Eski müttefikinden Netanyahu'ya darbe",
-      "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPbzllbU1yNmJkOF82MHFQTXMtb1ZTOUlieHZpLXYtMEl6UW0tLWctVEdia2ktSTY3V2hpejZxLVVhc0ZpWWdOdV9aazk4S09FR3h2SmhZU3RJVHhlakdLY2NCR2JkUC1GQ1czOGQ0RElRdzdYZjB0RlU2UUpwUm1FOUdHSnZNNURzSzZ2QlZBZDVjV3NfX1VnN0ZXakNxRTJyR3RGOE5SNlE?oc=5",
-      "source": "Hürriyet",
-      "tag": "Türkiye",
-      "published": "2026-11-05T14:23+03:00"
+      "published": "2026-11-06T00:02+03:00"
     }
   ],
   "markets": {
     "usd": {
       "v": 50.047,
       "src": "api.frankfurter.app",
-      "t": "2026-11-06T03:59+03:00"
+      "t": "2026-11-06T10:51+03:00"
     },
     "eur": {
       "v": 56.1729,
       "src": "api.frankfurter.app",
-      "t": "2026-11-06T03:59+03:00"
+      "t": "2026-11-06T10:51+03:00"
     },
     "bist": {
-      "v": 11333.27,
+      "v": 11205.52,
       "src": "Yahoo Finance",
-      "t": "2026-11-06T03:59+03:00"
+      "t": "2026-11-06T10:51+03:00"
     }
   },
   "world": {
@@ -115,6 +115,27 @@
         "seen": "2026-11-06T03:30+03:00"
       },
       {
+        "title": "Recession explained: What is it, how is it measured, and should Australia be worried?",
+        "link": "https://www.theage.com.au/politics/federal/what-is-a-recession-and-are-we-in-one-a-bluffer-s-guide-20261106-p61bg8.html",
+        "source": "theage.com.au",
+        "topic": "Ekonomi",
+        "seen": "2026-11-06T06:00+03:00"
+      },
+      {
+        "title": "Arab News | Trump hints at wider European security deal after meeting Putin envoy",
+        "link": "https://www.arabnews.com/world/trump-hints-at-wider-european-security-deal-after-meeting-putin-envoy-3010079",
+        "source": "arabnews.com",
+        "topic": "Çatışma",
+        "seen": "2026-11-06T04:00+03:00"
+      },
+      {
+        "title": "Cutting government spending may slow prices, but it could bring on something worse",
+        "link": "https://www.theage.com.au/business/the-economy/cutting-government-spending-may-slow-prices-but-it-could-bring-on-something-worse-20261106-p61bql.html",
+        "source": "theage.com.au",
+        "topic": "Ekonomi",
+        "seen": "2026-11-06T06:00+03:00"
+      },
+      {
         "title": "Melania Trump seeks lasting Ukraine ceasefire",
         "link": "https://punchng.com/melania-trump-seeks-lasting-ukraine-ceasefire/",
         "source": "punchng.com",
@@ -122,42 +143,21 @@
         "seen": "2026-11-06T01:30+03:00"
       },
       {
+        "title": "Dhanteras 2026 today: Buy gold at current rates or avoid? Shopping guide - 20% price down from 2026 peak; Expert views",
+        "link": "https://www.livemint.com/market/commodities/dhanteras-2026-today-buy-gold-at-current-rates-or-avoid-shopping-guide-20-price-down-from-2026-peak-experts-views-11793932229932.html",
+        "source": "livemint.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-06T06:30+03:00"
+      },
+      {
         "title": "Trump meets with top Putin envoy at the White House but not visiting Ukrainian officials - Las Vegas Sun News",
         "link": "https://lasvegassun.com/news/2026/nov/05/trump-meets-with-top-putin-envoy-at-the-white-hous/",
         "source": "lasvegassun.com",
         "topic": "Çatışma",
         "seen": "2026-11-06T03:30+03:00"
-      },
-      {
-        "title": "Zelensky Questions Whether Musk Acted Alone in Ukraine Satellite Slowdown",
-        "link": "https://radaronline.com/p/zelensky-accuses-elon-musk-of-not-acting-alone-in-starlink-slowdown-and-fires-back-at-his-russia-remarks-these-are-not-jokes-i-can-understand/",
-        "source": "radaronline.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-06T02:30+03:00"
-      },
-      {
-        "title": "Trump says big, beautiful agreement on Ukraine might involve all of Europe",
-        "link": "https://www.thetelegraphandargus.co.uk/news/national/26704229.trump-says-big-beautiful-agreement-ukraine-might-involve-europe/",
-        "source": "thetelegraphandargus.co.uk",
-        "topic": "Çatışma",
-        "seen": "2026-11-06T03:30+03:00"
-      },
-      {
-        "title": "Melania Trump touts rare agreement she brokered between Russia and Ukraine",
-        "link": "https://www.kalw.org/npr-news/2026-11-05/melania-trump-touts-rare-agreement-she-brokered-between-russia-and-ukraine",
-        "source": "kalw.org",
-        "topic": "Çatışma",
-        "seen": "2026-11-06T03:30+03:00"
-      },
-      {
-        "title": "Hakim Adi Pan - Africanism and Communism: A pro - Stalinist attempt to erase the Trotskyist alternative Part Four",
-        "link": "https://www.wsws.org/en/articles/2026/11/05/krdx-n05.html",
-        "source": "wsws.org",
-        "topic": "Çatışma",
-        "seen": "2026-11-06T01:30+03:00"
       }
     ],
-    "hits": 1
+    "hits": 2
   },
   "ok": {
     "ego": true,
