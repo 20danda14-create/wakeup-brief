@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-07T00:31+03:00",
+  "updated": "2026-11-07T04:11+03:00",
   "ego": [
     {
       "id": 7782,
@@ -66,18 +66,11 @@
       "published": "2026-11-06T14:08+03:00"
     },
     {
-      "title": "Fenerbahçe'nin takım otobüsüne Trabzon'da saldırılmıştı: Savcılıktan açıklama",
-      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNZzdKczFxMVd3LUsta0VBZ3NqV3R5emhjLVpSMWlYRmFQRmtwcHZjdHVkM2RHUnR1VWxWUEZtcGF3dlBabzBXdEFicFZOcVUtNl9uRzRuWldKb3hhdVZvdWdIb21hWWlwb3p3VnpZUXJ2YXJQV2xWUG1IMS1KWjJsbnRhOVRiQVkzU25BdVhyTnJReXBIbXJSSFRyX29zd3k4YVFneEM3NjZrXzBfX3BILWRB?oc=5",
-      "source": "birgun.net",
+      "title": "DİKKAT! Tir tir titreyeceğiz: Kar yağışı için tarih verildi!",
+      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOcHpqMUxkUjJiVHhBdUZzS21DdkZseER5blBCa1FrMHdRUUFCQVBRdmI1S3JOLW1xTFIzZWZjTGFYd3pmRGtpQnY1Sm9LUkdPdDZseXg1aXVnQ2pibzRMcFRiNlc0eGstcUJpUE1NbTNFZ1B2XzJ0a0tWZTkxbkxCUjk0RmhtYVdoOGVYUkZzdmNRWHlFcjBmWkZ3Smd2bXp6NzBGem12VQ?oc=5",
+      "source": "CNN Türk",
       "tag": "Türkiye",
-      "published": "2026-11-06T19:56+03:00"
-    },
-    {
-      "title": "Umreye gitmek için havalimanına geldi, dua ederken hayatını kaybetti",
-      "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOdzBEckVIaXJjVG1mQVFQel9TN3NzaEc2U0VKSmswdHctM0pYb3hMQXZib0cwclhnWjNNNDFZWjBHZk1od25xMFpaRWtwdUhZdS1tRUkxbFllVUc5QjRocVBXZFVldUUxc25EZzlpamlfM09UXzZXSGN6bTdBOFBFc3VDZWs2UTFJM2xoU3FsMy1HWGV6WWxaMHVXSUZkNzhMSHfSAacBQVVfeXFMTnFNM252bGZ2SDFxS282RXFydWpzUG91cnJLTEpWRW1EbnFCVUpFcE1saHlhdW5wNmhSVmt0Z1lzUldGUm1xa1R1X1pFTWwtc3pzSDhjQmY0cnJLYUVYOUROVW9kX2RWSkhjLU0xRk8wa0RfandxaVAtMEFLX0F4OTl4S0lkT0JUSWM3N0tjZHR2TThCVmJEU1dZOVlwTXBFQlBrSktqcXM?oc=5",
-      "source": "Sözcü Gazetesi",
-      "tag": "Türkiye",
-      "published": "2026-11-06T12:49+03:00"
+      "published": "2026-11-06T18:30+03:00"
     },
     {
       "title": "Son Dakika: En düşük emekli maaşı ne kadar olacak? İşte konuşulan sınır...",
@@ -85,23 +78,30 @@
       "source": "Uzmanpara",
       "tag": "Türkiye",
       "published": "2026-11-06T09:56+03:00"
+    },
+    {
+      "title": "Fenerbahçe'nin takım otobüsüne Trabzon'da saldırılmıştı: Savcılıktan açıklama",
+      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNZzdKczFxMVd3LUsta0VBZ3NqV3R5emhjLVpSMWlYRmFQRmtwcHZjdHVkM2RHUnR1VWxWUEZtcGF3dlBabzBXdEFicFZOcVUtNl9uRzRuWldKb3hhdVZvdWdIb21hWWlwb3p3VnpZUXJ2YXJQV2xWUG1IMS1KWjJsbnRhOVRiQVkzU25BdVhyTnJReXBIbXJSSFRyX29zd3k4YVFneEM3NjZrXzBfX3BILWRB?oc=5",
+      "source": "birgun.net",
+      "tag": "Türkiye",
+      "published": "2026-11-06T19:56+03:00"
     }
   ],
   "markets": {
     "usd": {
       "v": 50.153,
       "src": "api.frankfurter.app",
-      "t": "2026-11-07T00:26+03:00"
+      "t": "2026-11-07T04:06+03:00"
     },
     "eur": {
       "v": 55.9957,
       "src": "api.frankfurter.app",
-      "t": "2026-11-07T00:26+03:00"
+      "t": "2026-11-07T04:06+03:00"
     },
     "bist": {
       "v": 11482.6,
       "src": "Yahoo Finance",
-      "t": "2026-11-07T00:26+03:00"
+      "t": "2026-11-07T04:06+03:00"
     }
   },
   "world": {
@@ -115,13 +115,6 @@
         "seen": "2026-11-06T14:30+03:00"
       },
       {
-        "title": "Recession explained: What is it, how is it measured, and should Australia be worried?",
-        "link": "https://www.theage.com.au/politics/federal/what-is-a-recession-and-are-we-in-one-a-bluffer-s-guide-20261106-p61bg8.html",
-        "source": "theage.com.au",
-        "topic": "Ekonomi",
-        "seen": "2026-11-06T06:00+03:00"
-      },
-      {
         "title": "Russia agreed to supply Iran with 90 helicopter missile launchers",
         "link": "https://www.irishexaminer.com/world/arid-41934033.html",
         "source": "irishexaminer.com",
@@ -129,35 +122,42 @@
         "seen": "2026-11-06T11:30+03:00"
       },
       {
-        "title": "Cutting government spending may slow prices, but it could bring on something worse",
-        "link": "https://www.theage.com.au/business/the-economy/cutting-government-spending-may-slow-prices-but-it-could-bring-on-something-worse-20261106-p61bql.html",
-        "source": "theage.com.au",
-        "topic": "Ekonomi",
-        "seen": "2026-11-06T06:00+03:00"
-      },
-      {
-        "title": "Trump meets at the White House with Putin envoy after he appeared with Melania Trump - Las Vegas Sun News",
-        "link": "https://lasvegassun.com/news/2026/nov/05/trump-meets-at-the-white-house-with-putin-envoy-af/",
-        "source": "lasvegassun.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-06T03:30+03:00"
-      },
-      {
-        "title": "Dhanteras 2026 today: Buy gold at current rates or avoid? Shopping guide - 20% price down from 2026 peak; Expert views",
-        "link": "https://www.livemint.com/market/commodities/dhanteras-2026-today-buy-gold-at-current-rates-or-avoid-shopping-guide-20-price-down-from-2026-peak-experts-views-11793932229932.html",
-        "source": "livemint.com",
-        "topic": "Ekonomi",
-        "seen": "2026-11-06T06:30+03:00"
-      },
-      {
         "title": "Israel Used Where Daddy? AI to Relentlessly Murder Palestinian Journalists and Their Families in Their Homes from October to December",
         "link": "https://countercurrents.org/2026/11/israel-used-wheres-daddy-ai-to-relentlessly-murder-palestinian-journalists-and-their-families-in-their-homes-from-october-to-december/",
         "source": "countercurrents.org",
         "topic": "Çatışma",
         "seen": "2026-11-06T14:30+03:00"
+      },
+      {
+        "title": "US Midterms Offer Hope on Ukraine Aid, Russia Scrutiny: Analysts",
+        "link": "https://www.kyivpost.com/post/89319",
+        "source": "kyivpost.com",
+        "topic": "Çatışma",
+        "seen": "2026-11-06T14:00+03:00"
+      },
+      {
+        "title": "Rocket launcher deal illustrates deepening Russia - Iran relations",
+        "link": "https://www.aljazeera.com/news/2026/11/6/rocket-launcher-deal-illustrates-deepening-russia-iran-relations",
+        "source": "aljazeera.com",
+        "topic": "Çatışma",
+        "seen": "2026-11-06T15:00+03:00"
+      },
+      {
+        "title": "Australia: 2026 Asia - Pacific Naval Warfare Symposium",
+        "link": "https://www.icrc.org/en/news-release/australia-naval-officers-across-indo-pacific-region-meet-laws-war-sea",
+        "source": "icrc.org",
+        "topic": "Çatışma",
+        "seen": "2026-11-06T11:00+03:00"
+      },
+      {
+        "title": "Donald Trump predicts deal with Russia on Ukraine and all of Europe",
+        "link": "https://www.thehindu.com/news/international/donald-trump-predicts-deal-with-russia-on-ukraine-and-all-of-europe/article71672626.ece",
+        "source": "thehindu.com",
+        "topic": "Çatışma",
+        "seen": "2026-11-06T05:00+03:00"
       }
     ],
-    "hits": 2
+    "hits": 1
   },
   "ok": {
     "ego": true,
