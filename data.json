@@ -1,6 +1,12 @@
 {
-  "updated": "2026-11-10T10:30+03:00",
+  "updated": "2026-11-10T18:50+03:00",
   "ego": [
+    {
+      "id": 7783,
+      "title": "330 Ege Mh. Lojman 15 Temmuz Kızılay Milli İrade Meydanı Abb Binası Hattı güzergahı yeniden düzenlenmiştir",
+      "link": "https://www.ego.gov.tr/tr/duyuru/7783/330-ege-mh-lojman-15-temmuz-kizilay-milli-irade-meydani-abb-binasi-hatti-guzergahi-yeniden-duzenlenmistir",
+      "date": "2026-11-10"
+    },
     {
       "id": 7782,
       "title": "434 ,458,459,472,474,..477,,477-1,486,486-1Aybü Saray Kaymakamlık Hastane Pursaklar Merkez Hattı güzergahı yeniden düzenlenmiştir",
@@ -42,66 +48,60 @@
       "title": "356 Kıbrısköyü Yeşilbayır Zerdalitepe Kayaş Banliyö Tren İstasyonu hattının servis saatleri yeniden düzenlenmiştir",
       "link": "https://www.ego.gov.tr/tr/duyuru/7776/356-kibriskoyu-yesilbayir-zerdalitepe-kayas-banliyo-tren-istasyonu-hattinin-servis-saatleri-yeniden-duzenlenmistir",
       "date": "2026-10-01"
-    },
-    {
-      "id": 7775,
-      "title": "367 Şirintepe 15 Temmuz Kızılay Milli İrade Meydanı Sıhhiye Ulus Hattı güzergahı yeniden düzenlenmiştir",
-      "link": "https://www.ego.gov.tr/tr/duyuru/7775/367-sirintepe-15-temmuz-kizilay-milli-irade-meydani-sihhiye-ulus-hatti-guzergahi-yeniden-duzenlenmistir",
-      "date": "2026-09-25"
     }
   ],
   "news": [
     {
-      "title": "İzmir'de demir çelik fabrikasında patlama meydana geldi",
-      "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxORFNybmd0UGtHNjVEYzUxVnM1a3RleE91VTltanNZYUF4Y2ZjVFNKN0ZHWkxKVUw5RGxiaHVXVDlqX05DTjNQbV9vV2dodUxyTkIxNkY3ODJMYnVaaUEwdlVMUFJnaHhsVUphSzlLS2JMYWFNOVZwY2c5MGx2Y1VNOHdEdzJpZ2FmQ3E2aDVzTTlBZDlEZFU2T0NR?oc=5",
-      "source": "Anadolu Ajansı",
+      "title": "Fabrikada patlama: 17 can kaybı, 1’i ağır 13 yaralı",
+      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPOXhyaHM0ZVNZQTRKTW05VVpGZlo4Q2MycmNuSjhEbDdXWmJHNXR4bGxWM19WTFMzdEZwQmk3MGJHZkJKblZmV3FDM3VMTDc0ZWZaZ3ZmTDlMb3lSeFdzT3dhSTd6a0JzUDZtc1FPeXlnYmpMVkZ2UXgyVkpRUVdrcXRXSTRpRTQxQjlPWnZlSQ?oc=5",
+      "source": "Hürriyet",
       "tag": "Türkiye",
-      "published": "2026-11-09T18:34+03:00"
+      "published": "2026-11-10T10:44+03:00"
     },
     {
-      "title": "Akın Gürlek’ten YENİ Partili Özer’e: “Şu an sen milletvekili olmasan evin aranacaktı, gel senin dokunulmazlığını da benimkini de kaldıralım”",
-      "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOR2pNXzU5UVZIbG9yVWRNSU5Eek5VSHNOZFF3SGpSQ0M1SUZTaGlVVUhxaktnM2U3TmVORzFzYTI0RU4xa2g4d2NDYy1SSkdqX1V4Y0Z2NElqbE5qYjVzQ05zLUxPUFdQUjBNZm9HeW5FM3Q5OUs3WG1FSVlzMmtuOFc1c2x4MzB4bjZYN1gtS0xoTlpsZTZjMVBFam9fUGZGcm5xNEczTnkyblJiNnRFblpXZTI1TXhQd1pZX0JsV2FPNnM0QjF0WHZPZko1RXM?oc=5",
-      "source": "Medyascope",
-      "tag": "Türkiye",
-      "published": "2026-11-10T00:32+03:00"
-    },
-    {
-      "title": "Erdoğan-Aliyev “aile” fotoğrafı… Türkiye-Azerbaycan krizi bitti mi? İsrail Kafkaslarda neler yapıyor? Yoksa Türkiye mi İsrail’i çevreliyor. İsrail’e yakın duran herkes kaybetti. Liderler “büyük imzalar” atmalı. Küresel fırtına herkesi vurabilir.",
-      "link": "https://news.google.com/rss/articles/CBMimgNBVV95cUxQZFdYYmViYkJOdVpkQm9rZjV0VGFQXzF0U005bkdtaWtWaDFjS2ZJT3dlNnRxWG4wTC1XTEMydlo5V3EyT1BPWGFBd0txN2tlZmdUZGdRM2pKQjdlQVdBaGQ4SjRRLXc3Ri14ekVxWDRjYUE5bVpiVS1oYlYyb1UtQVVBdzFCRDJ1aWR3UmFmTEFZbXdTSkwybm8xVzhwNFZrbHpaZFBydjR5a0o4T3VGRDVKM3otR0RlcUs0SXI0al93MzdkQ0dtN1pyTUhwTFpURmN6RVlPSTNpLUt5Q3pBT3ljWWJoRVNROFI4ZU5NWjBhRWhYMnpfMDRjNkhqeG5HM2VnYVlmeUVFMThBZzlpM3RnVXEtSnNaUGRrMnIzTVRNbXdrOVdhV2ctVl9rbm9jdmxDYV9QZmk1M21HRm5PTjBnOXg1NlVZcWFoWnZjQmFWLTFPSmZNQzBBVFgzVDlDb1FzdGlrTzROZG5sV2VPWl8ycGl5WHg0Ujdzb2FKQkhRU1J2dk5iSV9XUlFmSmhMVE1ab3dlR0Vwdw?oc=5",
-      "source": "Yeni Şafak",
-      "tag": "Türkiye",
-      "published": "2026-11-10T04:07+03:00"
-    },
-    {
-      "title": "Cumhurbaşkanı Erdoğan: Gabar'da 135 milyon varil yerinde petrol potansiyeli bulundu",
-      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQcjlSNzlvSWNhSzI5a01xczRtN0J3aU12OE5ONklOcTlxdm5rckhGanRQYlZabTlHQmNvM0hSUThlUGVsdUlpel83WFI0YmpBWUlaQnVXcE12LXhfOWdmNVkwQVBIVWhaYTBCNEoyVHpyWENhMU9ZYzRhTkJrSEJNMnp0MEFOQ2o3RnBPOGg3Y2hzWVN4Rmc4TzU2RC1lWHdpZDJ6WnV4bzloV1dTSVYxMjk2cTY3cFF0XzIzYXdXMG5YWklJRktDOEhTcw?oc=5",
-      "source": "TRT Haber",
-      "tag": "Türkiye",
-      "published": "2026-11-09T19:05+03:00"
-    },
-    {
-      "title": "‘Fatma Betül bir sonuç, saadet zinciri bayağı uzun’ - İsmail Saymaz",
-      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNeVpjVmlsc0Q3YmpXQmFMY3lqRmduY3l6dWxOUEpocnlpcnJ1NWJSeEpLZVBEZlVVRHFwVHkwblVDczRRUU1LTVcwSzEzU0dPS0FseVFRWVlBYXlZSy1CMHdtcGdRV1pBOGo4anRQNnFxYUxOSU40c0hKT19wTkhYNkNQbVhxUWtq?oc=5",
+      "title": "Türkiye sınırına 90 kilometre kala 70 araç adeta üst üste bindi!",
+      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxONTlKTDRTcnlJNGU1UElvTTEwRnlQbVRJeUgxbHBaRVFEV3kxQng4WHpUX1RJYWZaU1UxSm1wajRZbzMwNGRnTUZ1WEdnS3BVUHR1aW41TG80Z0JpWEdXYlF3SndyQm9wSzRHU182MWlEbnJxcXRWTjlDWXR4b3RfX0JtY2RPaURVczNzS0s3Uzg5c01leUhQcEVHeGdwRVo3VGs3WVE2ZWN3R3M1SzI0NVI0cUxzN3Jy0gG-AUFVX3lxTE1HMjd3dmpFaFo2T1lfc1I5bTJpbWlCZndVZWhLUzVIOVBZVTh3ZEF3blhXWjFfMmVYUDJ5UFVabktzQ1Q1WllNcjg2YUU1aFJTQVRyZGpwbUlOSTEwVVFOTXpMMXoyUGVscDVvd2hJU3dEWlFnNWtXeHUwZFJ5MEdRcm1sMUdDdG5aTm9RVmRLRW5qRVhaZHpKMkVwOGR1T3BIZzJMdmEtOWQtNWFFbHUxWVhfZEFFa0JCYkdlS3c?oc=5",
       "source": "Sözcü Gazetesi",
       "tag": "Türkiye",
-      "published": "2026-11-10T05:00+03:00"
+      "published": "2026-11-10T13:17+03:00"
+    },
+    {
+      "title": "Erdoğan’dan Anıtkabir’de 10 Kasım mesajı! Tüm imkanlar devrede",
+      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOZkFKQkRjZkZnUjFEM0dwbmZfdGRzOENRT0s1aHBkRFE3aW94OTBzdDNwYktQZzRvTE81ZGhiMUNMSWZueVZjMElsXzhuclA5cGp1RFFfVVQtSGg0Szk5U01UVkNrRzItUUgwX21xTWp1NXhFcV91NTRKdU9jSjFzV3ZOT3B2S1JCc0lmZTVlajJSSnZTWXA4UEdKcFdYWDN3Q0Q3bEdSbG9nRktXS294TlB5VXZqZw?oc=5",
+      "source": "Takvim",
+      "tag": "Türkiye",
+      "published": "2026-11-10T08:50+03:00"
+    },
+    {
+      "title": "Fatma Betül Sayan Kaya’nın hakimlik ifadesi ortaya çıktı: 'Ev hanımıyım' dedi, siyasileri işaret etti",
+      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxObXhPN3R2V0Z2OGI0R2lXUjhzZnF5VXRGcG5vdGdsRklHR1IxWVlfeEhvRVJSdmFpLWlHYjdUZ0RuaElTWlBiOTAybzlScTJaSmIxcjIyWWNlZDg4NjliNUtQQmZFTFBWUUlWNjlvVlgyY1pjXy1UYlAtY2w2LUlDalZnZ2J2UENBX1ZySGh5RDZPdmNJYUFxc1lZZEFjY0tDUTNYckRZVXhrU0d5RW1ubFAxMkhDQVY5bTA3YmR6cjdUOEJuOEg1MGhZalVOWFRDc2dWeXZUMzMtLVU?oc=5",
+      "source": "Cumhuriyet",
+      "tag": "Türkiye",
+      "published": "2026-11-09T10:04+03:00"
+    },
+    {
+      "title": "Ahmet Şık’ın eşi Yonca Verdioğlu Şık gözaltına alındı",
+      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNdG5ITzBFbTRwOWRONjhDZGltUEIyb21FYlBuZGgwMURRaUVRZHlRNHBJMFYxODk4al9NWU9hWFJXa3U4R0dZTlFZTUhDZU1uMkFzV1pmLXhjdGZPaW5RVWVkcGhOV0djbzlzbUNNTnB3blV6aFFGLS1Zd1pjNG53U1hhN2ZZUTZ3OGNwQ291WQ?oc=5",
+      "source": "Medyascope",
+      "tag": "Türkiye",
+      "published": "2026-11-10T16:25+03:00"
     }
   ],
   "markets": {
     "usd": {
-      "v": 50.138,
+      "v": 50.224,
       "src": "api.frankfurter.app",
-      "t": "2026-11-10T10:25+03:00"
+      "t": "2026-11-10T18:44+03:00"
     },
     "eur": {
-      "v": 56.1199,
+      "v": 56.3207,
       "src": "api.frankfurter.app",
-      "t": "2026-11-10T10:25+03:00"
+      "t": "2026-11-10T18:44+03:00"
     },
     "bist": {
-      "v": 11686.93,
+      "v": 11661.86,
       "src": "Yahoo Finance",
-      "t": "2026-11-10T10:25+03:00"
+      "t": "2026-11-10T18:44+03:00"
     }
   },
   "world": {
@@ -163,6 +163,6 @@
     "ego": true,
     "news": true,
     "markets": true,
-    "world": true
+    "world": false
   }
 }
