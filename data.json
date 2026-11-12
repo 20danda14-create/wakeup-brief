@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12T01:54+03:00",
+  "updated": "2026-11-12T06:50+03:00",
   "ego": [
     {
       "id": 7783,
@@ -73,68 +73,40 @@
       "published": "2026-11-11T15:49+03:00"
     },
     {
-      "title": "Karalandıkça netleşen Önderimiz",
-      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOS2QzY0NfRVdWMmhGaE5ZRVhnZDhibnlabHFFSGxaUVI0MVhGc2hIajJhN1Y5b2p0Vl9HS2RpWThZRjZHS3dENnlPRUpsclJ4NHNDeGRIX2w4QUxqRVUxdVlDdGZBTUxGU3dmMjFJb1VRT0E2TGJQOWdhRTB5clRKNEZpQXdoRUR3THd1ZmpXMzd4SGRXLUVjVw?oc=5",
-      "source": "Fatih Altaylı",
-      "tag": "Türkiye",
-      "published": "2026-11-10T11:48+03:00"
-    },
-    {
-      "title": "Her ifadesi deprem etkisi yaratıyor: Emir Sarıgül bugün sürpriz bir şekilde yeni ifade verdi",
-      "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNYUJhQ2J2YU9LYmFnNXFqYmRZYi1teG9TNHljSG1xYTNNcE5KRThZNTRwTEU2c1dXOHFmTTdVVy1qd0JqdjVVOGF6N2kxWnd1S1owTGZPcEtRZHgydC1qVWRXbVhXVDVGRDJTaXJ0REJzNmRFbnF6dEE3ZHRTdWNuYk5lMzlyODktQlJ3WmdiMnY2UkYxRWNUV1ZzTVJ4bFpJNXRoaG80Q0Z6MUZ2WjRZNXp0R3RWVFludWRHajJrZGtITWlu?oc=5",
+      "title": "Avrupa’da kırmızı alarm: 350’den fazla uçuş iptal edildi",
+      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPYkdVZjR1Rmh5RTVfYmliOXBTZ0h3WFV5eTd2RjQzaFVsYzhSVEdIdnBjZFBld2pqcnlCUWhFSTNYTXpsTVNsSXRDNEFEMmdtRUNVdmNOWlZ4T0ZMYkdyMFZ2WlUwZFdrNzVmajg0a1Y0UTVkQXVEVW1fQnRjZE82RU5OSE1FWThMbWozN3hvY3dfdw?oc=5",
       "source": "Sözcü Gazetesi",
       "tag": "Türkiye",
-      "published": "2026-11-11T13:13+03:00"
+      "published": "2026-11-12T01:12+03:00"
+    },
+    {
+      "title": "SON DAKİKA! İhtiyaç, taşıt ve ticari kredilerinde yeni dönem! Merkez Bankası sınırlarını yükseltti",
+      "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOVEhab0RXSm5Zb1RsUXBMSkF6TXlwQVh0YmN1ajNuYzRUaGUwcFFKWWxmT3BxcEg2X1IxVGxVeWFKeXlwRDM2VXFrbjZTRC1falh5YkRRYkhnOFBsR2ZTRVY0V2xmLXE2RFVUdjhmeDZZN2RIbk11SEd1Zm5uRXdYZDhqcFFoS2ZxQjdmUEVJd3RVQS1TZjJaZXNrT2czUUJ1VzRadjd1elZCMndrc1JrQzBXTlBwbFBIelZES0VtNHNWUzItMUFOb1pJekZhNEFEYzlKTTNhaGNseUhfLXVWSA?oc=5",
+      "source": "Uzmanpara",
+      "tag": "Türkiye",
+      "published": "2026-11-11T22:57+03:00"
     }
   ],
   "markets": {
     "usd": {
       "v": 50.229,
       "src": "api.frankfurter.app",
-      "t": "2026-11-12T01:49+03:00"
+      "t": "2026-11-12T06:44+03:00"
     },
     "eur": {
       "v": 55.8897,
       "src": "api.frankfurter.app",
-      "t": "2026-11-12T01:49+03:00"
+      "t": "2026-11-12T06:44+03:00"
     },
     "bist": {
       "v": 11666.42,
       "src": "Yahoo Finance",
-      "t": "2026-11-12T01:49+03:00"
+      "t": "2026-11-12T06:44+03:00"
     }
   },
   "world": {
-    "date": "2026-11-11",
+    "date": "2026-11-12",
     "items": [
-      {
-        "title": "Trump meets Qatar PM, believes Iran - US war is effectively over",
-        "link": "https://theshillongtimes.com/2026/11/11/trump-meets-qatar-pm-believes-iran-us-war-is-effectively-over/",
-        "source": "theshillongtimes.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-11T05:30+03:00"
-      },
-      {
-        "title": "Rubio: No Need for Major Combat Operations Against Iran U. S. Achieving Same Objective by Economic Means",
-        "link": "https://www.breitbart.com/politics/2026/11/10/rubio-no-need-major-combat-operations-against-iran/",
-        "source": "breitbart.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-11T05:30+03:00"
-      },
-      {
-        "title": "Iran economic pain will intensify, says US Secretary of State Marco Rubio",
-        "link": "https://www.thehindubusinessline.com/news/world/irans-economic-pain-to-intensify-in-coming-months-says-marco-rubio/article71687530.ece",
-        "source": "thehindubusinessline.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-11T05:00+03:00"
-      },
-      {
-        "title": "Israeli strikes and gunfire in Gaza kill 5 people, and other Mideast news",
-        "link": "http://www.postregister.com/news/national/israeli-strikes-and-gunfire-in-gaza-kill-5-people-and-other-mideast-news/article_a9b5fe4a-0fcd-5353-89fe-f8ddafa58df2.html",
-        "source": "postregister.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-11T04:30+03:00"
-      },
       {
         "title": "IRGC Unveils New Missile City, Touts Underground Production Amid War",
         "link": "https://www.zerohedge.com/geopolitical/irgc-unveils-new-missile-city-touts-underground-production-amid-war",
@@ -143,18 +115,46 @@
         "seen": "2026-11-11T08:00+03:00"
       },
       {
-        "title": "FOLD YOUR HAND: Iran Security Chief Tells President Trump To Surrender To Tehran Seven Conditions – The Yeshiva World",
-        "link": "https://www.theyeshivaworld.com/news/israel-news/2621420/__trashed-128.html",
-        "source": "theyeshivaworld.com",
+        "title": "Rafael unveils new cruise missile: 454 - kilogram warhead and low - altitude flight capability",
+        "link": "https://www.israelnationalnews.com/flashes/697187",
+        "source": "israelnationalnews.com",
         "topic": "Çatışma",
-        "seen": "2026-11-11T05:30+03:00"
+        "seen": "2026-11-11T08:30+03:00"
       },
       {
-        "title": "EA - Frontline Video: Backing Ukraine Against Russia Destructive Winter",
-        "link": "https://eaworldview.com/2026/11/ukraine-russia-destructive-winter/",
-        "source": "eaworldview.com",
+        "title": "Ireland Pledges Ukraine Funding for 2027 and Tougher Russia Sanctions",
+        "link": "https://www.kyivpost.com/post/89850",
+        "source": "kyivpost.com",
         "topic": "Çatışma",
-        "seen": "2026-11-11T04:30+03:00"
+        "seen": "2026-11-12T03:30+03:00"
+      },
+      {
+        "title": "Dorset businessmen drive aid supplies to war - hit Ukraine",
+        "link": "https://www.dorsetecho.co.uk/news/26720141.dorset-businessmen-drive-aid-supplies-war-hit-ukraine/",
+        "source": "dorsetecho.co.uk",
+        "topic": "Çatışma",
+        "seen": "2026-11-12T06:00+03:00"
+      },
+      {
+        "title": "GCC To Set Up Kuwait Command Center Amid Doubts Over US Security Commitment",
+        "link": "https://www.zerohedge.com/geopolitical/gcc-set-kuwait-command-center-amid-doubts-over-us-security-commitment",
+        "source": "zerohedge.com",
+        "topic": "Çatışma",
+        "seen": "2026-11-11T08:00+03:00"
+      },
+      {
+        "title": "Injury Report: Week 10 vs Rams",
+        "link": "https://www.azcardinals.com/news/injury-report-week-10-vs-rams",
+        "source": "azcardinals.com",
+        "topic": "Çatışma",
+        "seen": "2026-11-12T04:30+03:00"
+      },
+      {
+        "title": "Russian ambassador to US, Alexander Darchiev, dies at 66",
+        "link": "https://pmnewsnigeria.com/2026/11/11/russian-ambassador-to-us-alexander-darchiev-dies-at-66/",
+        "source": "pmnewsnigeria.com",
+        "topic": "Çatışma",
+        "seen": "2026-11-12T03:30+03:00"
       }
     ],
     "hits": 1
@@ -163,6 +163,6 @@
     "ego": true,
     "news": true,
     "markets": true,
-    "world": false
+    "world": true
   }
 }
