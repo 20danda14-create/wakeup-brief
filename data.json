@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T22:47+03:00",
+  "updated": "2026-11-22T03:03+03:00",
   "ego": [
     {
       "id": 7783,
@@ -52,6 +52,13 @@
   ],
   "news": [
     {
+      "title": "Bakan Fidan'dan ABD'ye CAATSA çağrısı",
+      "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPZXgtUnYyLVB6WDREVnVXY1piUGhnVzNGREhtOUdITHNjd1BIZG1aRExVZERFZmhoUEMzenBiZDFwOWRJcV9kQ0ZYcnlNRTByQWs0MTVyaHlDdGZ3RjZQcFJqOEZuTWJUbTc4TlB5SmpTMlR1TXB3YVJIWk9wMEVSZndGRXY?oc=5",
+      "source": "İnternet Haber",
+      "tag": "Türkiye",
+      "published": "2026-11-21T21:35+03:00"
+    },
+    {
       "title": "Tanju Özcan adli kontrol şartıyla tahliye edildi",
       "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOZTlzREZzV3d6OG9xaURISE1rUlJZNHFka0lfM2JYUlp2ak9iMUZvYjh6b1k4R2xTMVJ6dVRIcXRuSW9HQjM2M1dBR0xDdGt6dVNZbFg5OEo3cEN3ZDVxeWhkdjU5ZmpFbGJjbEE1VmJ3MjVQOTRsdUl6OHM5bThIQ3hxb0lzV0hQczRxWnVzVEQ5Y3FsMWc?oc=5",
       "source": "İnternet Haber",
@@ -59,49 +66,42 @@
       "published": "2026-11-21T21:05+03:00"
     },
     {
-      "title": "Cumhurbaşkanı Erdoğan'dan \"adalet\" vurgusu: Kanunların uygulanmadığı düzende huzur olmaz",
-      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOUlJTS1p1akZSM1JQeG9rZ0szWnJuQi1iMGFvQVNEU1RvaXpaXzdkcVp4QzZzUTJmaUFZSGh4MWlzX1JZY2N5WUdUWWJSeXJtbU1GbG0zSmREeVRpbnJrNzRaOGpQTEtNU3FYQ0dXZ2Z4d3JjNXdTd2N3TWNvOG1ReEsxSXJmcVBPRjBMNHRFSQ?oc=5",
-      "source": "İnternet Haber",
+      "title": "MHP'li Yıldız \"Terörsüz Türkiye\" sürecine dair konuştu: Cezaevindeki kaç kişinin \"aftan\" yararlanacağını açıkladı",
+      "link": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxNdlJkZXFOckRHcWhkeE9xZFBBLUg5SWtfUXY5MXE5OXVMQVdJN1IxdVpmdFM1LWVvNGhlVWpPekdobG1VcFl6bkd3eFJXX0hQNjQ5Y1pjY2VLRUhPelI1bkE1WTQzMlFyWGt5TWkzOEdvd3ZGSWY2UU4zX0tBS0VVZXZxQ3UtT1RXbjV2V3ozZ0swYnZvVlAtNzZGdkZGVkNraTE2Z1dGRGdZbk56ZHF1ZHV1Z3k1Wk9Qa0Y4TlRNaHVnOE9LdVVTblVyQ09RdkROaVp0TjA3bTJKa1ox?oc=5",
+      "source": "BirGün Gazetesi",
       "tag": "Türkiye",
-      "published": "2026-11-21T14:50+03:00"
+      "published": "2026-11-21T21:10+03:00"
     },
     {
-      "title": "Tüm yurtta etkili olacak: Hava bir anda değişecek | Meteoroloji ve AKOM tarih vererek uyardı: 21 ilde sarı alarm! İstanbul’u sağanak ve dolu vurdu",
-      "link": "https://news.google.com/rss/articles/CBMihAJBVV95cUxQa2l5WTBocmpDd2hxLUlmVWN4S2hvSC1YbkhLSThGUGI0Q1lvUVN1MzUxU2NJRkZFMUpfNWRHamJfeW1iR0FWUzVIbGdCaENoeVBPLWQyeG9nVnpyWlFfaUx3YjBHZ0FUX0cySTJZTTVqcjJkb0QwSWJFSUx0UGhxMDlQc09TVlVWOWJTbDh0MHhpSGdRVkd4OWdhNFFmbWoyajdrMEZDUThPNVFkbjlUMWJCbW9vSEZjUU10SGR5dVF4ckMzSFZVeFk4Tzc0ejdJWUo0SGxYRUw0X0xYNGhUZkZsZmNmU29xYTZtbklUOVJNandfV3RrdnJNdlBsZ3JmNUdKWQ?oc=5",
-      "source": "Hürriyet",
+      "title": "Vizesiz Avrupa için yeni adım: Eksik altı kriter Meclis'e geliyor",
+      "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOZ3pXdThfUzJoU0gzZ1FhSi1JRlNTcndoVWo5VkpQNi1LanlnRUJyRW4xdnNmblBCcHJEaEZDWk1FcUl1c2FvdXZMc1VTMFQzRHZSZTEtQzFESUdzUEZDaWtFejRVaGFZUldRdi13eXN4QzZzUW5lNW1KdDJXZS0tS0pEQ0ZTTWhpcHdGbS1reUE1cUJIeWtyTThOSDBLQ0JLejROMW0zVEEzOG5sVWfSAbMBQVVfeXFMTkdQMkFkRWctU0F6WFJnMFdHdWlJUWtDZUR0OW9iSzExbl9mb25pZU9VejJxSkdhOEphbm1sb2p4YzhTV1NOb2djaFFvUk1nSjZCYVlDX2NjRXNpdk9HS0VBVnhSeUVYZW5UbzNZdWw3S0tQaXJJSmxnLXEyeXJKVnRvODBVWWxINFJMaUtreWJKX2pUUl9QdnhFWXdYczNFb3NMVUZ1TUpFRS1ZQ0F6UW9yMWM?oc=5",
+      "source": "NTV Haber",
       "tag": "Türkiye",
-      "published": "2026-11-21T08:00+03:00"
+      "published": "2026-11-21T09:34+03:00"
     },
     {
-      "title": "Bir şehre daha hızlı tren geliyor: 2 büyükşehir arası 2 saate düşecek",
-      "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNRVZRMXFacTkyVVotbGVtQllfVHRsZ2Y5RmRaVmsyUEhmMG13eGtXNmVhWGt0UFpZb0xQNVlHeDFoRGFOeHh0MElrLU5BSHRpYTlaODdkbGs2OGFQOU1SRmJ1c3M0Q2RLWUlJaDlCd0RfMEdxNWhzdGdPY0tUSUx1RU9SbExMZ0NBRkZ3UEZtY1Y1QjI4YzEwVUxPMnpDaWx2Y1Ew?oc=5",
-      "source": "Sözcü Gazetesi",
+      "title": "Her zirveden sonra iniş başlar",
+      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQVFhUQW5rRkJ2bGtjZHRybnQwNGptaTEwdUV6bEJCMnd3TlhRcTVZbzdlQWJiN0t5cUxoLWJOTnhnT2RacmZBTlpGSUc4YUV4TW9DT1V6dllfeWtTX3dEdzZWUHQzNm45ZDVIY2tHR0V5SngwUXNXM050LTdzMzVzbnN1X3pUdTBJNExIVDQ1bkdld9IBlwFBVV95cUxPS3ZxZzFINFR2eWVyMU1RLXJhaDhvbGtZUTlfRm1Rc0ZCbGJ0QjA5Zm5saVljSFlfWENrYy1EYmJlT2IwNmloX3hyU1RQdTNydlRlSS14Y2NsMWt2VHNHakktcmJHbzdSYWROcWJGSkpoYkZ5RFg0OXdMQXVuQ18tX3NHelBST1lvMmRSendQM0d6X2JvT3A4?oc=5",
+      "source": "Sabah",
       "tag": "Türkiye",
-      "published": "2026-11-21T11:27+03:00"
-    },
-    {
-      "title": "Ümit Özlale ‘fon vurgunu’nu sordu, Menderes Türel ‘abdest’ ile yanıt verdi: 'İki günde 48 milyon lira nasıl eridi?'",
-      "link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPWGN5UGtaS1doUk5pVmJId2NtS0xfUXI4MzBLbXhyZV9fN0pUS3hrZUxPZHRrSnNscHhGamZ1Zzc2VzRqSHBUWFRueXZBa0hpT2FJUjFoSzhvQ2kxUG9ET2RJNEl4UnFBd0JVUkpWNGRVdHhMRXBNNjVZTi1kRTNQWDJ5NmQ3czEtVG5SWk0wREpnaC1QemhZNmdVcnpoblVpSjlnMkItTVBETDVVRTdONmNNZlQzNWM4NjkyWTlJX1JVNTB1ZmF0dHhPM1lUU3loYTYxYUJhaFBsRXVzdjZXeEJwc1N6Q08w?oc=5",
-      "source": "Cumhuriyet",
-      "tag": "Türkiye",
-      "published": "2026-11-21T13:51+03:00"
+      "published": "2026-11-21T07:05+03:00"
     }
   ],
   "markets": {
     "usd": {
       "v": 50.572,
       "src": "api.frankfurter.app",
-      "t": "2026-11-21T22:42+03:00"
+      "t": "2026-11-22T02:57+03:00"
     },
     "eur": {
       "v": 55.5788,
       "src": "api.frankfurter.app",
-      "t": "2026-11-21T22:42+03:00"
+      "t": "2026-11-22T02:57+03:00"
     },
     "bist": {
       "v": 11131.32,
       "src": "Yahoo Finance",
-      "t": "2026-11-21T22:42+03:00"
+      "t": "2026-11-22T02:57+03:00"
     }
   },
   "world": {
@@ -163,6 +163,6 @@
     "ego": true,
     "news": true,
     "markets": true,
-    "world": true
+    "world": false
   }
 }
