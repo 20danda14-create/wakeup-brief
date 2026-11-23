@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-23T04:35+03:00",
+  "updated": "2026-11-23T12:48+03:00",
   "ego": [
     {
       "id": 7783,
@@ -91,17 +91,17 @@
     "usd": {
       "v": 50.572,
       "src": "api.frankfurter.app",
-      "t": "2026-11-23T04:30+03:00"
+      "t": "2026-11-23T12:42+03:00"
     },
     "eur": {
       "v": 55.5788,
       "src": "api.frankfurter.app",
-      "t": "2026-11-23T04:30+03:00"
+      "t": "2026-11-23T12:42+03:00"
     },
     "bist": {
-      "v": 11131.32,
+      "v": 11118.73,
       "src": "Yahoo Finance",
-      "t": "2026-11-23T04:30+03:00"
+      "t": "2026-11-23T12:42+03:00"
     }
   },
   "world": {
@@ -115,18 +115,11 @@
         "seen": "2026-11-22T23:30+03:00"
       },
       {
-        "title": "Australia may be headed for recession, former Federal Reserve economist says",
-        "link": "https://www.abc.net.au/news/2026-11-23/sahm-rule-recession-indicator-australia-november-2026/107408750",
-        "source": "abc.net.au",
+        "title": "FOMC meet: Why Bill Ackman wants the Fed to abandon its outdated 2% inflation target now",
+        "link": "https://www.businesstoday.in/world/story/fomc-meet-why-bill-ackman-wants-the-fed-to-abandon-its-outdated-2-inflation-target-now-568967-2026-11-23",
+        "source": "businesstoday.in",
         "topic": "Ekonomi",
-        "seen": "2026-11-23T00:30+03:00"
-      },
-      {
-        "title": "Just accept Brexit and move on, Theresa May urges Andy Burnham",
-        "link": "https://www.bucksfreepress.co.uk/news/national/26751613.just-accept-brexit-move-theresa-may-urges-andy-burnham/",
-        "source": "bucksfreepress.co.uk",
-        "topic": "Diplomasi",
-        "seen": "2026-11-22T21:45+03:00"
+        "seen": "2026-11-23T06:30+03:00"
       },
       {
         "title": "Libya eastern government suspects drone attack caused explosion on Russian ship",
@@ -136,18 +129,11 @@
         "seen": "2026-11-22T19:30+03:00"
       },
       {
-        "title": "Peso to move sideways vs dollar as markets eye key US economic data",
-        "link": "https://bworldonline.com/banking-finance/2026/11/22/795691/peso-to-move-sideways-vs-dollar-as-markets-eye-key-us-economic-data/",
-        "source": "bworldonline.com",
+        "title": "Australia may be headed for recession, former Federal Reserve economist says",
+        "link": "https://www.abc.net.au/news/2026-11-23/sahm-rule-recession-indicator-australia-november-2026/107408750",
+        "source": "abc.net.au",
         "topic": "Ekonomi",
-        "seen": "2026-11-22T15:30+03:00"
-      },
-      {
-        "title": "SCO Civilisational Dialogue leaves options open for Pakistan SCO meets next year, say sources",
-        "link": "https://www.thehindu.com/news/national/sco-civilisational-dialogue-leaves-options-open-for-pakistan-sco-meets-next-year-say-sources/article71731201.ece",
-        "source": "thehindu.com",
-        "topic": "Diplomasi",
-        "seen": "2026-11-22T15:30+03:00"
+        "seen": "2026-11-23T00:30+03:00"
       },
       {
         "title": "Saudi Arabia turns to Ukraine, South Korea and others to counter attacks",
@@ -155,13 +141,27 @@
         "source": "stripes.com",
         "topic": "Çatışma",
         "seen": "2026-11-23T01:30+03:00"
+      },
+      {
+        "title": "Peso to move sideways vs dollar as markets eye key US economic data",
+        "link": "https://bworldonline.com/banking-finance/2026/11/22/795691/peso-to-move-sideways-vs-dollar-as-markets-eye-key-us-economic-data/",
+        "source": "bworldonline.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-22T15:30+03:00"
+      },
+      {
+        "title": "Arab News | Libya eastern government suspects drone attack caused explosion on Russian ship in Benghazi",
+        "link": "https://www.arabnews.com/middle-east/libyas-eastern-government-suspects-drone-attack-caused-explosion-on-russian-ship-in-benghazi-3013570",
+        "source": "arabnews.com",
+        "topic": "Çatışma",
+        "seen": "2026-11-22T21:45+03:00"
       }
     ],
-    "hits": 3
+    "hits": 2
   },
   "ok": {
     "ego": true,
-    "news": true,
+    "news": false,
     "markets": true,
     "world": true
   }
