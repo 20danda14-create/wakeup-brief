@@ -1,6 +1,12 @@
 {
-  "updated": "2026-11-26T05:35+03:00",
+  "updated": "2026-11-26T14:30+03:00",
   "ego": [
+    {
+      "id": 7784,
+      "title": "Yeni hat 262 Bağlum - Ovacık",
+      "link": "https://www.ego.gov.tr/tr/duyuru/7784/yeni-hat-262-baglum-ovacik",
+      "date": "2026-11-26"
+    },
     {
       "id": 7783,
       "title": "330 Ege Mh. Lojman 15 Temmuz Kızılay Milli İrade Meydanı Abb Binası Hattı güzergahı yeniden düzenlenmiştir",
@@ -42,119 +48,113 @@
       "title": "352 Kutludüğün Mamak Opera Gar Hattına yeni servis eklenmiştir",
       "link": "https://www.ego.gov.tr/tr/duyuru/7777/352-kutludugun-mamak-opera-gar-hattina-yeni-servis-eklenmistir",
       "date": "2026-10-02"
-    },
-    {
-      "id": 7776,
-      "title": "356 Kıbrısköyü Yeşilbayır Zerdalitepe Kayaş Banliyö Tren İstasyonu hattının servis saatleri yeniden düzenlenmiştir",
-      "link": "https://www.ego.gov.tr/tr/duyuru/7776/356-kibriskoyu-yesilbayir-zerdalitepe-kayas-banliyo-tren-istasyonu-hattinin-servis-saatleri-yeniden-duzenlenmistir",
-      "date": "2026-10-01"
     }
   ],
   "news": [
     {
-      "title": "Fon krizinde kritik hamle... Saat ve tarih verildi: Yılmaz, Gürlek ve Şimşek basının karşısına çıkacak",
-      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQMTA3UXFrbnhxQ19BdDFfeERXNVVHR3pJMDM2QTN6ZFNKV1YwcF9saTU1S0ltS1ltSnFUNGtyY0xKQ2stdHdaRzNzMG15X1c3d1dxRkxtOWVrQWVpV2l0RHAxWVJ2ZDAxQ09MQzgxT0FKZzZzdV9UYWpRSVF1TTRGTlNISWUydk1CNlYyenRKZWI0MW5EXzFsSFcxTUQ4VGpydXctUmJVQVpBVnplSjZFOHNCX2lOVnVsTVBHYkt4N0xsdjNzeUhldC1vei1qX3NRejZNdEhhamNpczA?oc=5",
+      "title": "AYM'den Ekrem İmamoğlu kararı",
+      "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBCWXZyQ0hqTDJXVnVzUHBVSG9peDFSajc1aklHWHdQN3VlWHFURU1nd0l5YzYzUjZRWF9CaEE4V2I4c05RWGNaWlNrVENlMVdtRWtwMkhBYUFxSWtpTVJCdlZNejEyWWs1dVYzM3JYdw?oc=5",
+      "source": "Sözcü Gazetesi",
+      "tag": "Türkiye",
+      "published": "2026-11-26T12:41+03:00"
+    },
+    {
+      "title": "Son dakika.... Kritik kamu kurumlarını hedef alan casusluk şebekesi çökertildi",
+      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQX1RKckhIMU4waGJCTWNBOXM1MTV6R2VLb3ZDalFOUHM2VXpBOVNGaFdKQXJYMXViUEhMcy1CekNPQVoxTi1nOXEzU2ppZmw3RVB5N1JPZEtKTncxaWRMb0pGWFhuakhVTFVpVFl6UGxlZG04cWdzOUowRXhWQUU3cFRfb0c0MWFnTXUxTURnNzdySzFCUEdsUGxLWnQ1alJIOTFLNHpOdEZ0akXSAbABQVVfeXFMUE1zdjFRSlZhWC1tcEgzaHNOcGxjc0p5c1hCcVhRdnFJbkxfbEd0V3NMZERMRDB3LWg0cnJkdHJNZzZ2WTdTWVFmbm01cmdvV2lna21ZWTNpZnk2bFBQY1VJRmlqV093bXVURVVmYkhEYjRYRkxJUVV3TUR3MU9tS1RhcVRSOTFuS0tOTjRUdkNtRlNYd1huc05yaUctZmJNeDl3bkJmYW9IZDV3WmN6dUE?oc=5",
+      "source": "Sözcü Gazetesi",
+      "tag": "Türkiye",
+      "published": "2026-11-26T11:02+03:00"
+    },
+    {
+      "title": "Yılmaz, Gürlek ve Şimşek'ten fon krizine ilişkin toplantı",
+      "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOakNfQlJvNXhiNFNvZmVSb3N2YU8xQWdRN3V0Z1dwNnBPMzR5V2J0b3VrQ2hUTVY5MkttRFhGbmRRVkJRLWozUFl1YjZBUE44V1U4dGxtRFlkeFZnSHNTM1NYckJLenpjS3JCaExFeG1RU0JqclZRRC1JLS1QT1Z4U2JmS1RGVEtnNWtZSGRqaXJ4Zkl0UDBz?oc=5",
+      "source": "Bloomberght",
+      "tag": "Türkiye",
+      "published": "2026-11-26T10:12+03:00"
+    },
+    {
+      "title": "Hulusi Akar’dan Eskişehir’deki 5 şehitle ilgili açıklama: ‘Maalesef işin doğasında var’ - Son Dakika Türkiye Haberleri",
+      "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPemMzWmNESzk1NENrX1JEWTktTmFrcDJ2aWsxRGh4NHpjc09Ta19DSDhUaWtPZENHNlk5akFONlRGbXozS3F6LTMtUTR5M2EzVEFpQXotZHBBNEprZ2xfU0NBVXc5a3lsRjB3d3BMc2lwbURKaUF0N1hCbWFDZXBoaFhNcHFJb2xXUk5lVWw3bGk1SnFoaVpENVFEVk5iMUhtQmt3bC1RZmMxUVd2M0JIMEp4bTdRekstdlMyWlN2MmRmcVl1OTlHR3F3?oc=5",
       "source": "Cumhuriyet",
       "tag": "Türkiye",
-      "published": "2026-11-25T22:33+03:00"
+      "published": "2026-11-25T14:43+03:00"
     },
     {
-      "title": "ÖZEL | Hafter’e Tıbbi Yardım: Ankara’yla Normalleşme Böyle Başladı",
-      "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBGR0stVzNpQ3ZZWmNhTGtPdFhNc01RNExBVVlFelFFTkhNc3VTbU9DR1lpTnNpUjUwNVUtdXRnRE50aVlRN1U2WXFWdWtwUm5QU3Z6YXltRjRpZ2VsY2V0cG9JS3M2ZEtPWFExRmNRdEVCMlFtVjhzN2c5NnZYQQ?oc=5",
-      "source": "SavunmaSanayiST",
-      "tag": "Türkiye",
-      "published": "2026-11-25T19:20+03:00"
-    },
-    {
-      "title": "Atama kararları yayımlandı. 41 ilin valisi değişti, 14 vali merkeze çekildi",
-      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOMWRkZXJjc2NNTU9pbXZyZzBlZkljZy04SHY5VFdueG1NN1pIMU0yTDkwSlFDc1h1dWdjbVh5VDVBd2VSam1WdUZlQ3BhTEExdlJFRUF6VTFwcF9TZy1zSHpjbDdiZE02MWYzcDJvVW5KZko3amNPVzlia3JOUUFRbEVR0gGHAUFVX3lxTFByV0lqX0dJdDFFLUxnVmtsZ2RBSXdBb3dfOFRQZHRVRUlVcHEzaFppaDZRZm42U1Zya2lqYTZhVVBrSzB1ZFRlREFfZ3dTTml5M09lWGc2dWVXaHNqTlFFVnZybi1WVVBoWUdpaGVvZEgwbS1JU1VnT05qX0dsaTY1YlkwdHBZUQ?oc=5",
+      "title": "Milli Eğitim Bakanı Tekin: Akademiye 15 bin öğretmen adayı alınacak",
+      "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNQmhkODhGS0NsTXg3dmNKUGxlX283MGlCaU04TUtOVGJNb1dYYVZ6QXNNMGh3Uko1LUlCQ1dWek1vTnBnbGM0WWF1QzJERnhIeXNVWmxwd19lWVExVVFxNVJNUE9oYXZtYVVfWHVRQTk5Q0FZZGFvYUlQX0doRGlEVWdicE84dmJ6X29KUThaRUdzdEMyOVJ5MUx3NThTN0VVYndrZXNGVlrSAa4BQVVfeXFMUDBWVzZFMWJtWEZweFdmeW1vWW1IQlFhOEdjTXNRMGxPbnZzT0c0UloxZmtzUmtFRE1vendmMVRxdmtJLXB0RDZTa250aTRicHlaQXU4TkNGekFodnpCWHVTd0ZMbDFmUmhLZUgtUU9jQmR0LWdiaHlaTHRvTEF0SFhuM0hMQXZzbjhnYVZMMDRsWHFsTGgyN1B3cmtkd0dCZ01fQWJQdHdHSEJ1d3hB?oc=5",
       "source": "NTV Haber",
       "tag": "Türkiye",
-      "published": "2026-11-25T00:03+03:00"
-    },
-    {
-      "title": "Herkes gördüğünü söylemişti: İşte Sarıyer'deki 'firari aslan' muammasının perde arkası",
-      "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOTmVoMnV2WGpwYTg0ZjlFc2tEbFRPMC1aNmY4bUxNZzk4Zkk3RGg4TElZdlZTbkl0M19zVzFTWEoxRzhpY1JyYmNFMGlsSm44WnNaTjZqcXE5V1VZNUpMRDRlN1UxWlB1WUJPWVFyQkdvWnNTbVNoT25ucVRKQXlkVDdZZ2ZSaElmWnNPX1VvZ1lSekxCNmNXMDhiNGVlaXdVNUFSQWVaczFQU3BWMEJTcTZBSEJNSHJ4ZEJuWi15UWU?oc=5",
-      "source": "Yeni Şafak",
-      "tag": "Türkiye",
-      "published": "2026-11-25T13:27+03:00"
-    },
-    {
-      "title": "İmamoğlu'nun diploma iptali kesinleşti: Danıştay'ın gerekçesi ne?",
-      "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOOFhldFBsV2E1RzdmQUZfVFYwSVFIZExRZUo0UTA3RHRrcjJpWFE4TUJ5RmJsYTV2a29ad19TRXhJN1ptLW9xTmlKNWhLVmR2UW1IRXVFYnA5dWZZaGN0YXhERWNmNkd2SlZYVWZYZGtVV2VYcFBoYmlyXzlDSmhjd2ZKeFEzbXpFRHF4U2tEcV9fMWVteVpyMjJob2xUR3J5dUpaLW9TVmVGTVVMQUVUbHdtN3Q0ZUxRUlRMV0x6U3MyR0FfNk8tTnRB0gHKAUFVX3lxTE9vc3JxNTZNdEVXTEdIa0k4djktd1FwSDc0YndYQkRGUlF2MWR0eXJubVZfUFQ3eXh0dGFtU01id2pZc0h0QzIyYmlKT1puendDZDJNZUdiRzFNblJ0VTlvTkxGRGM2cmZ6T20wMHlNY0RxV2lRUi1oVjMtcFZBaEt0TFlxU0ZPRnpDS0tLWGdKMXJQMlNhaEQyUDRsU0tfMlZmT29peDNubjZ2SV9EXzQtaThzRDZEYkZYdnVqalVsZlZyQzQtVXhWZWc?oc=5",
-      "source": "DW.com",
-      "tag": "Türkiye",
-      "published": "2026-11-25T18:33+03:00"
+      "published": "2026-11-26T11:16+03:00"
     }
   ],
   "markets": {
     "usd": {
       "v": 50.678,
       "src": "api.frankfurter.app",
-      "t": "2026-11-26T05:29+03:00"
+      "t": "2026-11-26T14:24+03:00"
     },
     "eur": {
       "v": 55.4163,
       "src": "api.frankfurter.app",
-      "t": "2026-11-26T05:29+03:00"
+      "t": "2026-11-26T14:24+03:00"
     },
     "bist": {
-      "v": 10655.74,
+      "v": 10836.99,
       "src": "Yahoo Finance",
-      "t": "2026-11-26T05:29+03:00"
+      "t": "2026-11-26T14:24+03:00"
     }
   },
   "world": {
-    "date": "2026-11-25",
+    "date": "2026-11-26",
     "items": [
       {
-        "title": "Israeli strike kills Hamas official, his wife and children",
-        "link": "https://www.al-monitor.com/originals/2026/11/israeli-strike-kills-hamas-official-his-wife-and-children",
-        "source": "al-monitor.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-25T13:30+03:00"
+        "title": "Inflation returns to year highest level ahead of Black Friday; president proposes new tariffs",
+        "link": "https://www.wmur.com/article/inflation-returns-to-years-highest-level-ahead-of-black-friday-president-proposes-new-tariffs/74535311",
+        "source": "wmur.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-26T04:15+03:00"
       },
       {
-        "title": "UN Water Worker Killed by Israeli Strike in Jabalia as Gaza Ceasefire Crumbles",
-        "link": "https://www.latintimes.com/unrwa-worker-killed-israeli-strike-gaza-water-well-601786",
-        "source": "latintimes.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-25T03:15+03:00"
-      },
-      {
-        "title": "Israeli Attacks in Gaza Kill Seven Palestinians, Including Head of Internal Security Service",
-        "link": "https://news.antiwar.com/2026/11/24/israeli-attacks-in-gaza-kill-seven-palestinians-including-head-of-internal-security-service/",
-        "source": "news.antiwar.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-25T00:45+03:00"
-      },
-      {
-        "title": "Trump: Israel regime change goal in Iran probably doable, but not my goal",
-        "link": "https://www.israelnationalnews.com/news/437060",
-        "source": "israelnationalnews.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-25T06:15+03:00"
-      },
-      {
-        "title": "Palestinian martyred, several injured in Israeli strike on displacement camp in Gaza",
-        "link": "http://thepeninsulaqatar.com/article/25/11/2026/palestinian-martyred-several-injured-in-israeli-strike-on-displacement-camp-in-gaza",
-        "source": "thepeninsulaqatar.com",
-        "topic": "Çatışma",
+        "title": "5 Things Investors Need to Know About Wednesday Markets",
+        "link": "https://www.aol.com/articles/5-things-investors-know-wednesday-133820000.html",
+        "source": "aol.com",
+        "topic": "Ekonomi",
         "seen": "2026-11-25T17:15+03:00"
       },
       {
-        "title": "Inside Melania Trump - brokered evacuation of civilians from Russian - occupied Oleshky - 25 - Nov - 2026",
-        "link": "https://home.nzcity.co.nz/news/article.aspx?id=458716",
-        "source": "home.nzcity.co.nz",
-        "topic": "Çatışma",
-        "seen": "2026-11-25T05:30+03:00"
+        "title": "Business outlook darkens as inflation expectations rise",
+        "link": "https://www.standard.net.au/story/9398941/business-outlook-darkens-as-inflation-expectations-rise/",
+        "source": "standard.net.au",
+        "topic": "Ekonomi",
+        "seen": "2026-11-26T08:15+03:00"
       },
       {
-        "title": "Radio Station WHMI 93. 5 FM Livingston County Michigan News, Weather, Traffic, Sports, School Updates, and the Best Classic Hit",
-        "link": "https://www.whmi.com/news/fox/european-leader-warns-russian-aggression-could-escalate-within-weeks-months",
-        "source": "whmi.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-25T00:30+03:00"
+        "title": "DONT BUY THE DIP … YET | SHTF Plan",
+        "link": "https://www.shtfplan.com/headline-news/dont-buy-the-dip-yet",
+        "source": "shtfplan.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-26T04:15+03:00"
+      },
+      {
+        "title": "Wall Street recovers most early losses as pullback in AI stocks eases",
+        "link": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/wall-street-recovers-most-early-losses-pullback-ai-stocks-eases",
+        "source": "businesstimes.com.sg",
+        "topic": "Ekonomi",
+        "seen": "2026-11-26T03:45+03:00"
+      },
+      {
+        "title": "US stock market today: Dow rises, Nasdaq falls as AI selloff hits Wall Street",
+        "link": "https://www.thehindubusinessline.com/markets/wall-street-rebounds-from-days-lows-as-bargain-hunters-step-in-dow-gains-nasdaq-falls/article71744812.ece",
+        "source": "thehindubusinessline.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-26T03:45+03:00"
+      },
+      {
+        "title": "BOK raises rate to 3. 25% in final hike of year",
+        "link": "https://www.koreaherald.com/article/10949940",
+        "source": "koreaherald.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-26T04:30+03:00"
       }
     ],
     "hits": 1
@@ -163,6 +163,6 @@
     "ego": true,
     "news": true,
     "markets": true,
-    "world": false
+    "world": true
   }
 }
