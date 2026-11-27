@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T15:38+03:00",
+  "updated": "2026-11-28T00:42+03:00",
   "ego": [
     {
       "id": 7784,
@@ -89,79 +89,79 @@
   ],
   "markets": {
     "usd": {
-      "v": 50.677,
+      "v": 50.787,
       "src": "api.frankfurter.app",
-      "t": "2026-11-27T15:33+03:00"
+      "t": "2026-11-28T00:36+03:00"
     },
     "eur": {
-      "v": 55.6177,
+      "v": 55.6474,
       "src": "api.frankfurter.app",
-      "t": "2026-11-27T15:33+03:00"
+      "t": "2026-11-28T00:36+03:00"
     },
     "bist": {
-      "v": 11000.8,
+      "v": 10977.01,
       "src": "Yahoo Finance",
-      "t": "2026-11-27T15:33+03:00"
+      "t": "2026-11-28T00:36+03:00"
     }
   },
   "world": {
-    "date": "2026-11-27",
+    "date": "2026-11-28",
     "items": [
       {
-        "title": "Hamas weighs response after Israel kills 10 people in Gaza",
-        "link": "https://arynews.tv/hamas-weighs-response-after-israel-kills-10-people-in-gaza",
-        "source": "arynews.tv",
-        "topic": "Çatışma",
-        "seen": "2026-11-26T22:45+03:00"
+        "title": "Argentina bars Central Bank from printing money to fund government spending",
+        "link": "https://www.aljazeera.com/news/2026/11/27/argentina-bars-central-bank-from-printing-money-to-fund-government-spending",
+        "source": "aljazeera.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-27T04:15+03:00"
       },
       {
-        "title": "Israeli strikes hit eastern and southern Lebanon despite June agreement",
-        "link": "https://www.middle-east-online.com/en/israeli-strikes-hit-eastern-and-southern-lebanon-despite-june-agreement",
-        "source": "middle-east-online.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-27T02:45+03:00"
+        "title": "Argentina bans its central bank from printing money for the government",
+        "link": "https://www.wral.com/news/ap/e4598-argentina-bans-its-central-bank-from-printing-money-for-the-government/",
+        "source": "wral.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-27T04:15+03:00"
       },
       {
-        "title": "Israel Kills Third Senior Hamas Official in Three Days",
-        "link": "https://www.hngn.com/articles/273939/20261126/israel-kills-hamas-internal-security-chief-gaza-city-strike.htm",
-        "source": "hngn.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-27T01:30+03:00"
+        "title": "Core inflation in Tokyo hits 16 - month high, bolsters case for BOJ hike",
+        "link": "https://www.aol.com/articles/core-inflation-japans-capital-accelerates-234240000.html",
+        "source": "aol.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-27T04:30+03:00"
       },
       {
-        "title": "Israel strikes dozens Hezbollah rockets, launchers in S. Lebanon - Xinhua",
-        "link": "https://english.news.cn/20261127/e823f4a19fde460382aafea1091e38b8/c.html",
-        "source": "english.news.cn",
-        "topic": "Çatışma",
-        "seen": "2026-11-27T01:45+03:00"
+        "title": "Sensex, Nifty open lower as Brent crude surges above $96; Geopolitical tensions weigh on market sentiment",
+        "link": "http://www.bignewsnetwork.com/news/279464551/sensex-nifty-open-lower-as-brent-crude-surges-above-96-geopolitical-tensions-weigh-on-market-sentiment",
+        "source": "bignewsnetwork.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-27T08:30+03:00"
       },
       {
-        "title": "IDF strikes Hezbollah rockets, launchers at Radwan Force camp in Lebanon",
-        "link": "http://www.jpost.com/israel-news/defense-news/article-916285",
-        "source": "jpost.com",
-        "topic": "Çatışma",
-        "seen": "2026-11-27T01:15+03:00"
+        "title": "Thanksgiving Day News Roundup - Newsquawk Daily Asia - Pac Market Open",
+        "link": "http://www.zerohedge.com/markets/thanksgiving-day-news-roundup-newsquawk-daily-asia-pac-market-open",
+        "source": "zerohedge.com",
+        "topic": "Ekonomi",
+        "seen": "2026-11-27T03:15+03:00"
       },
       {
-        "title": "Russia arrests senior air defence general after Ukrainian strikes expose security failures",
-        "link": "https://www.thenews.com.pk/latest/1425335-russia-arrests-senior-air-defence-general-after-ukrainian-strikes-expose-security-failures",
-        "source": "thenews.com.pk",
-        "topic": "Çatışma",
-        "seen": "2026-11-27T07:30+03:00"
-      },
-      {
-        "title": "Inside Saudi Arabia, Houthi attacks test kingdom image of security",
-        "link": "https://www.bbc.co.uk/news/articles/c6ly7jgv7jzdo",
-        "source": "bbc.co.uk",
-        "topic": "Çatışma",
+        "title": "Gold, silver ETFs rally up to 5% as precious metals recover despite rate hike fears. What should investors do?",
+        "link": "https://economictimes.indiatimes.com/mf/mf-news/gold-silver-etfs-rally-up-to-5-as-precious-metals-recover-despite-rate-hike-fears-what-should-investors-do/articleshow/136210759.cms",
+        "source": "economictimes.indiatimes.com",
+        "topic": "Ekonomi",
         "seen": "2026-11-27T09:30+03:00"
+      },
+      {
+        "title": "Fed faces fresh rate hike as inflation and US growth defy expectations",
+        "link": "https://www.azernews.az/analysis/268155.html",
+        "source": "azernews.az",
+        "topic": "Ekonomi",
+        "seen": "2026-11-27T08:30+03:00"
       }
     ],
     "hits": 1
   },
   "ok": {
     "ego": true,
-    "news": true,
+    "news": false,
     "markets": true,
     "world": true
   }
